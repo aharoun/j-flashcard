@@ -1,7 +1,7 @@
 const CACHE_NAME = 'jp-flashcards-v1';
 const ASSETS = [
   './',
-  './flashcards.html',
+  './index.html',
   './manifest.json',
   'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap',
 ];
@@ -34,6 +34,6 @@ self.addEventListener('fetch', (e) => {
         }
         return response;
       });
-    }).catch(() => caches.match('./flashcards.html'))
+    }).catch(() => caches.match('./index.html'))
   );
 });

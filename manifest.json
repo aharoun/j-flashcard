@@ -2,7 +2,7 @@
   "name": "Harun's 日本語 Flashcards",
   "short_name": "日本語 Cards",
   "description": "Japanese vocabulary flashcards for travel and daily life",
-  "start_url": "./flashcards.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0f0f0f",
   "theme_color": "#0f0f0f",
