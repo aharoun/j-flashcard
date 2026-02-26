@@ -9,6 +9,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="日本語 Cards">
 <meta name="theme-color" content="#0f0f0f">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23e8572a'/%3E%3Ctext x='256' y='340' font-size='280' font-family='sans-serif' font-weight='bold' fill='white' text-anchor='middle'%3E%E8%AA%9E%3C/text%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -1223,6 +1224,7 @@ function saveNewCard() {
       inp.focus();
     }
     addFormSuccess = false;
+    render();
   }, 1500);
 }
 

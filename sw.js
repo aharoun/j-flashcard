@@ -1,14 +1,22 @@
-const CACHE_NAME = 'jp-flashcards-v1';
-const ASSETS = [
+const CACHE_NAME = 'jp-flashcards-v2';
+const CORE_ASSETS = [
   './',
   './index.html',
   './manifest.json',
+];
+
+const OPTIONAL_ASSETS = [
   'https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap',
 ];
 
 self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then((cache) =>
+      cache.addAll(CORE_ASSETS).then(() =>
+        // Fonts are optional — don't block install if they fail
+        Promise.allSettled(OPTIONAL_ASSETS.map((url) => cache.add(url)))
+      )
+    )
   );
   self.skipWaiting();
 });
@@ -23,12 +31,28 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
+  const url = new URL(e.request.url);
+  const isSameOrigin = url.origin === self.location.origin;
+
+  // Network-first for same-origin HTML so deploys aren't stale
+  if (isSameOrigin && e.request.destination === 'document') {
+    e.respondWith(
+      fetch(e.request).then((response) => {
+        if (response.ok) {
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
+        }
+        return response;
+      }).catch(() => caches.match(e.request).then((cached) => cached || caches.match('./index.html')))
+    );
+    return;
+  }
+
+  // Cache-first for everything else (fonts, manifest, etc.)
   e.respondWith(
     caches.match(e.request).then((cached) => {
-      // Serve from cache first, fall back to network, then cache the response
       return cached || fetch(e.request).then((response) => {
-        // Only cache same-origin and successful responses
-        if (response.ok && (e.request.url.startsWith(self.location.origin) || e.request.url.includes('fonts.googleapis.com') || e.request.url.includes('fonts.gstatic.com'))) {
+        if (response.ok && (isSameOrigin || e.request.url.includes('fonts.googleapis.com') || e.request.url.includes('fonts.gstatic.com'))) {
           const clone = response.clone();
           caches.open(CACHE_NAME).then((cache) => cache.put(e.request, clone));
         }
