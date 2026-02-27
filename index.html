@@ -2056,7 +2056,8 @@ function esc(str) {
 
 // ─── UTILITY: Date Helpers ───
 function getTodayKey() {
-  return new Date().toISOString().split('T')[0];
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
 }
 
 // ─── CARD ID SYSTEM ───
@@ -2561,6 +2562,17 @@ function startSpeedTimer() {
       clearInterval(speedInterval);
       speedInterval = null;
       state.sessionDone = true;
+      stopSpeechRecognition();
+      // Save session when timer expires
+      saveSession({
+        date: getTodayKey(),
+        correct: state.correct,
+        wrong: state.wrong,
+        total: state.cards.length,
+        mode: state.mode,
+        category: state.category,
+        sessionType: state.sessionType,
+      });
     }
     render();
   }, 1000);
@@ -2633,6 +2645,7 @@ function countByLevel(category, level) {
 
 function startSession() {
   stopSpeedTimer();
+  stopSpeechRecognition();
   if (state.sessionType) {
     state.cards = getCardsForSessionType(state.sessionType);
     if (state.sessionType === 'speed') {
@@ -2689,6 +2702,7 @@ function skipCard() {
 }
 
 function nextCard() {
+  stopSpeechRecognition();
   state.flipped = false;
   state.speechResult = null;
   state.speechInterim = '';
@@ -2745,6 +2759,7 @@ function setJLPTLevel(level) {
 
 function navigateTo(view) {
   stopSpeedTimer();
+  stopSpeechRecognition();
   state.view = view;
   if (view === 'study' || view === 'quiz') {
     if (!state.sessionType) {
@@ -2758,9 +2773,13 @@ function navigateTo(view) {
 }
 
 function startSessionType(type) {
-  state.sessionType = type;
+  stopSpeechRecognition();
   const cards = getCardsForSessionType(type);
-  if (cards.length === 0) return;
+  if (cards.length === 0) {
+    state.sessionType = null;
+    return;
+  }
+  state.sessionType = type;
   state.cards = cards;
   state.currentIndex = 0;
   state.flipped = false;
@@ -2778,6 +2797,7 @@ function startSessionType(type) {
 }
 
 function startQuizSession() {
+  stopSpeechRecognition();
   state.sessionType = null;
   state.cards = getCards(state.category, state.level);
   if (state.cards.length < 4) return;
@@ -3221,10 +3241,10 @@ function renderSessionSetup() {
           <div class="session-card-desc">Focus on new & struggling cards</div>
           <div class="session-card-count">Up to 20 cards</div>
         </div>
-        <div class="session-card" onclick="startSessionType('full')">
+        <div class="session-card ${dueCount === 0 ? 'disabled' : ''}" onclick="startSessionType('full')">
           <div class="session-card-icon">📚</div>
           <div class="session-card-name">Full Review</div>
-          <div class="session-card-desc">All due cards by SRS</div>
+          <div class="session-card-desc">${dueCount === 0 ? 'No cards due right now' : 'All due cards by SRS'}</div>
           <div class="session-card-count">${dueCount} due</div>
         </div>
         <div class="session-card" onclick="startSessionType('speed')">
@@ -3236,19 +3256,19 @@ function renderSessionSetup() {
         <div class="session-card ${weakCount === 0 ? 'disabled' : ''}" onclick="startSessionType('weak')">
           <div class="session-card-icon">💪</div>
           <div class="session-card-name">Weak Cards</div>
-          <div class="session-card-desc">Cards below 70% accuracy</div>
+          <div class="session-card-desc">${weakCount === 0 ? 'No weak cards yet — keep studying!' : 'Cards below 70% accuracy'}</div>
           <div class="session-card-count">${weakCount} cards</div>
         </div>
         <div class="session-card ${favCount === 0 ? 'disabled' : ''}" onclick="startSessionType('favorites')">
           <div class="session-card-icon">❤️</div>
           <div class="session-card-name">Favorites</div>
-          <div class="session-card-desc">Your bookmarked cards</div>
+          <div class="session-card-desc">${favCount === 0 ? 'Tap the heart on cards to add' : 'Your bookmarked cards'}</div>
           <div class="session-card-count">${favCount} cards</div>
         </div>
-        <div class="session-card" onclick="startSessionType('srs')">
+        <div class="session-card ${dueCount === 0 ? 'disabled' : ''}" onclick="startSessionType('srs')">
           <div class="session-card-icon">📈</div>
           <div class="session-card-name">SRS Review</div>
-          <div class="session-card-desc">Due cards by urgency</div>
+          <div class="session-card-desc">${dueCount === 0 ? 'No cards due right now' : 'Due cards by urgency'}</div>
           <div class="session-card-count">${dueCount} due</div>
         </div>
         <div class="session-card" onclick="startQuizSession()">
