@@ -2581,6 +2581,9 @@ function startSpeechRecognition(card, lang) {
         state.speechRecognizing = false;
         state.speechInterim = '';
         updateSpeechDisplay();
+        if (bestMatch.match && lang === 'ja' && !state.flipped) {
+          setTimeout(() => { if (!state.flipped) flipCard(); }, 800);
+        }
       } else {
         interim += event.results[i][0].transcript;
       }
