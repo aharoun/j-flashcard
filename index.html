@@ -32,6 +32,14 @@
     --card-front-bg: linear-gradient(145deg, #1e1e1e, #1a1a1a);
     --card-back-bg: linear-gradient(145deg, #1c2420, #1a1e1c);
     --overlay-bg: rgba(0,0,0,0.7);
+    --blue: #4a9eff;
+    --blue-soft: rgba(74, 158, 255, 0.12);
+    --purple: #c060e8;
+    --purple-soft: rgba(192, 96, 232, 0.12);
+    --yellow: #f0a030;
+    --yellow-soft: rgba(240, 160, 48, 0.12);
+    --glass-bg: rgba(26, 26, 26, 0.7);
+    --glass-border: rgba(255, 255, 255, 0.08);
   }
 
   [data-theme="light"] {
@@ -52,6 +60,14 @@
     --card-front-bg: linear-gradient(145deg, #ffffff, #faf9f7);
     --card-back-bg: linear-gradient(145deg, #f0f8f2, #edf5ef);
     --overlay-bg: rgba(0,0,0,0.35);
+    --blue: #2563eb;
+    --blue-soft: rgba(37, 99, 235, 0.08);
+    --purple: #9040b8;
+    --purple-soft: rgba(144, 64, 184, 0.08);
+    --yellow: #c07820;
+    --yellow-soft: rgba(192, 120, 32, 0.08);
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.08);
   }
 
   [data-theme="light"] .level-btn.active-beginner { border-color: #1e8c3e; background: rgba(30,140,62,0.08); }
@@ -102,13 +118,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 28px;
+    margin-bottom: 20px;
+    gap: 8px;
   }
 
   .logo {
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-shrink: 0;
   }
 
   .logo-mark {
@@ -133,6 +151,75 @@
 
   .logo-text span { color: var(--text-dim); font-weight: 400; }
 
+  .header-center {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .streak-badge {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--yellow-soft);
+    border: 1px solid rgba(240,160,48,0.3);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--yellow);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .streak-badge:hover { background: rgba(240,160,48,0.2); }
+  .streak-badge .streak-fire { font-size: 14px; }
+
+  .goal-ring-wrap {
+    position: relative;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+  }
+  .goal-ring-wrap svg { width: 36px; height: 36px; transform: rotate(-90deg); }
+  .goal-ring-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 9px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .xp-counter {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--purple-soft);
+    border: 1px solid rgba(192,96,232,0.3);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--purple);
+    position: relative;
+  }
+  .xp-pop {
+    position: absolute;
+    top: -18px;
+    right: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--purple);
+    animation: xpPop 0.8s ease forwards;
+    pointer-events: none;
+  }
+  @keyframes xpPop {
+    0% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-16px); }
+  }
+
   .stats-pill {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -148,8 +235,32 @@
   .header-actions {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
+    flex-shrink: 0;
   }
+
+  .header-icon-btn {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 50%;
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 16px;
+    line-height: 1;
+    padding: 0;
+    color: var(--text-dim);
+  }
+  .header-icon-btn:hover {
+    border-color: #888;
+    background: var(--surface-hover);
+    color: var(--text);
+  }
+  .header-icon-btn svg { width: 16px; height: 16px; fill: currentColor; }
 
   .add-card-btn {
     background: var(--surface);
@@ -193,6 +304,15 @@
     background: var(--surface-hover);
   }
 
+  /* ─── Glass Panel ─── */
+  .glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+  }
+
   /* ─── Add Card Panel ─── */
   .add-panel-overlay {
     position: fixed;
@@ -212,8 +332,10 @@
   }
 
   .add-panel {
-    background: var(--surface);
-    border: 1.5px solid var(--border);
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
     border-radius: 16px;
     padding: 28px 24px;
     width: 100%;
@@ -452,7 +574,7 @@
   .mode-selector {
     display: flex;
     gap: 8px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
   }
 
   .mode-btn {
@@ -505,7 +627,7 @@
   .categories {
     display: flex;
     gap: 6px;
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     overflow-x: auto;
     padding-bottom: 4px;
     scrollbar-width: none;
@@ -632,6 +754,66 @@
     letter-spacing: 0.5px;
   }
 
+  /* ─── Favorite Button ─── */
+  .fav-btn {
+    position: absolute;
+    top: 12px;
+    left: 14px;
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 5;
+    opacity: 0.4;
+    transition: all 0.2s;
+    padding: 4px;
+    line-height: 1;
+  }
+  .fav-btn:hover { opacity: 0.7; transform: scale(1.15); }
+  .fav-btn.is-fav { opacity: 1; color: var(--red); }
+
+  /* ─── SRS Stage Badge ─── */
+  .srs-badge {
+    position: absolute;
+    bottom: 14px;
+    right: 16px;
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding: 2px 7px;
+    border-radius: 5px;
+  }
+  .srs-new { background: var(--blue-soft); color: var(--blue); }
+  .srs-learning { background: var(--yellow-soft); color: var(--yellow); }
+  .srs-familiar { background: var(--green-soft); color: var(--green); }
+  .srs-mastered { background: var(--purple-soft); color: var(--purple); }
+
+  /* ─── Example Sentences ─── */
+  .card-examples {
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    width: 100%;
+    text-align: left;
+  }
+  .example-sentence {
+    margin-bottom: 8px;
+  }
+  .example-sentence:last-child { margin-bottom: 0; }
+  .example-jp {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+  .example-en {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.4;
+    margin-top: 1px;
+  }
+
   /* ─── Action Buttons ─── */
   .actions {
     display: flex;
@@ -694,7 +876,7 @@
     height: 100%;
     background: var(--accent);
     border-radius: 4px;
-    transition: width 0.4s ease;
+    transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .progress-stats {
@@ -715,6 +897,7 @@
     margin-top: 16px;
     font-size: 11px;
     color: var(--text-faint);
+    flex-wrap: wrap;
   }
 
   kbd {
@@ -761,6 +944,7 @@
     font-weight: 600;
     cursor: pointer;
     transition: opacity 0.15s;
+    margin: 4px;
   }
 
   .restart-btn:hover { opacity: 0.85; }
@@ -852,7 +1036,7 @@
   .badge-intermediate { background: rgba(240,160,48,0.15); color: #f0a030; }
   .badge-advanced { background: rgba(192,96,232,0.15); color: #c060e8; }
 
-  /* ─── Audio Controls (standalone, below card) ─── */
+  /* ─── Audio Controls ─── */
   .audio-controls {
     display: flex;
     flex-direction: column;
@@ -860,7 +1044,6 @@
     margin-bottom: 16px;
   }
 
-  /* ─── Audio Button ─── */
   .audio-btn {
     background: var(--accent-soft);
     border: 1.5px solid rgba(232, 87, 42, 0.3);
@@ -931,11 +1114,489 @@
     text-align: center;
   }
 
+  /* ─── Quiz Mode ─── */
+  .quiz-prompt {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+  .quiz-prompt-label {
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .quiz-prompt-text {
+    font-size: 32px;
+    font-weight: 600;
+    font-family: 'Noto Sans JP', 'DM Sans', sans-serif;
+    margin-bottom: 4px;
+  }
+  .quiz-prompt-sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    color: var(--text-dim);
+  }
+
+  .quiz-options {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+
+  .quiz-option {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--text);
+  }
+  .quiz-option:hover { border-color: #444; background: var(--surface-hover); }
+  .quiz-option.selected-correct {
+    border-color: var(--green);
+    background: var(--green-soft);
+    color: var(--green);
+  }
+  .quiz-option.selected-wrong {
+    border-color: var(--red);
+    background: var(--red-soft);
+    color: var(--red);
+  }
+  .quiz-option.reveal-correct {
+    border-color: var(--green);
+    background: var(--green-soft);
+    color: var(--green);
+  }
+  .quiz-option.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+
+  .quiz-next-btn {
+    display: block;
+    width: 100%;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .quiz-next-btn:hover { opacity: 0.85; }
+
+  /* ─── Session Setup ─── */
+  .session-setup {
+    flex: 1;
+  }
+  .session-setup-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .session-setup-sub {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-bottom: 24px;
+  }
+  .session-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .session-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 18px 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .session-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .session-card-icon { font-size: 24px; margin-bottom: 8px; }
+  .session-card-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .session-card-desc {
+    font-size: 12px;
+    color: var(--text-dim);
+    line-height: 1.4;
+  }
+  .session-card-count {
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-top: 6px;
+  }
+  .session-card.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+
+  /* ─── Speed Timer ─── */
+  .speed-timer {
+    text-align: center;
+    margin-bottom: 16px;
+  }
+  .speed-timer-text {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .speed-timer-text.urgent { color: var(--red); }
+  .speed-timer-label {
+    font-size: 11px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ─── Stats Dashboard ─── */
+  .stats-view {
+    flex: 1;
+  }
+  .stats-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .stats-back-btn {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 8px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dim);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .stats-back-btn:hover { border-color: #444; }
+  .stats-title {
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  .stats-section {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 14px;
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .stats-section-title {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+  }
+
+  .stat-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .stat-row:last-child { margin-bottom: 0; }
+  .stat-label { font-size: 14px; color: var(--text); }
+  .stat-value { font-size: 14px; font-weight: 600; color: var(--accent); }
+
+  .mastery-bar-bg {
+    height: 8px;
+    background: var(--surface);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-top: 6px;
+  }
+  .mastery-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .srs-distribution {
+    display: flex;
+    height: 24px;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-top: 8px;
+  }
+  .srs-dist-seg {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    color: white;
+    min-width: 0;
+    transition: width 0.3s ease;
+  }
+
+  .srs-legend {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .srs-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .srs-legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  /* ─── Streak Calendar ─── */
+  .streak-calendar {
+    display: grid;
+    grid-template-columns: repeat(13, 1fr);
+    gap: 3px;
+    margin-top: 10px;
+  }
+  .streak-day {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 3px;
+    background: var(--surface);
+  }
+  .streak-day.active {
+    background: var(--green);
+  }
+  .streak-day.today {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+
+  /* ─── JLPT Selector ─── */
+  .jlpt-selector {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 16px;
+  }
+  .jlpt-btn {
+    flex: 1;
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 8px;
+    cursor: pointer;
+    text-align: center;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dim);
+    transition: all 0.2s;
+  }
+  .jlpt-btn:hover { border-color: #444; background: var(--surface-hover); }
+  .jlpt-btn.active {
+    border-color: var(--blue);
+    background: var(--blue-soft);
+    color: var(--blue);
+  }
+  .jlpt-btn .jlpt-count {
+    font-size: 10px;
+    font-weight: 400;
+    display: block;
+    margin-top: 2px;
+  }
+
+  /* ─── Daily Goal Settings Modal ─── */
+  .goal-modal {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    width: 100%;
+    max-width: 340px;
+    text-align: center;
+    animation: slideUp 0.25s ease;
+  }
+  .goal-modal-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .goal-options {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    justify-content: center;
+  }
+  .goal-option {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 20px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text);
+    transition: all 0.15s;
+  }
+  .goal-option:hover { border-color: var(--accent); }
+  .goal-option.active {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent);
+  }
+  .goal-option-sub {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  /* ─── Speech Recognition ─── */
+  .mic-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .mic-btn {
+    background: var(--blue-soft);
+    border: 1.5px solid rgba(74,158,255,0.3);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 20px;
+  }
+  .mic-btn:hover { background: rgba(74,158,255,0.2); border-color: var(--blue); }
+  .mic-btn.listening {
+    animation: pulse-ring-blue 0.8s ease infinite;
+    background: var(--blue-soft);
+    border-color: var(--blue);
+  }
+  @keyframes pulse-ring-blue {
+    0% { box-shadow: 0 0 0 0 rgba(74,158,255,0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(74,158,255,0); }
+    100% { box-shadow: 0 0 0 0 rgba(74,158,255,0); }
+  }
+  .speech-interim {
+    font-size: 14px;
+    color: var(--text-dim);
+    margin-top: 8px;
+    font-style: italic;
+  }
+  .speech-result {
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 8px;
+    padding: 6px 12px;
+    border-radius: 8px;
+  }
+  .speech-result.correct {
+    background: var(--green-soft);
+    color: var(--green);
+  }
+  .speech-result.wrong {
+    background: var(--red-soft);
+    color: var(--red);
+  }
+  .speech-fallback {
+    font-size: 11px;
+    color: var(--text-faint);
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  /* ─── Animations ─── */
+  @keyframes shakeWrong {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-6px); }
+    80% { transform: translateX(6px); }
+  }
+  .shake { animation: shakeWrong 0.4s ease; }
+
+  @keyframes cardEnter {
+    from { transform: scale(0.92); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .card-enter { animation: cardEnter 0.3s ease; }
+
+  .card:active { transform: scale(0.97); }
+  .card.flipped:active { transform: rotateY(180deg) scale(0.97); }
+
+  /* ─── Confetti ─── */
+  .confetti-container {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 999;
+    overflow: hidden;
+  }
+  .confetti-piece {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 2px;
+    animation: confettiFall 2.5s ease forwards;
+  }
+  @keyframes confettiFall {
+    0% { opacity: 1; transform: translateY(-10px) rotate(0deg); }
+    100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
+  }
+
+  /* ─── Study History Item ─── */
+  .history-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .history-item:last-child { border-bottom: none; }
+  .history-date { font-size: 13px; color: var(--text-dim); }
+  .history-score { font-size: 13px; font-weight: 600; }
+  .history-mode { font-size: 11px; color: var(--text-faint); }
+
   /* ─── Responsive ─── */
   @media (max-width: 480px) {
     .card-japanese { font-size: 28px; }
     .card-main { font-size: 24px; }
     .card-romaji { font-size: 15px; }
+    .header-center { gap: 6px; }
+    .quiz-options { grid-template-columns: 1fr; }
+    .session-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -943,184 +1604,162 @@
 <div class="app" id="app"></div>
 
 <script>
-// ─── VOCABULARY DATA (with levels) ───
-// level: 1 = Beginner (survival essentials), 2 = Intermediate (daily comfort), 3 = Advanced (fluent navigation)
-const vocabulary = {
+// ─── VOCABULARY DATA (loaded from vocabulary.json) ───
+let vocabulary = {
   "Greetings": [
-    // Beginner — absolute first things you need
-    { japanese: "こんにちは", romaji: "konnichiwa", english: "Hello", level: 1 },
-    { japanese: "ありがとう", romaji: "arigatou", english: "Thank you", level: 1 },
-    { japanese: "すみません", romaji: "sumimasen", english: "Excuse me / Sorry", level: 1 },
-    { japanese: "はい", romaji: "hai", english: "Yes", level: 1 },
-    { japanese: "いいえ", romaji: "iie", english: "No", level: 1 },
-    { japanese: "お願いします", romaji: "onegai shimasu", english: "Please", level: 1 },
-    { japanese: "おはよう", romaji: "ohayou", english: "Good morning (casual)", level: 1 },
-    // Intermediate — polite forms and social basics
-    { japanese: "ありがとうございます", romaji: "arigatou gozaimasu", english: "Thank you (polite)", level: 2 },
-    { japanese: "おはようございます", romaji: "ohayou gozaimasu", english: "Good morning (polite)", level: 2 },
-    { japanese: "こんばんは", romaji: "konbanwa", english: "Good evening", level: 2 },
-    { japanese: "さようなら", romaji: "sayounara", english: "Goodbye", level: 2 },
-    { japanese: "おやすみなさい", romaji: "oyasuminasai", english: "Good night", level: 2 },
-    { japanese: "お元気ですか", romaji: "ogenki desu ka", english: "How are you?", level: 2 },
-    { japanese: "元気です", romaji: "genki desu", english: "I'm fine", level: 2 },
-    // Advanced — cultural and formal expressions
-    { japanese: "はじめまして", romaji: "hajimemashite", english: "Nice to meet you", level: 3 },
-    { japanese: "よろしくお願いします", romaji: "yoroshiku onegai shimasu", english: "Please treat me well", level: 3 },
-    { japanese: "いただきます", romaji: "itadakimasu", english: "Let's eat (before a meal)", level: 3 },
-    { japanese: "ごちそうさまでした", romaji: "gochisousama deshita", english: "Thank you for the meal", level: 3 },
-    { japanese: "お久しぶりです", romaji: "ohisashiburi desu", english: "Long time no see", level: 3 },
-    { japanese: "失礼します", romaji: "shitsurei shimasu", english: "Excuse me (formal)", level: 3 },
+    { japanese: "こんにちは", romaji: "konnichiwa", english: "Hello", level: 1, jlpt: "N5", examples: [{ jp: "こんにちは、元気ですか？", en: "Hello, how are you?" }] },
+    { japanese: "ありがとう", romaji: "arigatou", english: "Thank you", level: 1, jlpt: "N5", examples: [{ jp: "手伝ってくれてありがとう。", en: "Thank you for helping me." }] },
+    { japanese: "すみません", romaji: "sumimasen", english: "Excuse me / Sorry", level: 1, jlpt: "N5", examples: [{ jp: "すみません、駅はどこですか？", en: "Excuse me, where is the station?" }] },
+    { japanese: "はい", romaji: "hai", english: "Yes", level: 1, jlpt: "N5", examples: [{ jp: "はい、わかりました。", en: "Yes, I understand." }] },
+    { japanese: "いいえ", romaji: "iie", english: "No", level: 1, jlpt: "N5", examples: [{ jp: "いいえ、結構です。", en: "No, I'm fine." }] },
+    { japanese: "お願いします", romaji: "onegai shimasu", english: "Please", level: 1, jlpt: "N5", examples: [{ jp: "水をお願いします。", en: "Water, please." }] },
+    { japanese: "おはよう", romaji: "ohayou", english: "Good morning (casual)", level: 1, jlpt: "N5", examples: [{ jp: "おはよう、今日もいい天気だね。", en: "Good morning, nice weather today." }] },
+    { japanese: "ありがとうございます", romaji: "arigatou gozaimasu", english: "Thank you (polite)", level: 2, jlpt: "N5", examples: [{ jp: "ご親切にありがとうございます。", en: "Thank you for your kindness." }] },
+    { japanese: "おはようございます", romaji: "ohayou gozaimasu", english: "Good morning (polite)", level: 2, jlpt: "N5", examples: [{ jp: "先生、おはようございます。", en: "Good morning, teacher." }] },
+    { japanese: "こんばんは", romaji: "konbanwa", english: "Good evening", level: 2, jlpt: "N5", examples: [{ jp: "こんばんは、お元気ですか？", en: "Good evening, how are you?" }] },
+    { japanese: "さようなら", romaji: "sayounara", english: "Goodbye", level: 2, jlpt: "N5", examples: [{ jp: "さようなら、また明日。", en: "Goodbye, see you tomorrow." }] },
+    { japanese: "おやすみなさい", romaji: "oyasuminasai", english: "Good night", level: 2, jlpt: "N5", examples: [{ jp: "おやすみなさい、いい夢を。", en: "Good night, sweet dreams." }] },
+    { japanese: "お元気ですか", romaji: "ogenki desu ka", english: "How are you?", level: 2, jlpt: "N5", examples: [{ jp: "お久しぶりです。お元気ですか？", en: "Long time no see. How are you?" }] },
+    { japanese: "元気です", romaji: "genki desu", english: "I'm fine", level: 2, jlpt: "N5", examples: [{ jp: "はい、元気です。ありがとう。", en: "Yes, I'm fine. Thank you." }] },
+    { japanese: "はじめまして", romaji: "hajimemashite", english: "Nice to meet you", level: 3, jlpt: "N5", examples: [{ jp: "はじめまして、田中です。", en: "Nice to meet you, I'm Tanaka." }] },
+    { japanese: "よろしくお願いします", romaji: "yoroshiku onegai shimasu", english: "Please treat me well", level: 3, jlpt: "N4", examples: [{ jp: "新しいメンバーです。よろしくお願いします。", en: "I'm a new member. Please take care of me." }] },
+    { japanese: "いただきます", romaji: "itadakimasu", english: "Let's eat (before a meal)", level: 3, jlpt: "N4", examples: [{ jp: "いただきます！おいしそう！", en: "Let's eat! It looks delicious!" }] },
+    { japanese: "ごちそうさまでした", romaji: "gochisousama deshita", english: "Thank you for the meal", level: 3, jlpt: "N4", examples: [{ jp: "ごちそうさまでした。とてもおいしかったです。", en: "Thank you for the meal. It was very delicious." }] },
+    { japanese: "お久しぶりです", romaji: "ohisashiburi desu", english: "Long time no see", level: 3, jlpt: "N3", examples: [{ jp: "お久しぶりです！最近どうですか？", en: "Long time no see! How have you been?" }] },
+    { japanese: "失礼します", romaji: "shitsurei shimasu", english: "Excuse me (formal)", level: 3, jlpt: "N3", examples: [{ jp: "失礼します、少しよろしいですか？", en: "Excuse me, do you have a moment?" }] },
   ],
   "Survival Words": [
-    // Beginner — can't survive without these
-    { japanese: "水", romaji: "mizu", english: "Water", level: 1 },
-    { japanese: "トイレ", romaji: "toire", english: "Toilet / Restroom", level: 1 },
-    { japanese: "駅", romaji: "eki", english: "Station", level: 1 },
-    { japanese: "お金", romaji: "okane", english: "Money", level: 1 },
-    { japanese: "これ", romaji: "kore", english: "This", level: 1 },
-    { japanese: "いくら", romaji: "ikura", english: "How much?", level: 1 },
-    { japanese: "どこ", romaji: "doko", english: "Where?", level: 1 },
-    { japanese: "ここ", romaji: "koko", english: "Here", level: 1 },
-    { japanese: "大丈夫", romaji: "daijoubu", english: "OK / I'm fine", level: 1 },
-    // Intermediate
-    { japanese: "お茶", romaji: "ocha", english: "Tea", level: 2 },
-    { japanese: "コーヒー", romaji: "koohii", english: "Coffee", level: 2 },
-    { japanese: "ご飯", romaji: "gohan", english: "Rice / Meal", level: 2 },
-    { japanese: "電車", romaji: "densha", english: "Train", level: 2 },
-    { japanese: "切符", romaji: "kippu", english: "Ticket", level: 2 },
-    { japanese: "今日", romaji: "kyou", english: "Today", level: 2 },
-    { japanese: "明日", romaji: "ashita", english: "Tomorrow", level: 2 },
-    { japanese: "時間", romaji: "jikan", english: "Time", level: 2 },
-    // Advanced
-    { japanese: "昨日", romaji: "kinou", english: "Yesterday", level: 3 },
-    { japanese: "天気", romaji: "tenki", english: "Weather", level: 3 },
-    { japanese: "暑い", romaji: "atsui", english: "Hot", level: 3 },
-    { japanese: "寒い", romaji: "samui", english: "Cold", level: 3 },
-    { japanese: "傘", romaji: "kasa", english: "Umbrella", level: 3 },
-    { japanese: "鍵", romaji: "kagi", english: "Key", level: 3 },
-    { japanese: "財布", romaji: "saifu", english: "Wallet", level: 3 },
+    { japanese: "水", romaji: "mizu", english: "Water", level: 1, jlpt: "N5", examples: [{ jp: "水をください。", en: "Please give me water." }] },
+    { japanese: "トイレ", romaji: "toire", english: "Toilet / Restroom", level: 1, jlpt: "N5", examples: [{ jp: "トイレはどこですか？", en: "Where is the toilet?" }] },
+    { japanese: "駅", romaji: "eki", english: "Station", level: 1, jlpt: "N5", examples: [{ jp: "東京駅まで行きたいです。", en: "I want to go to Tokyo Station." }] },
+    { japanese: "お金", romaji: "okane", english: "Money", level: 1, jlpt: "N5", examples: [{ jp: "お金が足りません。", en: "I don't have enough money." }] },
+    { japanese: "これ", romaji: "kore", english: "This", level: 1, jlpt: "N5", examples: [{ jp: "これは何ですか？", en: "What is this?" }] },
+    { japanese: "いくら", romaji: "ikura", english: "How much?", level: 1, jlpt: "N5", examples: [{ jp: "これはいくらですか？", en: "How much is this?" }] },
+    { japanese: "どこ", romaji: "doko", english: "Where?", level: 1, jlpt: "N5", examples: [{ jp: "どこに行きますか？", en: "Where are you going?" }] },
+    { japanese: "ここ", romaji: "koko", english: "Here", level: 1, jlpt: "N5", examples: [{ jp: "ここに座ってください。", en: "Please sit here." }] },
+    { japanese: "大丈夫", romaji: "daijoubu", english: "OK / I'm fine", level: 1, jlpt: "N5", examples: [{ jp: "大丈夫ですか？", en: "Are you OK?" }] },
+    { japanese: "お茶", romaji: "ocha", english: "Tea", level: 2, jlpt: "N5", examples: [{ jp: "お茶を飲みましょう。", en: "Let's drink tea." }] },
+    { japanese: "コーヒー", romaji: "koohii", english: "Coffee", level: 2, jlpt: "N5", examples: [{ jp: "コーヒーを一つお願いします。", en: "One coffee, please." }] },
+    { japanese: "ご飯", romaji: "gohan", english: "Rice / Meal", level: 2, jlpt: "N5", examples: [{ jp: "ご飯を食べましたか？", en: "Have you eaten?" }] },
+    { japanese: "電車", romaji: "densha", english: "Train", level: 2, jlpt: "N5", examples: [{ jp: "電車で行きます。", en: "I'll go by train." }] },
+    { japanese: "切符", romaji: "kippu", english: "Ticket", level: 2, jlpt: "N4", examples: [{ jp: "切符を買いたいです。", en: "I want to buy a ticket." }] },
+    { japanese: "今日", romaji: "kyou", english: "Today", level: 2, jlpt: "N5", examples: [{ jp: "今日は暑いですね。", en: "It's hot today, isn't it?" }] },
+    { japanese: "明日", romaji: "ashita", english: "Tomorrow", level: 2, jlpt: "N5", examples: [{ jp: "明日は休みです。", en: "Tomorrow is a day off." }] },
+    { japanese: "時間", romaji: "jikan", english: "Time", level: 2, jlpt: "N5", examples: [{ jp: "時間がありません。", en: "I don't have time." }] },
+    { japanese: "昨日", romaji: "kinou", english: "Yesterday", level: 3, jlpt: "N5", examples: [{ jp: "昨日は雨でした。", en: "It rained yesterday." }] },
+    { japanese: "天気", romaji: "tenki", english: "Weather", level: 3, jlpt: "N5", examples: [{ jp: "明日の天気はどうですか？", en: "How's the weather tomorrow?" }] },
+    { japanese: "暑い", romaji: "atsui", english: "Hot", level: 3, jlpt: "N5", examples: [{ jp: "今日はとても暑いです。", en: "It's very hot today." }] },
+    { japanese: "寒い", romaji: "samui", english: "Cold", level: 3, jlpt: "N5", examples: [{ jp: "冬は寒いです。", en: "Winter is cold." }] },
+    { japanese: "傘", romaji: "kasa", english: "Umbrella", level: 3, jlpt: "N4", examples: [{ jp: "傘を忘れました。", en: "I forgot my umbrella." }] },
+    { japanese: "鍵", romaji: "kagi", english: "Key", level: 3, jlpt: "N4", examples: [{ jp: "鍵をなくしました。", en: "I lost my key." }] },
+    { japanese: "財布", romaji: "saifu", english: "Wallet", level: 3, jlpt: "N4", examples: [{ jp: "財布を忘れました。", en: "I forgot my wallet." }] },
   ],
   "Getting Around": [
-    // Beginner — essential navigation
-    { japanese: "右", romaji: "migi", english: "Right", level: 1 },
-    { japanese: "左", romaji: "hidari", english: "Left", level: 1 },
-    { japanese: "まっすぐ", romaji: "massugu", english: "Straight ahead", level: 1 },
-    { japanese: "出口", romaji: "deguchi", english: "Exit", level: 1 },
-    { japanese: "入口", romaji: "iriguchi", english: "Entrance", level: 1 },
-    { japanese: "タクシー", romaji: "takushii", english: "Taxi", level: 1 },
-    // Intermediate
-    { japanese: "地下鉄", romaji: "chikatetsu", english: "Subway", level: 2 },
-    { japanese: "バス", romaji: "basu", english: "Bus", level: 2 },
-    { japanese: "近い", romaji: "chikai", english: "Near / Close", level: 2 },
-    { japanese: "遠い", romaji: "tooi", english: "Far", level: 2 },
-    { japanese: "そこ", romaji: "soko", english: "There", level: 2 },
-    { japanese: "地図", romaji: "chizu", english: "Map", level: 2 },
-    { japanese: "止まる", romaji: "tomaru", english: "To stop", level: 2 },
-    // Advanced
-    { japanese: "交番", romaji: "kouban", english: "Police box", level: 3 },
-    { japanese: "病院", romaji: "byouin", english: "Hospital", level: 3 },
-    { japanese: "信号", romaji: "shingou", english: "Traffic light", level: 3 },
-    { japanese: "交差点", romaji: "kousaten", english: "Intersection", level: 3 },
-    { japanese: "歩く", romaji: "aruku", english: "To walk", level: 3 },
-    { japanese: "乗り換え", romaji: "norikae", english: "Transfer (trains)", level: 3 },
-    { japanese: "片道", romaji: "katamichi", english: "One way", level: 3 },
-    { japanese: "往復", romaji: "oufuku", english: "Round trip", level: 3 },
+    { japanese: "右", romaji: "migi", english: "Right", level: 1, jlpt: "N5", examples: [{ jp: "右に曲がってください。", en: "Please turn right." }] },
+    { japanese: "左", romaji: "hidari", english: "Left", level: 1, jlpt: "N5", examples: [{ jp: "左に曲がってください。", en: "Please turn left." }] },
+    { japanese: "まっすぐ", romaji: "massugu", english: "Straight ahead", level: 1, jlpt: "N5", examples: [{ jp: "まっすぐ行ってください。", en: "Please go straight." }] },
+    { japanese: "出口", romaji: "deguchi", english: "Exit", level: 1, jlpt: "N4", examples: [{ jp: "出口はどこですか？", en: "Where is the exit?" }] },
+    { japanese: "入口", romaji: "iriguchi", english: "Entrance", level: 1, jlpt: "N4", examples: [{ jp: "入口はあちらです。", en: "The entrance is over there." }] },
+    { japanese: "タクシー", romaji: "takushii", english: "Taxi", level: 1, jlpt: "N5", examples: [{ jp: "タクシーを呼んでください。", en: "Please call a taxi." }] },
+    { japanese: "地下鉄", romaji: "chikatetsu", english: "Subway", level: 2, jlpt: "N4", examples: [{ jp: "地下鉄で行きましょう。", en: "Let's go by subway." }] },
+    { japanese: "バス", romaji: "basu", english: "Bus", level: 2, jlpt: "N5", examples: [{ jp: "バスは何時ですか？", en: "What time is the bus?" }] },
+    { japanese: "近い", romaji: "chikai", english: "Near / Close", level: 2, jlpt: "N5", examples: [{ jp: "駅は近いですか？", en: "Is the station near?" }] },
+    { japanese: "遠い", romaji: "tooi", english: "Far", level: 2, jlpt: "N5", examples: [{ jp: "空港は遠いです。", en: "The airport is far." }] },
+    { japanese: "そこ", romaji: "soko", english: "There", level: 2, jlpt: "N5", examples: [{ jp: "そこに置いてください。", en: "Please put it there." }] },
+    { japanese: "地図", romaji: "chizu", english: "Map", level: 2, jlpt: "N4", examples: [{ jp: "地図を見せてください。", en: "Please show me the map." }] },
+    { japanese: "止まる", romaji: "tomaru", english: "To stop", level: 2, jlpt: "N4", examples: [{ jp: "ここで止まってください。", en: "Please stop here." }] },
+    { japanese: "交番", romaji: "kouban", english: "Police box", level: 3, jlpt: "N3", examples: [{ jp: "交番で道を聞きました。", en: "I asked for directions at the police box." }] },
+    { japanese: "病院", romaji: "byouin", english: "Hospital", level: 3, jlpt: "N4", examples: [{ jp: "病院に行きたいです。", en: "I want to go to the hospital." }] },
+    { japanese: "信号", romaji: "shingou", english: "Traffic light", level: 3, jlpt: "N3", examples: [{ jp: "信号を右に曲がってください。", en: "Turn right at the traffic light." }] },
+    { japanese: "交差点", romaji: "kousaten", english: "Intersection", level: 3, jlpt: "N3", examples: [{ jp: "次の交差点を左に。", en: "Turn left at the next intersection." }] },
+    { japanese: "歩く", romaji: "aruku", english: "To walk", level: 3, jlpt: "N4", examples: [{ jp: "駅まで歩きます。", en: "I'll walk to the station." }] },
+    { japanese: "乗り換え", romaji: "norikae", english: "Transfer (trains)", level: 3, jlpt: "N3", examples: [{ jp: "新宿で乗り換えてください。", en: "Please transfer at Shinjuku." }] },
+    { japanese: "片道", romaji: "katamichi", english: "One way", level: 3, jlpt: "N3", examples: [{ jp: "片道切符をください。", en: "A one-way ticket, please." }] },
+    { japanese: "往復", romaji: "oufuku", english: "Round trip", level: 3, jlpt: "N3", examples: [{ jp: "往復でいくらですか？", en: "How much for a round trip?" }] },
   ],
   "Shopping & Food": [
-    // Beginner — ordering and paying
-    { japanese: "いくらですか", romaji: "ikura desu ka", english: "How much is it?", level: 1 },
-    { japanese: "これをください", romaji: "kore o kudasai", english: "This one, please", level: 1 },
-    { japanese: "おいしい", romaji: "oishii", english: "Delicious", level: 1 },
-    { japanese: "メニュー", romaji: "menyuu", english: "Menu", level: 1 },
-    { japanese: "会計", romaji: "kaikei", english: "Check / Bill", level: 1 },
-    // Intermediate
-    { japanese: "それ", romaji: "sore", english: "That (near you)", level: 2 },
-    { japanese: "高い", romaji: "takai", english: "Expensive", level: 2 },
-    { japanese: "安い", romaji: "yasui", english: "Cheap", level: 2 },
-    { japanese: "大きい", romaji: "ookii", english: "Big", level: 2 },
-    { japanese: "小さい", romaji: "chiisai", english: "Small", level: 2 },
-    { japanese: "現金", romaji: "genkin", english: "Cash", level: 2 },
-    { japanese: "クレジットカード", romaji: "kurejitto kaado", english: "Credit card", level: 2 },
-    { japanese: "レシート", romaji: "reshiito", english: "Receipt", level: 2 },
-    // Advanced
-    { japanese: "袋", romaji: "fukuro", english: "Bag", level: 3 },
-    { japanese: "肉", romaji: "niku", english: "Meat", level: 3 },
-    { japanese: "魚", romaji: "sakana", english: "Fish", level: 3 },
-    { japanese: "野菜", romaji: "yasai", english: "Vegetables", level: 3 },
-    { japanese: "飲み物", romaji: "nomimono", english: "Drink / Beverage", level: 3 },
-    { japanese: "辛い", romaji: "karai", english: "Spicy", level: 3 },
-    { japanese: "甘い", romaji: "amai", english: "Sweet", level: 3 },
-    { japanese: "お持ち帰り", romaji: "omochikaeri", english: "Takeout", level: 3 },
-    { japanese: "アレルギー", romaji: "arerugii", english: "Allergy", level: 3 },
+    { japanese: "いくらですか", romaji: "ikura desu ka", english: "How much is it?", level: 1, jlpt: "N5", examples: [{ jp: "このバッグはいくらですか？", en: "How much is this bag?" }] },
+    { japanese: "これをください", romaji: "kore o kudasai", english: "This one, please", level: 1, jlpt: "N5", examples: [{ jp: "これをください。二つお願いします。", en: "This one, please. Two, please." }] },
+    { japanese: "おいしい", romaji: "oishii", english: "Delicious", level: 1, jlpt: "N5", examples: [{ jp: "このラーメンはおいしい！", en: "This ramen is delicious!" }] },
+    { japanese: "メニュー", romaji: "menyuu", english: "Menu", level: 1, jlpt: "N5", examples: [{ jp: "メニューを見せてください。", en: "Please show me the menu." }] },
+    { japanese: "会計", romaji: "kaikei", english: "Check / Bill", level: 1, jlpt: "N4", examples: [{ jp: "会計をお願いします。", en: "The check, please." }] },
+    { japanese: "それ", romaji: "sore", english: "That (near you)", level: 2, jlpt: "N5", examples: [{ jp: "それは何ですか？", en: "What is that?" }] },
+    { japanese: "高い", romaji: "takai", english: "Expensive", level: 2, jlpt: "N5", examples: [{ jp: "このホテルは高いです。", en: "This hotel is expensive." }] },
+    { japanese: "安い", romaji: "yasui", english: "Cheap", level: 2, jlpt: "N5", examples: [{ jp: "この店は安いです。", en: "This shop is cheap." }] },
+    { japanese: "大きい", romaji: "ookii", english: "Big", level: 2, jlpt: "N5", examples: [{ jp: "大きいサイズはありますか？", en: "Do you have a big size?" }] },
+    { japanese: "小さい", romaji: "chiisai", english: "Small", level: 2, jlpt: "N5", examples: [{ jp: "もっと小さいのはありますか？", en: "Do you have a smaller one?" }] },
+    { japanese: "現金", romaji: "genkin", english: "Cash", level: 2, jlpt: "N4", examples: [{ jp: "現金で払います。", en: "I'll pay with cash." }] },
+    { japanese: "クレジットカード", romaji: "kurejitto kaado", english: "Credit card", level: 2, jlpt: "N4", examples: [{ jp: "クレジットカードは使えますか？", en: "Can I use a credit card?" }] },
+    { japanese: "レシート", romaji: "reshiito", english: "Receipt", level: 2, jlpt: "N4", examples: [{ jp: "レシートをください。", en: "Please give me a receipt." }] },
+    { japanese: "袋", romaji: "fukuro", english: "Bag", level: 3, jlpt: "N4", examples: [{ jp: "袋はいりますか？", en: "Do you need a bag?" }] },
+    { japanese: "肉", romaji: "niku", english: "Meat", level: 3, jlpt: "N5", examples: [{ jp: "肉を食べません。", en: "I don't eat meat." }] },
+    { japanese: "魚", romaji: "sakana", english: "Fish", level: 3, jlpt: "N5", examples: [{ jp: "日本の魚はおいしいです。", en: "Japanese fish is delicious." }] },
+    { japanese: "野菜", romaji: "yasai", english: "Vegetables", level: 3, jlpt: "N4", examples: [{ jp: "野菜を多く食べましょう。", en: "Let's eat more vegetables." }] },
+    { japanese: "飲み物", romaji: "nomimono", english: "Drink / Beverage", level: 3, jlpt: "N4", examples: [{ jp: "飲み物は何がいいですか？", en: "What would you like to drink?" }] },
+    { japanese: "辛い", romaji: "karai", english: "Spicy", level: 3, jlpt: "N4", examples: [{ jp: "辛い食べ物が好きです。", en: "I like spicy food." }] },
+    { japanese: "甘い", romaji: "amai", english: "Sweet", level: 3, jlpt: "N4", examples: [{ jp: "日本のお菓子は甘い。", en: "Japanese sweets are sweet." }] },
+    { japanese: "お持ち帰り", romaji: "omochikaeri", english: "Takeout", level: 3, jlpt: "N3", examples: [{ jp: "お持ち帰りでお願いします。", en: "Takeout, please." }] },
+    { japanese: "アレルギー", romaji: "arerugii", english: "Allergy", level: 3, jlpt: "N3", examples: [{ jp: "ナッツアレルギーがあります。", en: "I have a nut allergy." }] },
   ],
   "Key Phrases": [
-    // Beginner — absolute must-know phrases
-    { japanese: "わかりません", romaji: "wakarimasen", english: "I don't understand", level: 1 },
-    { japanese: "日本語がわかりません", romaji: "nihongo ga wakarimasen", english: "I don't understand Japanese", level: 1 },
-    { japanese: "英語を話せますか", romaji: "eigo o hanasemasu ka", english: "Do you speak English?", level: 1 },
-    { japanese: "助けて", romaji: "tasukete", english: "Help!", level: 1 },
-    { japanese: "ちょっと待って", romaji: "chotto matte", english: "Wait a moment", level: 1 },
-    // Intermediate
-    { japanese: "もう一度お願いします", romaji: "mou ichido onegai shimasu", english: "One more time, please", level: 2 },
-    { japanese: "ゆっくりお願いします", romaji: "yukkuri onegai shimasu", english: "Slowly, please", level: 2 },
-    { japanese: "これは何ですか", romaji: "kore wa nan desu ka", english: "What is this?", level: 2 },
-    { japanese: "大丈夫です", romaji: "daijoubu desu", english: "It's okay / I'm fine", level: 2 },
-    { japanese: "わかりました", romaji: "wakarimashita", english: "I understand / Got it", level: 2 },
-    { japanese: "お手洗いはどこですか", romaji: "otearai wa doko desu ka", english: "Where is the restroom?", level: 2 },
-    // Advanced
-    { japanese: "予約があります", romaji: "yoyaku ga arimasu", english: "I have a reservation", level: 3 },
-    { japanese: "写真を撮ってもいいですか", romaji: "shashin o tottemo ii desu ka", english: "May I take a photo?", level: 3 },
-    { japanese: "WiFiはありますか", romaji: "waifai wa arimasu ka", english: "Is there WiFi?", level: 3 },
-    { japanese: "少し日本語を話します", romaji: "sukoshi nihongo o hanashimasu", english: "I speak a little Japanese", level: 3 },
-    { japanese: "何時ですか", romaji: "nanji desu ka", english: "What time is it?", level: 3 },
-    { japanese: "どうやって行きますか", romaji: "douyatte ikimasu ka", english: "How do I get there?", level: 3 },
-    { japanese: "具合が悪いです", romaji: "guai ga warui desu", english: "I'm not feeling well", level: 3 },
-    { japanese: "道に迷いました", romaji: "michi ni mayoimashita", english: "I'm lost", level: 3 },
+    { japanese: "わかりません", romaji: "wakarimasen", english: "I don't understand", level: 1, jlpt: "N5", examples: [{ jp: "すみません、わかりません。", en: "Sorry, I don't understand." }] },
+    { japanese: "日本語がわかりません", romaji: "nihongo ga wakarimasen", english: "I don't understand Japanese", level: 1, jlpt: "N5", examples: [{ jp: "ごめんなさい、日本語がわかりません。", en: "I'm sorry, I don't understand Japanese." }] },
+    { japanese: "英語を話せますか", romaji: "eigo o hanasemasu ka", english: "Do you speak English?", level: 1, jlpt: "N4", examples: [{ jp: "すみません、英語を話せますか？", en: "Excuse me, do you speak English?" }] },
+    { japanese: "助けて", romaji: "tasukete", english: "Help!", level: 1, jlpt: "N4", examples: [{ jp: "助けてください！", en: "Please help!" }] },
+    { japanese: "ちょっと待って", romaji: "chotto matte", english: "Wait a moment", level: 1, jlpt: "N5", examples: [{ jp: "ちょっと待ってください。", en: "Please wait a moment." }] },
+    { japanese: "もう一度お願いします", romaji: "mou ichido onegai shimasu", english: "One more time, please", level: 2, jlpt: "N4", examples: [{ jp: "すみません、もう一度お願いします。", en: "Sorry, one more time please." }] },
+    { japanese: "ゆっくりお願いします", romaji: "yukkuri onegai shimasu", english: "Slowly, please", level: 2, jlpt: "N4", examples: [{ jp: "ゆっくりお願いします。日本語を勉強中です。", en: "Slowly, please. I'm studying Japanese." }] },
+    { japanese: "これは何ですか", romaji: "kore wa nan desu ka", english: "What is this?", level: 2, jlpt: "N5", examples: [{ jp: "すみません、これは何ですか？", en: "Excuse me, what is this?" }] },
+    { japanese: "大丈夫です", romaji: "daijoubu desu", english: "It's okay / I'm fine", level: 2, jlpt: "N5", examples: [{ jp: "心配しないで、大丈夫です。", en: "Don't worry, it's okay." }] },
+    { japanese: "わかりました", romaji: "wakarimashita", english: "I understand / Got it", level: 2, jlpt: "N5", examples: [{ jp: "わかりました、ありがとうございます。", en: "I understand, thank you." }] },
+    { japanese: "お手洗いはどこですか", romaji: "otearai wa doko desu ka", english: "Where is the restroom?", level: 2, jlpt: "N4", examples: [{ jp: "すみません、お手洗いはどこですか？", en: "Excuse me, where is the restroom?" }] },
+    { japanese: "予約があります", romaji: "yoyaku ga arimasu", english: "I have a reservation", level: 3, jlpt: "N3", examples: [{ jp: "田中です。予約があります。", en: "I'm Tanaka. I have a reservation." }] },
+    { japanese: "写真を撮ってもいいですか", romaji: "shashin o tottemo ii desu ka", english: "May I take a photo?", level: 3, jlpt: "N3", examples: [{ jp: "すみません、写真を撮ってもいいですか？", en: "Excuse me, may I take a photo?" }] },
+    { japanese: "WiFiはありますか", romaji: "waifai wa arimasu ka", english: "Is there WiFi?", level: 3, jlpt: "N4", examples: [{ jp: "この近くにWiFiはありますか？", en: "Is there WiFi nearby?" }] },
+    { japanese: "少し日本語を話します", romaji: "sukoshi nihongo o hanashimasu", english: "I speak a little Japanese", level: 3, jlpt: "N4", examples: [{ jp: "少し日本語を話します。まだ勉強中です。", en: "I speak a little Japanese. I'm still studying." }] },
+    { japanese: "何時ですか", romaji: "nanji desu ka", english: "What time is it?", level: 3, jlpt: "N5", examples: [{ jp: "すみません、今何時ですか？", en: "Excuse me, what time is it now?" }] },
+    { japanese: "どうやって行きますか", romaji: "douyatte ikimasu ka", english: "How do I get there?", level: 3, jlpt: "N3", examples: [{ jp: "東京タワーにどうやって行きますか？", en: "How do I get to Tokyo Tower?" }] },
+    { japanese: "具合が悪いです", romaji: "guai ga warui desu", english: "I'm not feeling well", level: 3, jlpt: "N3", examples: [{ jp: "具合が悪いです。病院に行きたい。", en: "I'm not feeling well. I want to go to a hospital." }] },
+    { japanese: "道に迷いました", romaji: "michi ni mayoimashita", english: "I'm lost", level: 3, jlpt: "N3", examples: [{ jp: "すみません、道に迷いました。", en: "Excuse me, I'm lost." }] },
   ],
   "Numbers": [
-    // Beginner — 1-10
-    { japanese: "一", romaji: "ichi", english: "One (1)", level: 1 },
-    { japanese: "二", romaji: "ni", english: "Two (2)", level: 1 },
-    { japanese: "三", romaji: "san", english: "Three (3)", level: 1 },
-    { japanese: "四", romaji: "yon", english: "Four (4)", level: 1 },
-    { japanese: "五", romaji: "go", english: "Five (5)", level: 1 },
-    { japanese: "六", romaji: "roku", english: "Six (6)", level: 1 },
-    { japanese: "七", romaji: "nana", english: "Seven (7)", level: 1 },
-    { japanese: "八", romaji: "hachi", english: "Eight (8)", level: 1 },
-    { japanese: "九", romaji: "kyuu", english: "Nine (9)", level: 1 },
-    { japanese: "十", romaji: "juu", english: "Ten (10)", level: 1 },
-    // Intermediate — larger numbers, currency
-    { japanese: "百", romaji: "hyaku", english: "Hundred (100)", level: 2 },
-    { japanese: "千", romaji: "sen", english: "Thousand (1,000)", level: 2 },
-    { japanese: "万", romaji: "man", english: "Ten thousand (10,000)", level: 2 },
-    { japanese: "円", romaji: "en", english: "Yen (currency)", level: 2 },
-    { japanese: "零", romaji: "rei / zero", english: "Zero (0)", level: 2 },
-    // Advanced — counters
-    { japanese: "一つ", romaji: "hitotsu", english: "One (general counter)", level: 3 },
-    { japanese: "二つ", romaji: "futatsu", english: "Two (general counter)", level: 3 },
-    { japanese: "三つ", romaji: "mittsu", english: "Three (general counter)", level: 3 },
-    { japanese: "一人", romaji: "hitori", english: "One person", level: 3 },
-    { japanese: "二人", romaji: "futari", english: "Two people", level: 3 },
+    { japanese: "一", romaji: "ichi", english: "One (1)", level: 1, jlpt: "N5", examples: [{ jp: "一つください。", en: "One, please." }] },
+    { japanese: "二", romaji: "ni", english: "Two (2)", level: 1, jlpt: "N5", examples: [{ jp: "二人で行きます。", en: "Two of us will go." }] },
+    { japanese: "三", romaji: "san", english: "Three (3)", level: 1, jlpt: "N5", examples: [{ jp: "三時に会いましょう。", en: "Let's meet at three o'clock." }] },
+    { japanese: "四", romaji: "yon", english: "Four (4)", level: 1, jlpt: "N5", examples: [{ jp: "四月は桜の季節です。", en: "April is cherry blossom season." }] },
+    { japanese: "五", romaji: "go", english: "Five (5)", level: 1, jlpt: "N5", examples: [{ jp: "五分待ってください。", en: "Please wait five minutes." }] },
+    { japanese: "六", romaji: "roku", english: "Six (6)", level: 1, jlpt: "N5", examples: [{ jp: "六時に起きます。", en: "I wake up at six." }] },
+    { japanese: "七", romaji: "nana", english: "Seven (7)", level: 1, jlpt: "N5", examples: [{ jp: "七月は暑いです。", en: "July is hot." }] },
+    { japanese: "八", romaji: "hachi", english: "Eight (8)", level: 1, jlpt: "N5", examples: [{ jp: "八百円です。", en: "It's 800 yen." }] },
+    { japanese: "九", romaji: "kyuu", english: "Nine (9)", level: 1, jlpt: "N5", examples: [{ jp: "九時に始まります。", en: "It starts at nine." }] },
+    { japanese: "十", romaji: "juu", english: "Ten (10)", level: 1, jlpt: "N5", examples: [{ jp: "十分歩きます。", en: "I'll walk for ten minutes." }] },
+    { japanese: "百", romaji: "hyaku", english: "Hundred (100)", level: 2, jlpt: "N5", examples: [{ jp: "百円ショップに行きましょう。", en: "Let's go to the 100 yen shop." }] },
+    { japanese: "千", romaji: "sen", english: "Thousand (1,000)", level: 2, jlpt: "N5", examples: [{ jp: "千円札はありますか？", en: "Do you have a 1,000 yen bill?" }] },
+    { japanese: "万", romaji: "man", english: "Ten thousand (10,000)", level: 2, jlpt: "N5", examples: [{ jp: "一万円をお願いします。", en: "10,000 yen, please." }] },
+    { japanese: "円", romaji: "en", english: "Yen (currency)", level: 2, jlpt: "N5", examples: [{ jp: "五百円です。", en: "It's 500 yen." }] },
+    { japanese: "零", romaji: "rei / zero", english: "Zero (0)", level: 2, jlpt: "N5", examples: [{ jp: "電話番号はゼロから始まります。", en: "The phone number starts with zero." }] },
+    { japanese: "一つ", romaji: "hitotsu", english: "One (general counter)", level: 3, jlpt: "N4", examples: [{ jp: "りんごを一つください。", en: "One apple, please." }] },
+    { japanese: "二つ", romaji: "futatsu", english: "Two (general counter)", level: 3, jlpt: "N4", examples: [{ jp: "お皿を二つお願いします。", en: "Two plates, please." }] },
+    { japanese: "三つ", romaji: "mittsu", english: "Three (general counter)", level: 3, jlpt: "N4", examples: [{ jp: "質問が三つあります。", en: "I have three questions." }] },
+    { japanese: "一人", romaji: "hitori", english: "One person", level: 3, jlpt: "N5", examples: [{ jp: "一人で旅行します。", en: "I'll travel alone." }] },
+    { japanese: "二人", romaji: "futari", english: "Two people", level: 3, jlpt: "N5", examples: [{ jp: "二人分お願いします。", en: "For two people, please." }] },
   ],
   "People & Pronouns": [
-    // Beginner
-    { japanese: "私", romaji: "watashi", english: "I / Me", level: 1 },
-    { japanese: "あなた", romaji: "anata", english: "You", level: 1 },
-    { japanese: "友達", romaji: "tomodachi", english: "Friend", level: 1 },
-    // Intermediate
-    { japanese: "彼", romaji: "kare", english: "He / Him", level: 2 },
-    { japanese: "彼女", romaji: "kanojo", english: "She / Her", level: 2 },
-    { japanese: "私たち", romaji: "watashitachi", english: "We / Us", level: 2 },
-    { japanese: "名前", romaji: "namae", english: "Name", level: 2 },
-    { japanese: "先生", romaji: "sensei", english: "Teacher / Professor", level: 2 },
-    { japanese: "学生", romaji: "gakusei", english: "Student", level: 2 },
-    // Advanced
-    { japanese: "家族", romaji: "kazoku", english: "Family", level: 3 },
-    { japanese: "子供", romaji: "kodomo", english: "Child / Children", level: 3 },
-    { japanese: "大人", romaji: "otona", english: "Adult", level: 3 },
-    { japanese: "お兄さん", romaji: "oniisan", english: "Older brother", level: 3 },
-    { japanese: "お姉さん", romaji: "oneesan", english: "Older sister", level: 3 },
-    { japanese: "同僚", romaji: "douryou", english: "Colleague", level: 3 },
+    { japanese: "私", romaji: "watashi", english: "I / Me", level: 1, jlpt: "N5", examples: [{ jp: "私は学生です。", en: "I am a student." }] },
+    { japanese: "あなた", romaji: "anata", english: "You", level: 1, jlpt: "N5", examples: [{ jp: "あなたの名前は何ですか？", en: "What is your name?" }] },
+    { japanese: "友達", romaji: "tomodachi", english: "Friend", level: 1, jlpt: "N5", examples: [{ jp: "友達と映画を見ます。", en: "I'll watch a movie with my friend." }] },
+    { japanese: "彼", romaji: "kare", english: "He / Him", level: 2, jlpt: "N5", examples: [{ jp: "彼は日本人です。", en: "He is Japanese." }] },
+    { japanese: "彼女", romaji: "kanojo", english: "She / Her", level: 2, jlpt: "N5", examples: [{ jp: "彼女は先生です。", en: "She is a teacher." }] },
+    { japanese: "私たち", romaji: "watashitachi", english: "We / Us", level: 2, jlpt: "N5", examples: [{ jp: "私たちは友達です。", en: "We are friends." }] },
+    { japanese: "名前", romaji: "namae", english: "Name", level: 2, jlpt: "N5", examples: [{ jp: "名前を教えてください。", en: "Please tell me your name." }] },
+    { japanese: "先生", romaji: "sensei", english: "Teacher / Professor", level: 2, jlpt: "N5", examples: [{ jp: "先生に聞いてください。", en: "Please ask the teacher." }] },
+    { japanese: "学生", romaji: "gakusei", english: "Student", level: 2, jlpt: "N5", examples: [{ jp: "私は大学生です。", en: "I am a college student." }] },
+    { japanese: "家族", romaji: "kazoku", english: "Family", level: 3, jlpt: "N4", examples: [{ jp: "家族は四人です。", en: "There are four in my family." }] },
+    { japanese: "子供", romaji: "kodomo", english: "Child / Children", level: 3, jlpt: "N4", examples: [{ jp: "子供が二人います。", en: "I have two children." }] },
+    { japanese: "大人", romaji: "otona", english: "Adult", level: 3, jlpt: "N4", examples: [{ jp: "大人一人お願いします。", en: "One adult, please." }] },
+    { japanese: "お兄さん", romaji: "oniisan", english: "Older brother", level: 3, jlpt: "N4", examples: [{ jp: "お兄さんは何歳ですか？", en: "How old is your older brother?" }] },
+    { japanese: "お姉さん", romaji: "oneesan", english: "Older sister", level: 3, jlpt: "N4", examples: [{ jp: "お姉さんは東京に住んでいます。", en: "My older sister lives in Tokyo." }] },
+    { japanese: "同僚", romaji: "douryou", english: "Colleague", level: 3, jlpt: "N3", examples: [{ jp: "同僚と食事に行きました。", en: "I went to eat with a colleague." }] },
   ],
 };
 
@@ -1130,6 +1769,15 @@ const LEVELS = {
   2: { label: 'Intermediate', colorClass: 'active-intermediate', dot: 'dot-intermediate', badge: 'badge-intermediate' },
   3: { label: 'Advanced', colorClass: 'active-advanced', dot: 'dot-advanced', badge: 'badge-advanced' },
 };
+
+const JLPT_LEVELS = ['N5', 'N4', 'N3'];
+
+const SRS_STAGES = [
+  { name: 'New', interval: 0, css: 'srs-new' },
+  { name: 'Learning', interval: 1, css: 'srs-learning' },
+  { name: 'Familiar', interval: 3, css: 'srs-familiar' },
+  { name: 'Mastered', interval: 7, css: 'srs-mastered' },
+];
 
 // ─── CUSTOM CARDS (localStorage) ───
 function loadCustomCards() {
@@ -1153,11 +1801,9 @@ function addCustomCard(card) {
 }
 
 function mergeCustomCards() {
-  // Remove previously merged custom cards (tagged with custom: true)
   for (const cat in vocabulary) {
     vocabulary[cat] = vocabulary[cat].filter(c => !c.custom);
   }
-  // Re-merge from storage
   const customs = loadCustomCards();
   customs.forEach(card => {
     const cat = card.category || 'My Words';
@@ -1178,7 +1824,6 @@ function openAddPanel() {
   addPanelOpen = true;
   addFormSuccess = false;
   render();
-  // Focus first input after render
   setTimeout(() => {
     const inp = document.getElementById('input-japanese');
     if (inp) inp.focus();
@@ -1214,7 +1859,6 @@ function saveNewCard() {
 
   addFormSuccess = true;
   render();
-  // Keep panel open, clear fields for adding another
   setTimeout(() => {
     const inp = document.getElementById('input-japanese');
     if (inp) {
@@ -1230,9 +1874,7 @@ function saveNewCard() {
 
 function renderAddPanel() {
   if (!addPanelOpen) return '';
-
   const allCategories = Object.keys(vocabulary);
-
   return `
     <div class="add-panel-overlay" onclick="if(event.target===this)closeAddPanel()">
       <div class="add-panel">
@@ -1240,24 +1882,19 @@ function renderAddPanel() {
           <div class="add-panel-title">Add New Card</div>
           <button class="add-panel-close" onclick="closeAddPanel()">&times;</button>
         </div>
-
         ${addFormSuccess ? '<div class="form-success">Card added successfully!</div>' : ''}
-
         <div class="form-group">
           <label class="form-label">Japanese <span class="form-label-hint">— hiragana, katakana, or kanji</span></label>
           <input type="text" id="input-japanese" class="form-input input-japanese" placeholder="こんにちは" oninput="updateAddPreview()">
         </div>
-
         <div class="form-group">
           <label class="form-label">Romaji <span class="form-label-hint">— romanized pronunciation</span></label>
           <input type="text" id="input-romaji" class="form-input input-romaji" placeholder="konnichiwa" oninput="updateAddPreview()">
         </div>
-
         <div class="form-group">
           <label class="form-label">English <span class="form-label-hint">— meaning / translation</span></label>
           <input type="text" id="input-english" class="form-input" placeholder="Hello" oninput="updateAddPreview()">
         </div>
-
         <div class="form-row">
           <div class="form-group">
             <label class="form-label">Category</label>
@@ -1275,7 +1912,6 @@ function renderAddPanel() {
             </select>
           </div>
         </div>
-
         <div class="form-preview" id="add-preview">
           <div class="form-preview-label">Preview</div>
           <div class="form-preview-jp" id="preview-jp">—</div>
@@ -1285,11 +1921,9 @@ function renderAddPanel() {
             <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
           </button>
         </div>
-
         <div class="form-actions">
           <button class="btn-add-save" onclick="saveNewCard()">Add Card</button>
         </div>
-
         <div class="custom-count">
           <b>${getCustomCardCount()}</b> custom card${getCustomCardCount() !== 1 ? 's' : ''} added
         </div>
@@ -1309,6 +1943,21 @@ function updateAddPreview() {
   if (pjp) pjp.textContent = jp.value || '—';
   if (prm) prm.textContent = rm.value || '—';
   if (pen) pen.textContent = en.value || '—';
+}
+
+// ─── LOAD VOCABULARY FROM JSON ───
+function loadVocabulary() {
+  return fetch('./vocabulary.json')
+    .then(res => {
+      if (!res.ok) throw new Error('Failed to load');
+      return res.json();
+    })
+    .then(data => {
+      vocabulary = data;
+    })
+    .catch(() => {
+      // Keep the inline fallback vocabulary if fetch fails (offline first load)
+    });
 }
 
 // Load custom cards on startup
@@ -1331,45 +1980,36 @@ function toggleTheme() {
   setTheme(next);
   render();
 }
-// Apply saved theme on load
 setTheme(getTheme());
 
 // ─── SPEECH SYNTHESIS ───
-let speechRate = 0.75; // default to slow
+let speechRate = 0.75;
 let isSpeaking = false;
 
 function speak(text) {
   if (!('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
-
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.lang = 'ja-JP';
   utterance.rate = speechRate;
   utterance.pitch = 1;
-
-  // Try to find a Japanese voice
   const voices = window.speechSynthesis.getVoices();
   const jpVoice = voices.find(v => v.lang.startsWith('ja'));
   if (jpVoice) utterance.voice = jpVoice;
-
   utterance.onstart = () => { isSpeaking = true; updateAudioBtn(); };
   utterance.onend = () => { isSpeaking = false; updateAudioBtn(); };
   utterance.onerror = () => { isSpeaking = false; updateAudioBtn(); };
-
   window.speechSynthesis.speak(utterance);
 }
 
 function updateAudioBtn() {
   const btn = document.getElementById('audio-btn');
-  if (btn) {
-    btn.classList.toggle('speaking', isSpeaking);
-  }
+  if (btn) btn.classList.toggle('speaking', isSpeaking);
 }
 
 function setSpeed(rate) {
   speechRate = rate;
   render();
-  // Re-speak at new speed only if Japanese is currently visible
   const japaneseVisible = state.mode === 'jp-to-en' || state.flipped;
   if (japaneseVisible) {
     const card = state.cards[state.currentIndex];
@@ -1378,15 +2018,13 @@ function setSpeed(rate) {
 }
 
 function handleAudioClick(e) {
-  e.stopPropagation(); // don't flip the card
+  e.stopPropagation();
   const card = state.cards[state.currentIndex];
   if (card) speak(card.japanese);
 }
 
-// Load voices (they load async on some browsers)
 if ('speechSynthesis' in window) {
   window.speechSynthesis.onvoiceschanged = () => {};
-  // Trigger voice loading
   window.speechSynthesis.getVoices();
 }
 
@@ -1416,11 +2054,532 @@ function esc(str) {
   return div.innerHTML;
 }
 
+// ─── UTILITY: Date Helpers ───
+function getTodayKey() {
+  return new Date().toISOString().split('T')[0];
+}
+
+// ─── CARD ID SYSTEM ───
+function getCardId(card) {
+  return card.japanese + '|' + card.english;
+}
+
+// ─── CARD STATS (SRS, accuracy) ───
+function loadCardStats() {
+  try {
+    return JSON.parse(localStorage.getItem('jp_fc_card_stats')) || {};
+  } catch(e) { return {}; }
+}
+
+function saveCardStats(stats) {
+  try { localStorage.setItem('jp_fc_card_stats', JSON.stringify(stats)); } catch(e) {}
+}
+
+function getCardStat(cardId) {
+  const stats = loadCardStats();
+  return stats[cardId] || { correct: 0, wrong: 0, srsStage: 0, lastReviewed: null, nextReview: null };
+}
+
+function updateCardStat(cardId, wasCorrect) {
+  const stats = loadCardStats();
+  if (!stats[cardId]) stats[cardId] = { correct: 0, wrong: 0, srsStage: 0, lastReviewed: null, nextReview: null };
+  const s = stats[cardId];
+  if (wasCorrect) {
+    s.correct++;
+    s.srsStage = Math.min(s.srsStage + 1, 3);
+  } else {
+    s.wrong++;
+    s.srsStage = Math.max(s.srsStage - 1, 0);
+  }
+  s.lastReviewed = getTodayKey();
+  const interval = SRS_STAGES[s.srsStage].interval;
+  const next = new Date();
+  next.setDate(next.getDate() + interval);
+  s.nextReview = next.toISOString().split('T')[0];
+  stats[cardId] = s;
+  saveCardStats(stats);
+}
+
+function getCardAccuracy(cardId) {
+  const s = getCardStat(cardId);
+  const total = s.correct + s.wrong;
+  if (total === 0) return -1;
+  return s.correct / total;
+}
+
+// ─── STREAK ───
+function loadStreak() {
+  try {
+    return JSON.parse(localStorage.getItem('jp_fc_streak')) || { current: 0, longest: 0, lastStudyDate: null, history: [] };
+  } catch(e) { return { current: 0, longest: 0, lastStudyDate: null, history: [] }; }
+}
+
+function saveStreak(streak) {
+  try { localStorage.setItem('jp_fc_streak', JSON.stringify(streak)); } catch(e) {}
+}
+
+function updateStreak() {
+  const streak = loadStreak();
+  const today = getTodayKey();
+  if (streak.lastStudyDate === today) return streak;
+
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yKey = yesterday.toISOString().split('T')[0];
+
+  if (streak.lastStudyDate === yKey) {
+    streak.current++;
+  } else if (streak.lastStudyDate !== today) {
+    streak.current = 1;
+  }
+  streak.lastStudyDate = today;
+  if (streak.current > streak.longest) streak.longest = streak.current;
+  if (!streak.history) streak.history = [];
+  if (!streak.history.includes(today)) streak.history.push(today);
+  // Keep last 90 days
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - 90);
+  const cutoffKey = cutoff.toISOString().split('T')[0];
+  streak.history = streak.history.filter(d => d >= cutoffKey);
+  saveStreak(streak);
+  return streak;
+}
+
+// ─── XP ───
+function loadXP() {
+  try {
+    return JSON.parse(localStorage.getItem('jp_fc_xp')) || { total: 0, daily: {} };
+  } catch(e) { return { total: 0, daily: {} }; }
+}
+
+function saveXP(xp) {
+  try { localStorage.setItem('jp_fc_xp', JSON.stringify(xp)); } catch(e) {}
+}
+
+function addXP(amount) {
+  const xp = loadXP();
+  xp.total += amount;
+  const today = getTodayKey();
+  xp.daily[today] = (xp.daily[today] || 0) + amount;
+  saveXP(xp);
+  // Show animation
+  pendingXPPop = amount;
+  return xp;
+}
+
+let pendingXPPop = 0;
+
+// ─── DAILY GOAL ───
+function loadDailyGoal() {
+  try {
+    return JSON.parse(localStorage.getItem('jp_fc_daily_goal')) || { target: 20, todayCount: 0, todayDate: null };
+  } catch(e) { return { target: 20, todayCount: 0, todayDate: null }; }
+}
+
+function saveDailyGoal(goal) {
+  try { localStorage.setItem('jp_fc_daily_goal', JSON.stringify(goal)); } catch(e) {}
+}
+
+function resetDailyIfNeeded() {
+  const goal = loadDailyGoal();
+  const today = getTodayKey();
+  if (goal.todayDate !== today) {
+    goal.todayCount = 0;
+    goal.todayDate = today;
+    saveDailyGoal(goal);
+  }
+  return goal;
+}
+
+function incrementDailyGoal() {
+  const goal = resetDailyIfNeeded();
+  goal.todayCount++;
+  saveDailyGoal(goal);
+  // Check if goal just met
+  if (goal.todayCount === goal.target) {
+    pendingCelebration = true;
+  }
+  return goal;
+}
+
+function setDailyGoalTarget(target) {
+  const goal = resetDailyIfNeeded();
+  goal.target = target;
+  saveDailyGoal(goal);
+  goalModalOpen = false;
+  render();
+}
+
+let goalModalOpen = false;
+let pendingCelebration = false;
+
+// ─── FAVORITES ───
+function loadFavorites() {
+  try {
+    return JSON.parse(localStorage.getItem('jp_fc_favorites')) || [];
+  } catch(e) { return []; }
+}
+
+function saveFavorites(favs) {
+  try { localStorage.setItem('jp_fc_favorites', JSON.stringify(favs)); } catch(e) {}
+}
+
+function toggleFavorite(cardId) {
+  const favs = loadFavorites();
+  const idx = favs.indexOf(cardId);
+  if (idx === -1) favs.push(cardId);
+  else favs.splice(idx, 1);
+  saveFavorites(favs);
+  render();
+}
+
+function isFavorite(cardId) {
+  return loadFavorites().includes(cardId);
+}
+
+// ─── SESSION HISTORY ───
+function loadSessionHistory() {
+  try {
+    return JSON.parse(localStorage.getItem('jp_fc_sessions')) || [];
+  } catch(e) { return []; }
+}
+
+function saveSession(session) {
+  try {
+    const sessions = loadSessionHistory();
+    sessions.unshift(session);
+    // Keep last 50
+    if (sessions.length > 50) sessions.length = 50;
+    localStorage.setItem('jp_fc_sessions', JSON.stringify(sessions));
+  } catch(e) {}
+}
+
+// ─── SRS HELPERS ───
+function getAllCards() {
+  return Object.values(vocabulary).flat();
+}
+
+function getDueCards() {
+  const today = getTodayKey();
+  const stats = loadCardStats();
+  return getAllCards().filter(card => {
+    const id = getCardId(card);
+    const s = stats[id];
+    if (!s || !s.nextReview) return true; // New cards are due
+    return s.nextReview <= today;
+  });
+}
+
+function getDueCardCount() {
+  return getDueCards().length;
+}
+
+function getWeakCards() {
+  const stats = loadCardStats();
+  return getAllCards().filter(card => {
+    const id = getCardId(card);
+    const s = stats[id];
+    if (!s) return false;
+    const total = s.correct + s.wrong;
+    if (total < 3) return false;
+    return (s.correct / total) < 0.7;
+  });
+}
+
+function getWeakCardCount() {
+  return getWeakCards().length;
+}
+
+function getFavoriteCards() {
+  const favs = loadFavorites();
+  return getAllCards().filter(card => favs.includes(getCardId(card)));
+}
+
+// ─── SESSION TYPES ───
+function getCardsForSessionType(type) {
+  const stats = loadCardStats();
+  let cards;
+  switch(type) {
+    case 'quick':
+      cards = getAllCards();
+      shuffle(cards);
+      return cards.slice(0, 10);
+    case 'deep':
+      cards = getAllCards().filter(card => {
+        const s = stats[getCardId(card)];
+        return !s || s.srsStage <= 1;
+      });
+      shuffle(cards);
+      return cards.slice(0, 20);
+    case 'full':
+      cards = getDueCards();
+      shuffle(cards);
+      return cards;
+    case 'speed':
+      cards = getAllCards();
+      shuffle(cards);
+      return cards.slice(0, 15);
+    case 'weak':
+      cards = getWeakCards();
+      shuffle(cards);
+      return cards;
+    case 'favorites':
+      cards = getFavoriteCards();
+      shuffle(cards);
+      return cards;
+    case 'srs':
+      cards = getDueCards();
+      // Sort by urgency (oldest nextReview first)
+      cards.sort((a, b) => {
+        const sa = stats[getCardId(a)];
+        const sb = stats[getCardId(b)];
+        const na = sa && sa.nextReview ? sa.nextReview : '0000';
+        const nb = sb && sb.nextReview ? sb.nextReview : '0000';
+        return na.localeCompare(nb);
+      });
+      return cards;
+    default:
+      return getAllCards();
+  }
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// ─── QUIZ MODE ───
+function generateQuizOptions(correctCard, allCards) {
+  const options = [correctCard];
+  // Try same category first
+  const sameCategory = allCards.filter(c => c !== correctCard && c.english !== correctCard.english);
+  shuffle(sameCategory);
+  for (const c of sameCategory) {
+    if (options.length >= 4) break;
+    if (!options.find(o => o.english === c.english)) {
+      options.push(c);
+    }
+  }
+  // Expand to all if not enough
+  if (options.length < 4) {
+    const all = getAllCards().filter(c => !options.find(o => o.english === c.english));
+    shuffle(all);
+    for (const c of all) {
+      if (options.length >= 4) break;
+      options.push(c);
+    }
+  }
+  shuffle(options);
+  return options;
+}
+
+// ─── SPEECH RECOGNITION ───
+function isIOSStandalone() {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const isStandalone = window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches;
+  return isIOS && isStandalone;
+}
+
+function isSpeechRecognitionAvailable() {
+  return ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) && !isIOSStandalone();
+}
+
+function normalizeJapanese(text) {
+  // Katakana to hiragana
+  let result = text.replace(/[\u30A1-\u30F6]/g, ch => String.fromCharCode(ch.charCodeAt(0) - 0x60));
+  // Strip punctuation
+  return result.replace(/[。、！？\s・「」『』（）\.\,\!\?\s]/g, '');
+}
+
+function normalizeEnglish(text) {
+  return text.toLowerCase().replace(/[^a-z0-9\s]/g, '').trim();
+}
+
+function levenshteinDistance(a, b) {
+  const m = a.length, n = b.length;
+  const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
+  for (let i = 0; i <= m; i++) dp[i][0] = i;
+  for (let j = 0; j <= n; j++) dp[0][j] = j;
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = a[i-1] === b[j-1]
+        ? dp[i-1][j-1]
+        : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
+    }
+  }
+  return dp[m][n];
+}
+
+function checkSpeechMatch(spoken, expected, lang) {
+  if (lang === 'ja') {
+    const norm = normalizeJapanese(spoken);
+    const exp = normalizeJapanese(expected);
+    if (norm === exp) return { match: true, similarity: 1 };
+    const dist = levenshteinDistance(norm, exp);
+    const maxLen = Math.max(norm.length, exp.length);
+    const sim = maxLen > 0 ? 1 - dist / maxLen : 0;
+    return { match: sim >= 0.75, similarity: sim };
+  } else {
+    const norm = normalizeEnglish(spoken);
+    const exp = normalizeEnglish(expected);
+    if (norm === exp) return { match: true, similarity: 1 };
+    const dist = levenshteinDistance(norm, exp);
+    const maxLen = Math.max(norm.length, exp.length);
+    const sim = maxLen > 0 ? 1 - dist / maxLen : 0;
+    return { match: sim >= 0.75, similarity: sim };
+  }
+}
+
+let speechRecognizer = null;
+
+function startSpeechRecognition(card, lang) {
+  if (!isSpeechRecognitionAvailable()) return;
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  speechRecognizer = new SpeechRecognition();
+  speechRecognizer.continuous = false;
+  speechRecognizer.interimResults = true;
+  speechRecognizer.maxAlternatives = 3;
+  speechRecognizer.lang = lang === 'ja' ? 'ja-JP' : 'en-US';
+
+  state.speechRecognizing = true;
+  state.speechResult = null;
+  state.speechInterim = '';
+  render();
+
+  speechRecognizer.onresult = (event) => {
+    let interim = '';
+    let finalTranscript = '';
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      if (event.results[i].isFinal) {
+        // Check all alternatives
+        const expected = lang === 'ja' ? card.japanese : card.english;
+        let bestMatch = { match: false, similarity: 0 };
+        let bestText = '';
+        for (let a = 0; a < event.results[i].length; a++) {
+          const alt = event.results[i][a].transcript;
+          const result = checkSpeechMatch(alt, expected, lang);
+          if (result.similarity > bestMatch.similarity) {
+            bestMatch = result;
+            bestText = alt;
+          }
+        }
+        finalTranscript = bestText || event.results[i][0].transcript;
+        state.speechResult = {
+          text: finalTranscript,
+          correct: bestMatch.match,
+          similarity: Math.round(bestMatch.similarity * 100),
+        };
+        state.speechRecognizing = false;
+        state.speechInterim = '';
+        render();
+      } else {
+        interim += event.results[i][0].transcript;
+      }
+    }
+    if (interim) {
+      state.speechInterim = interim;
+      render();
+    }
+  };
+
+  speechRecognizer.onerror = () => {
+    state.speechRecognizing = false;
+    state.speechInterim = '';
+    render();
+  };
+
+  speechRecognizer.onend = () => {
+    state.speechRecognizing = false;
+    render();
+  };
+
+  speechRecognizer.start();
+}
+
+function stopSpeechRecognition() {
+  if (speechRecognizer) {
+    speechRecognizer.stop();
+    speechRecognizer = null;
+  }
+  state.speechRecognizing = false;
+  render();
+}
+
+// ─── ANIMATIONS ───
+let pendingAnimation = null;
+
+function triggerConfetti() {
+  const container = document.createElement('div');
+  container.className = 'confetti-container';
+  document.body.appendChild(container);
+  const colors = ['#e8572a', '#3ecf6a', '#4a9eff', '#c060e8', '#f0a030', '#e84057'];
+  for (let i = 0; i < 30; i++) {
+    const piece = document.createElement('div');
+    piece.className = 'confetti-piece';
+    piece.style.left = Math.random() * 100 + '%';
+    piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+    piece.style.animationDelay = Math.random() * 0.5 + 's';
+    piece.style.animationDuration = (2 + Math.random()) + 's';
+    container.appendChild(piece);
+  }
+  setTimeout(() => container.remove(), 3000);
+}
+
+// ─── JLPT HELPERS ───
+function getCardsByJLPT(level) {
+  return getAllCards().filter(c => c.jlpt === level);
+}
+
+function getJLPTMastery(level) {
+  const cards = getCardsByJLPT(level);
+  if (cards.length === 0) return 0;
+  const stats = loadCardStats();
+  let mastered = 0;
+  cards.forEach(card => {
+    const s = stats[getCardId(card)];
+    if (s && s.srsStage >= 2) mastered++;
+  });
+  return mastered / cards.length;
+}
+
+function countByJLPT(level) {
+  return getCardsByJLPT(level).length;
+}
+
+// ─── SPEED TIMER ───
+let speedInterval = null;
+
+function startSpeedTimer() {
+  state.speedTimeLeft = 60;
+  if (speedInterval) clearInterval(speedInterval);
+  speedInterval = setInterval(() => {
+    state.speedTimeLeft--;
+    if (state.speedTimeLeft <= 0) {
+      clearInterval(speedInterval);
+      speedInterval = null;
+      state.sessionDone = true;
+    }
+    render();
+  }, 1000);
+}
+
+function stopSpeedTimer() {
+  if (speedInterval) {
+    clearInterval(speedInterval);
+    speedInterval = null;
+  }
+}
+
 // ─── APP STATE ───
 let state = {
+  view: 'study',          // 'study' | 'quiz' | 'stats' | 'sessionSetup'
   mode: 'en-to-jp',
   category: 'All',
-  level: 'all',              // 'all', 1, 2, 3
+  level: 'all',
+  jlptLevel: null,        // null | 'N5' | 'N4' | 'N3'
   currentIndex: 0,
   flipped: false,
   correct: 0,
@@ -1428,6 +2587,17 @@ let state = {
   skipped: 0,
   cards: [],
   sessionDone: false,
+  sessionType: null,      // null | 'quick' | 'deep' | 'full' | 'speed' | 'weak' | 'favorites' | 'srs'
+  speedTimeLeft: 60,
+  // Quiz state
+  quizOptions: [],
+  quizSelected: -1,
+  quizCorrectIndex: -1,
+  quizAnswered: false,
+  // Speech recognition
+  speechRecognizing: false,
+  speechResult: null,
+  speechInterim: '',
 };
 
 function getCards(category, level) {
@@ -1437,15 +2607,13 @@ function getCards(category, level) {
   } else {
     cards = [...(vocabulary[category] || [])];
   }
-  // Filter by level
   if (level !== 'all') {
     cards = cards.filter(c => c.level === level);
   }
-  // Shuffle
-  for (let i = cards.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [cards[i], cards[j]] = [cards[j], cards[i]];
+  if (state.jlptLevel) {
+    cards = cards.filter(c => c.jlpt === state.jlptLevel);
   }
+  shuffle(cards);
   return cards;
 }
 
@@ -1456,18 +2624,33 @@ function countByLevel(category, level) {
   } else {
     cards = vocabulary[category] || [];
   }
+  if (state.jlptLevel) {
+    cards = cards.filter(c => c.jlpt === state.jlptLevel);
+  }
   if (level === 'all') return cards.length;
   return cards.filter(c => c.level === level).length;
 }
 
 function startSession() {
-  state.cards = getCards(state.category, state.level);
+  stopSpeedTimer();
+  if (state.sessionType) {
+    state.cards = getCardsForSessionType(state.sessionType);
+    if (state.sessionType === 'speed') {
+      startSpeedTimer();
+    }
+  } else {
+    state.cards = getCards(state.category, state.level);
+  }
   state.currentIndex = 0;
   state.flipped = false;
   state.correct = 0;
   state.wrong = 0;
   state.skipped = 0;
   state.sessionDone = false;
+  state.speechResult = null;
+  state.speechRecognizing = false;
+  state.speechInterim = '';
+  updateStreak();
   render();
 }
 
@@ -1478,12 +2661,25 @@ function flipCard() {
 }
 
 function markCorrect() {
+  const card = state.cards[state.currentIndex];
+  if (card) {
+    const cardId = getCardId(card);
+    updateCardStat(cardId, true);
+    addXP(10);
+  }
   state.correct++;
   nextCard();
 }
 
 function markWrong() {
+  const card = state.cards[state.currentIndex];
+  if (card) {
+    const cardId = getCardId(card);
+    updateCardStat(cardId, false);
+    addXP(5);
+  }
   state.wrong++;
+  pendingAnimation = 'shake';
   nextCard();
 }
 
@@ -1494,8 +2690,28 @@ function skipCard() {
 
 function nextCard() {
   state.flipped = false;
+  state.speechResult = null;
+  state.speechInterim = '';
+  incrementDailyGoal();
   if (state.currentIndex + 1 >= state.cards.length) {
     state.sessionDone = true;
+    stopSpeedTimer();
+    // Check for perfect session
+    const total = state.correct + state.wrong;
+    if (total > 0 && state.wrong === 0 && state.correct >= 5) {
+      addXP(20);
+      setTimeout(triggerConfetti, 300);
+    }
+    // Save session
+    saveSession({
+      date: getTodayKey(),
+      correct: state.correct,
+      wrong: state.wrong,
+      total: state.cards.length,
+      mode: state.view === 'quiz' ? 'quiz' : state.mode,
+      category: state.category,
+      sessionType: state.sessionType,
+    });
   } else {
     state.currentIndex++;
   }
@@ -1504,129 +2720,215 @@ function nextCard() {
 
 function setMode(mode) {
   state.mode = mode;
+  state.sessionType = null;
+  state.view = 'study';
   startSession();
 }
 
 function setCategory(cat) {
   state.category = cat;
+  state.sessionType = null;
   startSession();
 }
 
 function setLevel(level) {
   state.level = level;
+  state.sessionType = null;
   startSession();
 }
 
-// ─── RENDER ───
-function render() {
-  const app = document.getElementById('app');
-  const card = state.cards[state.currentIndex];
-  const total = state.cards.length;
-  const reviewed = state.correct + state.wrong + state.skipped;
-  const progress = total > 0 ? (reviewed / total) * 100 : 0;
-  const categories = ['All', ...Object.keys(vocabulary)];
+function setJLPTLevel(level) {
+  state.jlptLevel = state.jlptLevel === level ? null : level;
+  state.sessionType = null;
+  startSession();
+}
 
-  let cardHTML = '';
-
-  if (state.sessionDone) {
-    const pct = total > 0 ? Math.round((state.correct / (state.correct + state.wrong)) * 100) : 0;
-    cardHTML = `
-      <div class="session-complete">
-        <div class="score-display">${isNaN(pct) ? '—' : pct + '%'}</div>
-        <h2>Session Complete</h2>
-        <p>${state.correct} correct · ${state.wrong} wrong · ${state.skipped} skipped · ${total} total</p>
-        <button class="restart-btn" onclick="startSession()">Go Again</button>
-      </div>
-    `;
-  } else if (card) {
-    // Build front and back based on mode
-    let frontHTML, backHTML;
-
-    if (state.mode === 'en-to-jp') {
-      // FRONT: English only
-      frontHTML = `
-        <span class="card-level-badge ${LEVELS[card.level].badge}">${LEVELS[card.level].label}</span>
-        <div class="card-hint">English</div>
-        <div class="card-main card-english">${esc(card.english)}</div>
-        <div class="tap-hint">tap to reveal Japanese</div>
-      `;
-      // BACK: Japanese + Romaji
-      backHTML = `
-        <span class="card-level-badge ${LEVELS[card.level].badge}">${LEVELS[card.level].label}</span>
-        <div class="card-hint">Japanese</div>
-        <div class="card-japanese">${esc(card.japanese)}</div>
-        <div class="card-romaji">${esc(card.romaji)}</div>
-      `;
+function navigateTo(view) {
+  stopSpeedTimer();
+  state.view = view;
+  if (view === 'study' || view === 'quiz') {
+    if (!state.sessionType) {
+      startSession();
     } else {
-      // FRONT: Japanese + Romaji
-      frontHTML = `
-        <span class="card-level-badge ${LEVELS[card.level].badge}">${LEVELS[card.level].label}</span>
-        <div class="card-hint">Japanese</div>
-        <div class="card-japanese">${esc(card.japanese)}</div>
-        <div class="card-romaji">${esc(card.romaji)}</div>
-        <div class="tap-hint">tap to reveal English</div>
-      `;
-      // BACK: English only
-      backHTML = `
-        <span class="card-level-badge ${LEVELS[card.level].badge}">${LEVELS[card.level].label}</span>
-        <div class="card-hint">English</div>
-        <div class="card-main card-english">${esc(card.english)}</div>
-      `;
+      render();
     }
-
-    cardHTML = `
-      <div class="card-container">
-        <div class="card ${state.flipped ? 'flipped' : ''}" onclick="flipCard()">
-          <div class="card-face card-front">${frontHTML}</div>
-          <div class="card-face card-back">${backHTML}</div>
-        </div>
-      </div>
-      <div class="audio-controls">
-        ${state.mode === 'jp-to-en' || state.flipped ? audioButtonHTML() : '<div style="height:44px"></div>'}
-      </div>
-      <div class="actions">
-        <button class="action-btn btn-wrong" onclick="markWrong()">✕ Wrong</button>
-        <button class="action-btn btn-skip" onclick="skipCard()">Skip</button>
-        <button class="action-btn btn-right" onclick="markCorrect()">✓ Got it</button>
-      </div>
-    `;
   } else {
-    // No cards match current filters
-    cardHTML = `
-      <div class="session-complete">
-        <h2>No cards found</h2>
-        <p>This category doesn't have cards at this level.<br>Try a different combination.</p>
-        <button class="restart-btn" onclick="setLevel('all')">Show All Levels</button>
-      </div>
-    `;
+    render();
   }
+}
 
-  app.innerHTML = `
+function startSessionType(type) {
+  state.sessionType = type;
+  const cards = getCardsForSessionType(type);
+  if (cards.length === 0) return;
+  state.cards = cards;
+  state.currentIndex = 0;
+  state.flipped = false;
+  state.correct = 0;
+  state.wrong = 0;
+  state.skipped = 0;
+  state.sessionDone = false;
+  state.speechResult = null;
+  if (type === 'speed') {
+    startSpeedTimer();
+  }
+  state.view = 'study';
+  updateStreak();
+  render();
+}
+
+function startQuizSession() {
+  state.sessionType = null;
+  state.cards = getCards(state.category, state.level);
+  if (state.cards.length < 4) return;
+  state.currentIndex = 0;
+  state.correct = 0;
+  state.wrong = 0;
+  state.skipped = 0;
+  state.sessionDone = false;
+  state.view = 'quiz';
+  setupQuizQuestion();
+  updateStreak();
+  render();
+}
+
+function setupQuizQuestion() {
+  const card = state.cards[state.currentIndex];
+  if (!card) return;
+  state.quizOptions = generateQuizOptions(card, state.cards);
+  state.quizCorrectIndex = state.quizOptions.indexOf(card);
+  state.quizSelected = -1;
+  state.quizAnswered = false;
+}
+
+function selectQuizOption(index) {
+  if (state.quizAnswered) return;
+  state.quizSelected = index;
+  state.quizAnswered = true;
+  const card = state.cards[state.currentIndex];
+  const cardId = getCardId(card);
+  if (index === state.quizCorrectIndex) {
+    updateCardStat(cardId, true);
+    addXP(10);
+    state.correct++;
+  } else {
+    updateCardStat(cardId, false);
+    addXP(5);
+    state.wrong++;
+    pendingAnimation = 'shake';
+  }
+  incrementDailyGoal();
+  render();
+}
+
+function nextQuizQuestion() {
+  if (state.currentIndex + 1 >= state.cards.length) {
+    state.sessionDone = true;
+    const total = state.correct + state.wrong;
+    if (total > 0 && state.wrong === 0 && state.correct >= 5) {
+      addXP(20);
+      setTimeout(triggerConfetti, 300);
+    }
+    saveSession({
+      date: getTodayKey(),
+      correct: state.correct,
+      wrong: state.wrong,
+      total: state.cards.length,
+      mode: 'quiz',
+      category: state.category,
+      sessionType: state.sessionType,
+    });
+    render();
+    return;
+  }
+  state.currentIndex++;
+  setupQuizQuestion();
+  render();
+}
+
+// ─── RENDER SYSTEM ───
+
+function renderHeader() {
+  const streak = loadStreak();
+  const xp = loadXP();
+  const goal = resetDailyIfNeeded();
+  const pct = goal.target > 0 ? Math.min(goal.todayCount / goal.target, 1) : 0;
+  const circumference = 2 * Math.PI * 14;
+  const offset = circumference * (1 - pct);
+
+  const xpPopHTML = pendingXPPop > 0 ? `<span class="xp-pop">+${pendingXPPop}</span>` : '';
+
+  return `
     <div class="header">
       <div class="logo">
         <div class="logo-mark">語</div>
         <div class="logo-text">Harun's <span>日本語</span></div>
       </div>
+      <div class="header-center">
+        <div class="streak-badge" title="Study streak: ${streak.current} day${streak.current !== 1 ? 's' : ''}">
+          <span class="streak-fire">🔥</span>${streak.current}
+        </div>
+        <div class="goal-ring-wrap" onclick="goalModalOpen=true;render()" title="Daily goal: ${goal.todayCount}/${goal.target}">
+          <svg viewBox="0 0 36 36">
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--border)" stroke-width="3"/>
+            <circle cx="18" cy="18" r="14" fill="none" stroke="var(--accent)" stroke-width="3"
+              stroke-dasharray="${circumference}" stroke-dashoffset="${offset}" stroke-linecap="round"/>
+          </svg>
+          <span class="goal-ring-text">${goal.todayCount}</span>
+        </div>
+        <div class="xp-counter">
+          ${xpPopHTML}
+          <span>⚡</span>${xp.total} XP
+        </div>
+      </div>
       <div class="header-actions">
-        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle light/dark mode">${getTheme() === 'dark' ? '☀️' : '🌙'}</button>
+        <button class="header-icon-btn" onclick="navigateTo('stats')" title="Stats Dashboard">
+          <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg>
+        </button>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle theme">${getTheme() === 'dark' ? '☀️' : '🌙'}</button>
         <button class="add-card-btn" onclick="openAddPanel()">＋ Add</button>
-        <div class="stats-pill"><b>${reviewed}</b> / ${total}</div>
       </div>
     </div>
+  `;
+}
 
+function renderModeSelector() {
+  return `
     <div class="mode-selector">
-      <div class="mode-btn ${state.mode === 'en-to-jp' ? 'active' : ''}" onclick="setMode('en-to-jp')">
+      <div class="mode-btn ${state.view === 'study' && state.mode === 'en-to-jp' ? 'active' : ''}" onclick="setMode('en-to-jp')">
         <div class="mode-label">Mode A</div>
         <div class="mode-arrow">EN → JP</div>
         <div class="mode-desc">See English, guess Japanese</div>
       </div>
-      <div class="mode-btn ${state.mode === 'jp-to-en' ? 'active' : ''}" onclick="setMode('jp-to-en')">
+      <div class="mode-btn ${state.view === 'study' && state.mode === 'jp-to-en' ? 'active' : ''}" onclick="setMode('jp-to-en')">
         <div class="mode-label">Mode B</div>
         <div class="mode-arrow">JP → EN</div>
         <div class="mode-desc">See Japanese, guess English</div>
       </div>
+      <div class="mode-btn ${state.view === 'quiz' ? 'active' : ''}" onclick="startQuizSession()">
+        <div class="mode-label">Quiz</div>
+        <div class="mode-arrow">🧠</div>
+        <div class="mode-desc">Multiple choice</div>
+      </div>
     </div>
+  `;
+}
 
+function renderJLPTSelector() {
+  return `
+    <div class="jlpt-selector">
+      ${JLPT_LEVELS.map(lvl => `
+        <div class="jlpt-btn ${state.jlptLevel === lvl ? 'active' : ''}" onclick="setJLPTLevel('${lvl}')">
+          ${lvl}
+          <span class="jlpt-count">${countByJLPT(lvl)}</span>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderLevelSelector() {
+  return `
     <div class="level-selector">
       <div class="level-btn ${state.level === 'all' ? LEVELS.all.colorClass : ''}" onclick="setLevel('all')">
         <div class="level-name">All</div>
@@ -1645,16 +2947,184 @@ function render() {
         <div class="level-count">${countByLevel(state.category, 3)} cards</div>
       </div>
     </div>
+  `;
+}
 
+function renderCategories() {
+  const categories = ['All', ...Object.keys(vocabulary)];
+  return `
     <div class="categories">
       ${categories.map(c => {
         const safeAttr = esc(c).replace(/'/g, '&#39;');
         return `<div class="cat-btn ${state.category === c ? 'active' : ''}" onclick="setCategory('${safeAttr}')">${esc(c)}</div>`;
       }).join('')}
     </div>
+  `;
+}
 
+function renderExamples(card) {
+  if (!card.examples || card.examples.length === 0) return '';
+  return `
+    <div class="card-examples">
+      ${card.examples.map(ex => `
+        <div class="example-sentence">
+          <div class="example-jp">${esc(ex.jp)}</div>
+          <div class="example-en">${esc(ex.en)}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function renderSRSBadge(card) {
+  const stat = getCardStat(getCardId(card));
+  const stage = SRS_STAGES[stat.srsStage];
+  return `<span class="srs-badge ${stage.css}">${stage.name}</span>`;
+}
+
+function renderFavButton(card) {
+  const cardId = getCardId(card);
+  const fav = isFavorite(cardId);
+  return `<button class="fav-btn ${fav ? 'is-fav' : ''}" onclick="event.stopPropagation();toggleFavorite('${esc(cardId).replace(/'/g, "\\'")}')">
+    ${fav ? '❤️' : '🤍'}
+  </button>`;
+}
+
+function renderSpeechSection(card) {
+  if (isIOSStandalone()) {
+    return `<div class="speech-fallback">Open in Safari for voice input</div>`;
+  }
+  if (!isSpeechRecognitionAvailable()) return '';
+
+  const lang = state.mode === 'en-to-jp' ? 'ja' : 'en';
+  const langLabel = lang === 'ja' ? 'Japanese' : 'English';
+
+  let resultHTML = '';
+  if (state.speechResult) {
+    const cls = state.speechResult.correct ? 'correct' : 'wrong';
+    resultHTML = `<div class="speech-result ${cls}">
+      "${esc(state.speechResult.text)}" — ${state.speechResult.similarity}% match
+    </div>`;
+  } else if (state.speechInterim) {
+    resultHTML = `<div class="speech-interim">${esc(state.speechInterim)}...</div>`;
+  }
+
+  return `
+    <div class="mic-section">
+      <button class="mic-btn ${state.speechRecognizing ? 'listening' : ''}"
+        onclick="event.stopPropagation(); ${state.speechRecognizing ? 'stopSpeechRecognition()' : `startSpeechRecognition(state.cards[state.currentIndex], '${lang}')`}"
+        title="Say the ${langLabel} answer">
+        🎤
+      </button>
+      ${resultHTML}
+    </div>
+  `;
+}
+
+function renderStudyView() {
+  const card = state.cards[state.currentIndex];
+  const total = state.cards.length;
+  const reviewed = state.correct + state.wrong + state.skipped;
+  const progress = total > 0 ? (reviewed / total) * 100 : 0;
+
+  let cardHTML = '';
+
+  if (state.sessionDone) {
+    const pct = (state.correct + state.wrong) > 0 ? Math.round((state.correct / (state.correct + state.wrong)) * 100) : 0;
+    cardHTML = `
+      <div class="session-complete">
+        <div class="score-display">${isNaN(pct) ? '—' : pct + '%'}</div>
+        <h2>Session Complete</h2>
+        <p>${state.correct} correct · ${state.wrong} wrong · ${state.skipped} skipped · ${total} total</p>
+        <button class="restart-btn" onclick="startSession()">Go Again</button>
+        <button class="restart-btn" onclick="navigateTo('sessionSetup')" style="background:var(--surface);color:var(--text);border:1.5px solid var(--border)">Session Types</button>
+      </div>
+    `;
+  } else if (card) {
+    let frontHTML, backHTML;
+    const favBtn = renderFavButton(card);
+    const srsBadge = renderSRSBadge(card);
+
+    if (state.mode === 'en-to-jp') {
+      frontHTML = `
+        ${favBtn}
+        <span class="card-level-badge ${LEVELS[card.level].badge}">${LEVELS[card.level].label}</span>
+        <div class="card-hint">English</div>
+        <div class="card-main card-english">${esc(card.english)}</div>
+        <div class="tap-hint">tap to reveal Japanese</div>
+        ${srsBadge}
+      `;
+      backHTML = `
+        ${favBtn}
+        <span class="card-level-badge ${LEVELS[card.level].badge}">${LEVELS[card.level].label}</span>
+        <div class="card-hint">Japanese</div>
+        <div class="card-japanese">${esc(card.japanese)}</div>
+        <div class="card-romaji">${esc(card.romaji)}</div>
+        ${renderExamples(card)}
+        ${srsBadge}
+      `;
+    } else {
+      frontHTML = `
+        ${favBtn}
+        <span class="card-level-badge ${LEVELS[card.level].badge}">${LEVELS[card.level].label}</span>
+        <div class="card-hint">Japanese</div>
+        <div class="card-japanese">${esc(card.japanese)}</div>
+        <div class="card-romaji">${esc(card.romaji)}</div>
+        <div class="tap-hint">tap to reveal English</div>
+        ${srsBadge}
+      `;
+      backHTML = `
+        ${favBtn}
+        <span class="card-level-badge ${LEVELS[card.level].badge}">${LEVELS[card.level].label}</span>
+        <div class="card-hint">English</div>
+        <div class="card-main card-english">${esc(card.english)}</div>
+        ${renderExamples(card)}
+        ${srsBadge}
+      `;
+    }
+
+    const speedTimerHTML = state.sessionType === 'speed' ? `
+      <div class="speed-timer">
+        <div class="speed-timer-text ${state.speedTimeLeft <= 10 ? 'urgent' : ''}">${state.speedTimeLeft}s</div>
+        <div class="speed-timer-label">Speed Round</div>
+      </div>
+    ` : '';
+
+    cardHTML = `
+      ${speedTimerHTML}
+      <div class="card-container">
+        <div class="card card-enter ${state.flipped ? 'flipped' : ''}" onclick="flipCard()">
+          <div class="card-face card-front">${frontHTML}</div>
+          <div class="card-face card-back">${backHTML}</div>
+        </div>
+      </div>
+      <div class="audio-controls">
+        ${state.mode === 'jp-to-en' || state.flipped ? audioButtonHTML() : '<div style="height:44px"></div>'}
+      </div>
+      ${state.flipped ? renderSpeechSection(card) : ''}
+      <div class="actions">
+        <button class="action-btn btn-wrong" onclick="markWrong()">✕ Wrong</button>
+        <button class="action-btn btn-skip" onclick="skipCard()">Skip</button>
+        <button class="action-btn btn-right" onclick="markCorrect()">✓ Got it</button>
+      </div>
+    `;
+  } else {
+    cardHTML = `
+      <div class="session-complete">
+        <h2>No cards found</h2>
+        <p>This combination doesn't have cards.<br>Try different filters.</p>
+        <button class="restart-btn" onclick="setLevel('all')">Show All Levels</button>
+        <button class="restart-btn" onclick="navigateTo('sessionSetup')" style="background:var(--surface);color:var(--text);border:1.5px solid var(--border);margin-top:8px">Session Types</button>
+      </div>
+    `;
+  }
+
+  return `
+    ${state.sessionType ? '' : renderModeSelector()}
+    ${state.sessionType ? '' : renderJLPTSelector()}
+    ${state.sessionType ? '' : renderLevelSelector()}
+    ${state.sessionType ? '' : renderCategories()}
     ${cardHTML}
-
     <div class="progress-section">
       <div class="progress-bar-bg">
         <div class="progress-bar-fill" style="width: ${progress}%"></div>
@@ -1665,32 +3135,400 @@ function render() {
         <span class="wrong">✕ ${state.wrong}</span>
       </div>
     </div>
-
     <div class="shortcuts">
       <span><kbd>Space</kbd> flip</span>
       <span><kbd>←</kbd> wrong</span>
       <span><kbd>→</kbd> got it</span>
       <span><kbd>↓</kbd> skip</span>
-      <span><kbd>P</kbd> play audio</span>
+      <span><kbd>P</kbd> play</span>
     </div>
   `;
+}
 
-  // Append add-card panel overlay (outside main flow)
+function renderQuizView() {
+  const card = state.cards[state.currentIndex];
+  const total = state.cards.length;
+  const reviewed = state.correct + state.wrong;
+  const progress = total > 0 ? (reviewed / total) * 100 : 0;
+
+  if (state.sessionDone) {
+    const pct = (state.correct + state.wrong) > 0 ? Math.round((state.correct / (state.correct + state.wrong)) * 100) : 0;
+    return `
+      <div class="session-complete">
+        <div class="score-display">${pct}%</div>
+        <h2>Quiz Complete!</h2>
+        <p>${state.correct} correct · ${state.wrong} wrong · ${total} questions</p>
+        <button class="restart-btn" onclick="startQuizSession()">Quiz Again</button>
+        <button class="restart-btn" onclick="navigateTo('study')" style="background:var(--surface);color:var(--text);border:1.5px solid var(--border)">Back to Study</button>
+      </div>
+    `;
+  }
+
+  if (!card) return '<div class="session-complete"><h2>Not enough cards for quiz</h2><p>Need at least 4 cards.</p></div>';
+
+  return `
+    ${renderModeSelector()}
+    <div class="quiz-prompt">
+      <div class="quiz-prompt-label">What does this mean?</div>
+      <div class="quiz-prompt-text">${esc(card.japanese)}</div>
+      <div class="quiz-prompt-sub">${esc(card.romaji)}</div>
+    </div>
+    <div class="quiz-options">
+      ${state.quizOptions.map((opt, i) => {
+        let cls = 'quiz-option';
+        if (state.quizAnswered) {
+          if (i === state.quizCorrectIndex) cls += ' reveal-correct';
+          if (i === state.quizSelected && i !== state.quizCorrectIndex) cls += ' selected-wrong';
+          if (i === state.quizSelected && i === state.quizCorrectIndex) cls += ' selected-correct';
+          if (i !== state.quizSelected && i !== state.quizCorrectIndex) cls += ' disabled';
+        }
+        return `<button class="${cls}" onclick="selectQuizOption(${i})">${esc(opt.english)}</button>`;
+      }).join('')}
+    </div>
+    ${state.quizAnswered ? `<button class="quiz-next-btn" onclick="nextQuizQuestion()">Next Question →</button>` : ''}
+    <div class="progress-section" style="margin-top:24px">
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" style="width: ${progress}%"></div>
+      </div>
+      <div class="progress-stats">
+        <span class="correct">✓ ${state.correct}</span>
+        <span>${reviewed} / ${total}</span>
+        <span class="wrong">✕ ${state.wrong}</span>
+      </div>
+    </div>
+  `;
+}
+
+function renderSessionSetup() {
+  const dueCount = getDueCardCount();
+  const weakCount = getWeakCardCount();
+  const favCount = getFavoriteCards().length;
+
+  return `
+    <div class="session-setup">
+      <div class="session-setup-title">Choose a Session</div>
+      <div class="session-setup-sub">Pick a study mode that fits your mood</div>
+      <div class="session-grid">
+        <div class="session-card" onclick="startSessionType('quick')">
+          <div class="session-card-icon">⚡</div>
+          <div class="session-card-name">Quick</div>
+          <div class="session-card-desc">10 random cards</div>
+          <div class="session-card-count">10 cards</div>
+        </div>
+        <div class="session-card" onclick="startSessionType('deep')">
+          <div class="session-card-icon">🧠</div>
+          <div class="session-card-name">Deep Study</div>
+          <div class="session-card-desc">Focus on new & struggling cards</div>
+          <div class="session-card-count">Up to 20 cards</div>
+        </div>
+        <div class="session-card" onclick="startSessionType('full')">
+          <div class="session-card-icon">📚</div>
+          <div class="session-card-name">Full Review</div>
+          <div class="session-card-desc">All due cards by SRS</div>
+          <div class="session-card-count">${dueCount} due</div>
+        </div>
+        <div class="session-card" onclick="startSessionType('speed')">
+          <div class="session-card-icon">🏎️</div>
+          <div class="session-card-name">Speed Round</div>
+          <div class="session-card-desc">15 cards in 60 seconds</div>
+          <div class="session-card-count">60s timer</div>
+        </div>
+        <div class="session-card ${weakCount === 0 ? 'disabled' : ''}" onclick="startSessionType('weak')">
+          <div class="session-card-icon">💪</div>
+          <div class="session-card-name">Weak Cards</div>
+          <div class="session-card-desc">Cards below 70% accuracy</div>
+          <div class="session-card-count">${weakCount} cards</div>
+        </div>
+        <div class="session-card ${favCount === 0 ? 'disabled' : ''}" onclick="startSessionType('favorites')">
+          <div class="session-card-icon">❤️</div>
+          <div class="session-card-name">Favorites</div>
+          <div class="session-card-desc">Your bookmarked cards</div>
+          <div class="session-card-count">${favCount} cards</div>
+        </div>
+        <div class="session-card" onclick="startSessionType('srs')">
+          <div class="session-card-icon">📈</div>
+          <div class="session-card-name">SRS Review</div>
+          <div class="session-card-desc">Due cards by urgency</div>
+          <div class="session-card-count">${dueCount} due</div>
+        </div>
+        <div class="session-card" onclick="startQuizSession()">
+          <div class="session-card-icon">❓</div>
+          <div class="session-card-name">Quiz Mode</div>
+          <div class="session-card-desc">Multiple choice questions</div>
+          <div class="session-card-count">${countByLevel(state.category, 'all')} cards</div>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:20px">
+        <button class="stats-back-btn" onclick="state.sessionType=null;navigateTo('study')">← Back to Study</button>
+      </div>
+    </div>
+  `;
+}
+
+function renderStatsView() {
+  const stats = loadCardStats();
+  const allCards = getAllCards();
+  const xp = loadXP();
+  const streak = loadStreak();
+  const sessions = loadSessionHistory();
+
+  // Overall accuracy
+  let totalCorrect = 0, totalWrong = 0;
+  Object.values(stats).forEach(s => { totalCorrect += s.correct; totalWrong += s.wrong; });
+  const overallAcc = (totalCorrect + totalWrong) > 0 ? Math.round((totalCorrect / (totalCorrect + totalWrong)) * 100) : 0;
+
+  // SRS distribution
+  const srsCount = [0, 0, 0, 0];
+  let reviewed = 0;
+  allCards.forEach(card => {
+    const s = stats[getCardId(card)];
+    if (s) {
+      srsCount[s.srsStage]++;
+      reviewed++;
+    } else {
+      srsCount[0]++;
+    }
+  });
+  const srsTotal = allCards.length;
+
+  // Category mastery
+  const categories = Object.keys(vocabulary);
+  const categoryMastery = categories.map(cat => {
+    const cards = vocabulary[cat];
+    let catCorrect = 0, catTotal = 0;
+    cards.forEach(card => {
+      const s = stats[getCardId(card)];
+      if (s) { catCorrect += s.correct; catTotal += s.correct + s.wrong; }
+    });
+    return {
+      name: cat,
+      accuracy: catTotal > 0 ? Math.round((catCorrect / catTotal) * 100) : 0,
+      count: cards.length,
+    };
+  });
+
+  // Streak calendar (last 91 days)
+  const calendarDays = [];
+  const today = new Date();
+  const historySet = new Set(streak.history || []);
+  const todayKey = getTodayKey();
+  for (let i = 90; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const key = d.toISOString().split('T')[0];
+    calendarDays.push({ key, active: historySet.has(key), today: key === todayKey });
+  }
+
+  // JLPT progress
+  const jlptProgress = JLPT_LEVELS.map(lvl => ({
+    level: lvl,
+    mastery: Math.round(getJLPTMastery(lvl) * 100),
+    count: countByJLPT(lvl),
+  }));
+
+  return `
+    <div class="stats-view">
+      <div class="stats-header">
+        <button class="stats-back-btn" onclick="navigateTo('study')">← Back</button>
+        <div class="stats-title">Stats Dashboard</div>
+      </div>
+
+      <div class="stats-section">
+        <div class="stats-section-title">Overview</div>
+        <div class="stat-row"><span class="stat-label">Total XP</span><span class="stat-value">⚡ ${xp.total}</span></div>
+        <div class="stat-row"><span class="stat-label">Current Streak</span><span class="stat-value">🔥 ${streak.current} days</span></div>
+        <div class="stat-row"><span class="stat-label">Longest Streak</span><span class="stat-value">${streak.longest} days</span></div>
+        <div class="stat-row"><span class="stat-label">Overall Accuracy</span><span class="stat-value">${overallAcc}%</span></div>
+        <div class="stat-row"><span class="stat-label">Cards Reviewed</span><span class="stat-value">${reviewed} / ${allCards.length}</span></div>
+      </div>
+
+      <div class="stats-section">
+        <div class="stats-section-title">SRS Distribution</div>
+        <div class="srs-distribution">
+          ${srsCount.map((count, i) => {
+            const pct = srsTotal > 0 ? (count / srsTotal * 100) : 0;
+            const colors = ['var(--blue)', 'var(--yellow)', 'var(--green)', 'var(--purple)'];
+            return pct > 0 ? `<div class="srs-dist-seg" style="width:${pct}%;background:${colors[i]}">${count}</div>` : '';
+          }).join('')}
+        </div>
+        <div class="srs-legend">
+          <div class="srs-legend-item"><span class="srs-legend-dot" style="background:var(--blue)"></span>New ${srsCount[0]}</div>
+          <div class="srs-legend-item"><span class="srs-legend-dot" style="background:var(--yellow)"></span>Learning ${srsCount[1]}</div>
+          <div class="srs-legend-item"><span class="srs-legend-dot" style="background:var(--green)"></span>Familiar ${srsCount[2]}</div>
+          <div class="srs-legend-item"><span class="srs-legend-dot" style="background:var(--purple)"></span>Mastered ${srsCount[3]}</div>
+        </div>
+      </div>
+
+      <div class="stats-section">
+        <div class="stats-section-title">JLPT Progress</div>
+        ${jlptProgress.map(j => `
+          <div class="stat-row"><span class="stat-label">${j.level} (${j.count} cards)</span><span class="stat-value">${j.mastery}%</span></div>
+          <div class="mastery-bar-bg">
+            <div class="mastery-bar-fill" style="width:${j.mastery}%;background:var(--blue)"></div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="stats-section">
+        <div class="stats-section-title">Category Mastery</div>
+        ${categoryMastery.map(c => `
+          <div class="stat-row"><span class="stat-label">${esc(c.name)}</span><span class="stat-value">${c.accuracy}%</span></div>
+          <div class="mastery-bar-bg">
+            <div class="mastery-bar-fill" style="width:${c.accuracy}%;background:var(--accent)"></div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="stats-section">
+        <div class="stats-section-title">Streak Calendar (90 days)</div>
+        <div class="streak-calendar">
+          ${calendarDays.map(d => `<div class="streak-day ${d.active ? 'active' : ''} ${d.today ? 'today' : ''}" title="${d.key}"></div>`).join('')}
+        </div>
+      </div>
+
+      <div class="stats-section">
+        <div class="stats-section-title">Recent Sessions</div>
+        ${sessions.length === 0 ? '<div style="color:var(--text-faint);font-size:13px">No sessions yet</div>' :
+          sessions.slice(0, 10).map(s => `
+            <div class="history-item">
+              <div>
+                <div class="history-date">${s.date}</div>
+                <div class="history-mode">${s.mode || 'study'}${s.sessionType ? ' · ' + s.sessionType : ''}</div>
+              </div>
+              <div class="history-score" style="color:${(s.correct/(s.correct+s.wrong||1)) >= 0.7 ? 'var(--green)' : 'var(--red)'}">
+                ${s.correct}/${s.correct + s.wrong} (${Math.round(s.correct/(s.correct+s.wrong||1)*100)}%)
+              </div>
+            </div>
+          `).join('')
+        }
+      </div>
+
+      <div class="stats-section" style="border:1.5px solid var(--red);border-color:rgba(232,64,87,0.3)">
+        <div class="stats-section-title" style="color:var(--red)">Reset</div>
+        <p style="font-size:13px;color:var(--text-dim);margin-bottom:14px">Erase all progress — streak, XP, stats, favorites, and session history. This cannot be undone.</p>
+        <button onclick="confirmReset()" style="background:var(--red-soft);border:1.5px solid rgba(232,64,87,0.3);color:var(--red);border-radius:10px;padding:10px 20px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;width:100%">Reset All Progress</button>
+      </div>
+    </div>
+  `;
+}
+
+function confirmReset() {
+  if (!confirm('Are you sure? This will erase ALL your progress — streak, XP, stats, favorites, and session history.')) return;
+  ['jp_fc_card_stats', 'jp_fc_streak', 'jp_fc_xp', 'jp_fc_daily_goal', 'jp_fc_favorites', 'jp_fc_sessions'].forEach(k => localStorage.removeItem(k));
+  navigateTo('study');
+  startSession();
+}
+
+function renderGoalModal() {
+  if (!goalModalOpen) return '';
+  const goal = resetDailyIfNeeded();
+  return `
+    <div class="add-panel-overlay" onclick="if(event.target===this){goalModalOpen=false;render()}">
+      <div class="goal-modal">
+        <div class="goal-modal-title">Daily Goal</div>
+        <div class="goal-options">
+          ${[10, 20, 30].map(n => `
+            <div class="goal-option ${goal.target === n ? 'active' : ''}" onclick="setDailyGoalTarget(${n})">
+              ${n}
+              <div class="goal-option-sub">cards</div>
+            </div>
+          `).join('')}
+        </div>
+        <div style="font-size:13px;color:var(--text-dim)">Today: ${goal.todayCount} / ${goal.target} cards</div>
+      </div>
+    </div>
+  `;
+}
+
+function render() {
+  const app = document.getElementById('app');
+
+  let viewHTML = '';
+  switch (state.view) {
+    case 'study':
+      viewHTML = renderStudyView();
+      break;
+    case 'quiz':
+      viewHTML = renderQuizView();
+      break;
+    case 'stats':
+      viewHTML = renderStatsView();
+      break;
+    case 'sessionSetup':
+      viewHTML = renderSessionSetup();
+      break;
+    default:
+      viewHTML = renderStudyView();
+  }
+
+  app.innerHTML = `
+    ${renderHeader()}
+    ${state.view === 'study' && !state.sessionType ? `
+      <div style="text-align:center;margin-bottom:16px">
+        <button class="stats-back-btn" onclick="navigateTo('sessionSetup')">📋 Session Types</button>
+      </div>
+    ` : ''}
+    ${viewHTML}
+  `;
+
+  // Append overlays
   const panelHTML = renderAddPanel();
-  if (panelHTML) {
-    app.insertAdjacentHTML('beforeend', panelHTML);
+  if (panelHTML) app.insertAdjacentHTML('beforeend', panelHTML);
+  const goalHTML = renderGoalModal();
+  if (goalHTML) app.insertAdjacentHTML('beforeend', goalHTML);
+
+  // Post-render hooks
+  postRender();
+}
+
+function postRender() {
+  // Handle pending animations
+  if (pendingAnimation === 'shake') {
+    const cardEl = document.querySelector('.card');
+    if (cardEl) {
+      cardEl.classList.add('shake');
+      setTimeout(() => cardEl.classList.remove('shake'), 400);
+    }
+    pendingAnimation = null;
+  }
+
+  // Handle celebration
+  if (pendingCelebration) {
+    pendingCelebration = false;
+    setTimeout(triggerConfetti, 200);
+  }
+
+  // Clear XP pop after animation
+  if (pendingXPPop > 0) {
+    setTimeout(() => { pendingXPPop = 0; }, 800);
   }
 }
 
 // ─── KEYBOARD SHORTCUTS ───
 document.addEventListener('keydown', (e) => {
-  // Close add panel on Escape
-  if (e.code === 'Escape' && addPanelOpen) {
-    closeAddPanel();
+  if (e.code === 'Escape') {
+    if (addPanelOpen) { closeAddPanel(); return; }
+    if (goalModalOpen) { goalModalOpen = false; render(); return; }
+    if (state.view !== 'study') { navigateTo('study'); return; }
+  }
+  if (addPanelOpen || goalModalOpen) return;
+
+  if (state.view === 'quiz') {
+    if (state.quizAnswered && (e.code === 'Space' || e.code === 'Enter')) {
+      e.preventDefault();
+      nextQuizQuestion();
+      return;
+    }
+    if (!state.quizAnswered) {
+      if (e.code === 'Digit1' || e.code === 'Numpad1') selectQuizOption(0);
+      if (e.code === 'Digit2' || e.code === 'Numpad2') selectQuizOption(1);
+      if (e.code === 'Digit3' || e.code === 'Numpad3') selectQuizOption(2);
+      if (e.code === 'Digit4' || e.code === 'Numpad4') selectQuizOption(3);
+    }
     return;
   }
-  // Don't trigger shortcuts when typing in form inputs
-  if (addPanelOpen) return;
+
+  if (state.view !== 'study') return;
   if (state.sessionDone) return;
   if (e.code === 'Space') { e.preventDefault(); flipCard(); }
   if (e.code === 'ArrowRight') { markCorrect(); }
@@ -1703,6 +3541,10 @@ document.addEventListener('keydown', (e) => {
       if (card) speak(card.japanese);
     }
   }
+  if (e.code === 'KeyF') {
+    const card = state.cards[state.currentIndex];
+    if (card) toggleFavorite(getCardId(card));
+  }
 });
 
 // ─── SERVICE WORKER (PWA offline support) ───
@@ -1711,7 +3553,11 @@ if ('serviceWorker' in navigator) {
 }
 
 // ─── INIT ───
-startSession();
+resetDailyIfNeeded();
+loadVocabulary().then(() => {
+  mergeCustomCards();
+  startSession();
+});
 </script>
 </body>
 </html>

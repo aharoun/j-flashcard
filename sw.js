@@ -1,8 +1,9 @@
-const CACHE_NAME = 'jp-flashcards-v2';
+const CACHE_NAME = 'jp-flashcards-v4';
 const CORE_ASSETS = [
   './',
   './index.html',
   './manifest.json',
+  './vocabulary.json',
 ];
 
 const OPTIONAL_ASSETS = [
@@ -34,8 +35,8 @@ self.addEventListener('fetch', (e) => {
   const url = new URL(e.request.url);
   const isSameOrigin = url.origin === self.location.origin;
 
-  // Network-first for same-origin HTML so deploys aren't stale
-  if (isSameOrigin && e.request.destination === 'document') {
+  // Network-first for same-origin HTML and vocabulary.json so deploys aren't stale
+  if (isSameOrigin && (e.request.destination === 'document' || url.pathname.endsWith('vocabulary.json'))) {
     e.respondWith(
       fetch(e.request).then((response) => {
         if (response.ok) {
