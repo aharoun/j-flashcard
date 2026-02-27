@@ -11,6 +11,8 @@
 <meta name="theme-color" content="#0f0f0f">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='100' fill='%23e8572a'/%3E%3Ctext x='256' y='340' font-size='280' font-family='sans-serif' font-weight='bold' fill='white' text-anchor='middle'%3E%E8%AA%9E%3C/text%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -22,7 +24,7 @@
     --accent-soft: rgba(232, 87, 42, 0.15);
     --text: #e8e8e8;
     --text-dim: #888;
-    --text-faint: #555;
+    --text-faint: #777;
     --green: #3ecf6a;
     --green-soft: rgba(62, 207, 106, 0.12);
     --red: #e84057;
@@ -51,7 +53,7 @@
     --accent-soft: rgba(217, 75, 30, 0.1);
     --text: #1a1a1a;
     --text-dim: #666;
-    --text-faint: #999;
+    --text-faint: #767676;
     --green: #1e8c3e;
     --green-soft: rgba(30, 140, 62, 0.08);
     --red: #c02030;
@@ -126,7 +128,8 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    flex-shrink: 0;
+    min-width: 0;
+    overflow: hidden;
   }
 
   .logo-mark {
@@ -151,11 +154,16 @@
 
   .logo-text span { color: var(--text-dim); font-weight: 400; }
 
+  @media (max-width: 360px) {
+    .logo-text { display: none; }
+  }
+
   .header-center {
     display: flex;
     align-items: center;
     gap: 10px;
-    flex-shrink: 0;
+    min-width: 0;
+    overflow: hidden;
   }
 
   .streak-badge {
@@ -256,7 +264,7 @@
     color: var(--text-dim);
   }
   .header-icon-btn:hover {
-    border-color: #888;
+    border-color: var(--text-dim);
     background: var(--surface-hover);
     color: var(--text);
   }
@@ -300,7 +308,7 @@
   }
 
   .theme-toggle:hover {
-    border-color: #888;
+    border-color: var(--text-dim);
     background: var(--surface-hover);
   }
 
@@ -546,7 +554,7 @@
     transition: all 0.15s;
   }
 
-  .btn-add-another:hover { border-color: #444; }
+  .btn-add-another:hover { border-color: var(--text-dim); }
 
   .form-success {
     text-align: center;
@@ -588,7 +596,7 @@
     text-align: center;
   }
 
-  .mode-btn:hover { border-color: #444; background: var(--surface-hover); }
+  .mode-btn:hover { border-color: var(--text-dim); background: var(--surface-hover); }
 
   .mode-btn.disabled { opacity: 0.4; pointer-events: none; }
 
@@ -650,7 +658,7 @@
     font-family: 'DM Sans', sans-serif;
   }
 
-  .cat-btn:hover { border-color: #444; }
+  .cat-btn:hover { border-color: var(--text-dim); }
   .cat-btn.active {
     background: var(--accent-soft);
     border-color: var(--accent);
@@ -689,6 +697,7 @@
     justify-content: center;
     padding: 32px 28px;
     text-align: center;
+    overflow-y: auto;
   }
 
   .card-front {
@@ -859,7 +868,7 @@
     border-color: var(--border);
     color: var(--text-dim);
   }
-  .btn-skip:hover { border-color: #444; }
+  .btn-skip:hover { border-color: var(--text-dim); }
 
   /* ─── Progress ─── */
   .progress-section {
@@ -970,7 +979,7 @@
     font-family: 'DM Sans', sans-serif;
   }
 
-  .level-btn:hover { border-color: #444; background: var(--surface-hover); }
+  .level-btn:hover { border-color: var(--text-dim); background: var(--surface-hover); }
 
   .level-name {
     font-size: 13px;
@@ -1102,7 +1111,7 @@
     transition: all 0.15s;
   }
 
-  .speed-btn:hover { border-color: #444; }
+  .speed-btn:hover { border-color: var(--text-dim); }
   .speed-btn.active {
     background: var(--accent-soft);
     border-color: var(--accent);
@@ -1161,7 +1170,7 @@
     font-weight: 500;
     color: var(--text);
   }
-  .quiz-option:hover { border-color: #444; background: var(--surface-hover); }
+  .quiz-option:hover { border-color: var(--text-dim); background: var(--surface-hover); }
   .quiz-option.selected-correct {
     border-color: var(--green);
     background: var(--green-soft);
@@ -1291,7 +1300,7 @@
     cursor: pointer;
     transition: all 0.15s;
   }
-  .stats-back-btn:hover { border-color: #444; }
+  .stats-back-btn:hover { border-color: var(--text-dim); }
   .stats-title {
     font-size: 22px;
     font-weight: 700;
@@ -1417,7 +1426,7 @@
     color: var(--text-dim);
     transition: all 0.2s;
   }
-  .jlpt-btn:hover { border-color: #444; background: var(--surface-hover); }
+  .jlpt-btn:hover { border-color: var(--text-dim); background: var(--surface-hover); }
   .jlpt-btn.active {
     border-color: var(--blue);
     background: var(--blue-soft);
@@ -1892,27 +1901,27 @@ function renderAddPanel() {
         </div>
         ${addFormSuccess ? '<div class="form-success">Card added successfully!</div>' : ''}
         <div class="form-group">
-          <label class="form-label">Japanese <span class="form-label-hint">— hiragana, katakana, or kanji</span></label>
+          <label class="form-label" for="input-japanese">Japanese <span class="form-label-hint">— hiragana, katakana, or kanji</span></label>
           <input type="text" id="input-japanese" class="form-input input-japanese" placeholder="こんにちは" oninput="updateAddPreview()">
         </div>
         <div class="form-group">
-          <label class="form-label">Romaji <span class="form-label-hint">— romanized pronunciation</span></label>
+          <label class="form-label" for="input-romaji">Romaji <span class="form-label-hint">— romanized pronunciation</span></label>
           <input type="text" id="input-romaji" class="form-input input-romaji" placeholder="konnichiwa" oninput="updateAddPreview()">
         </div>
         <div class="form-group">
-          <label class="form-label">English <span class="form-label-hint">— meaning / translation</span></label>
+          <label class="form-label" for="input-english">English <span class="form-label-hint">— meaning / translation</span></label>
           <input type="text" id="input-english" class="form-input" placeholder="Hello" oninput="updateAddPreview()">
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label class="form-label">Category</label>
+            <label class="form-label" for="select-category">Category</label>
             <select id="select-category" class="form-select">
               ${allCategories.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('')}
               ${!allCategories.includes('My Words') ? '<option value="My Words">My Words</option>' : ''}
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Level</label>
+            <label class="form-label" for="select-level">Level</label>
             <select id="select-level" class="form-select">
               <option value="1">Beginner</option>
               <option value="2">Intermediate</option>
@@ -2070,10 +2079,17 @@ function getTodayKey() {
   return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
 }
 
+function toLocalDateKey(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+
 // ─── CARD ID SYSTEM ───
 function getCardId(card) {
-  return card.japanese + '|' + card.english;
+  return (card.custom ? 'custom:' : '') + card.japanese + '|' + card.english;
 }
+
+// ─── RENDER-SCOPED CACHE ───
+let _statsCache = null, _favsCache = null;
 
 // ─── CARD STATS (SRS, accuracy) ───
 function loadCardStats() {
@@ -2087,7 +2103,7 @@ function saveCardStats(stats) {
 }
 
 function getCardStat(cardId) {
-  const stats = loadCardStats();
+  const stats = _statsCache || loadCardStats();
   return stats[cardId] || { correct: 0, wrong: 0, srsStage: 0, lastReviewed: null, nextReview: null };
 }
 
@@ -2106,7 +2122,7 @@ function updateCardStat(cardId, wasCorrect) {
   const interval = SRS_STAGES[s.srsStage].interval;
   const next = new Date();
   next.setDate(next.getDate() + interval);
-  s.nextReview = next.toISOString().split('T')[0];
+  s.nextReview = toLocalDateKey(next);
   stats[cardId] = s;
   saveCardStats(stats);
 }
@@ -2136,7 +2152,7 @@ function updateStreak() {
 
   const yesterday = new Date();
   yesterday.setDate(yesterday.getDate() - 1);
-  const yKey = yesterday.toISOString().split('T')[0];
+  const yKey = toLocalDateKey(yesterday);
 
   if (streak.lastStudyDate === yKey) {
     streak.current++;
@@ -2150,7 +2166,7 @@ function updateStreak() {
   // Keep last 90 days
   const cutoff = new Date();
   cutoff.setDate(cutoff.getDate() - 90);
-  const cutoffKey = cutoff.toISOString().split('T')[0];
+  const cutoffKey = toLocalDateKey(cutoff);
   streak.history = streak.history.filter(d => d >= cutoffKey);
   saveStreak(streak);
   return streak;
@@ -2245,7 +2261,7 @@ function toggleFavorite(cardId) {
 }
 
 function isFavorite(cardId) {
-  return loadFavorites().includes(cardId);
+  return (_favsCache || loadFavorites()).includes(cardId);
 }
 
 // ─── SESSION HISTORY ───
@@ -2383,6 +2399,10 @@ function generateQuizOptions(correctCard, allCards) {
       options.push(c);
     }
   }
+  // Pad with placeholders if still fewer than 4
+  while (options.length < 4) {
+    options.push({ english: '\u2014', japanese: '', romaji: '' });
+  }
   shuffle(options);
   return options;
 }
@@ -2448,6 +2468,7 @@ let speechRecognizer = null;
 
 function startSpeechRecognition(card, lang) {
   if (!isSpeechRecognitionAvailable()) return;
+  stopSpeechRecognition();
   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
   speechRecognizer = new SpeechRecognition();
   speechRecognizer.continuous = false;
@@ -2583,8 +2604,16 @@ function startSpeedTimer() {
         category: state.category,
         sessionType: state.sessionType,
       });
+      render();
+    } else {
+      const timerEl = document.querySelector('.speed-timer-text');
+      if (timerEl) {
+        timerEl.textContent = state.speedTimeLeft + 's';
+        timerEl.classList.toggle('urgent', state.speedTimeLeft <= 10);
+      } else {
+        render();
+      }
     }
-    render();
   }, 1000);
 }
 
@@ -2691,6 +2720,7 @@ function markCorrect() {
     addXP(10);
   }
   state.correct++;
+  incrementDailyGoal();
   nextCard();
 }
 
@@ -2702,7 +2732,9 @@ function markWrong() {
     addXP(5);
   }
   state.wrong++;
-  pendingAnimation = 'shake';
+  incrementDailyGoal();
+  const cardEl = document.querySelector('.card');
+  if (cardEl) cardEl.classList.add('shake');
   nextCard();
 }
 
@@ -2716,7 +2748,6 @@ function nextCard() {
   state.flipped = false;
   state.speechResult = null;
   state.speechInterim = '';
-  incrementDailyGoal();
   if (state.currentIndex + 1 >= state.cards.length) {
     state.sessionDone = true;
     stopSpeedTimer();
@@ -2834,6 +2865,7 @@ function setupQuizQuestion() {
 
 function selectQuizOption(index) {
   if (state.quizAnswered) return;
+  if (index < 0 || index >= state.quizOptions.length) return;
   state.quizSelected = index;
   state.quizAnswered = true;
   const card = state.cards[state.currentIndex];
@@ -2846,7 +2878,8 @@ function selectQuizOption(index) {
     updateCardStat(cardId, false);
     addXP(5);
     state.wrong++;
-    pendingAnimation = 'shake';
+    const cardEl = document.querySelector('.card');
+    if (cardEl) cardEl.classList.add('shake');
   }
   incrementDailyGoal();
   render();
@@ -3348,7 +3381,7 @@ function renderStatsView() {
   for (let i = 90; i >= 0; i--) {
     const d = new Date(today);
     d.setDate(d.getDate() - i);
-    const key = d.toISOString().split('T')[0];
+    const key = toLocalDateKey(d);
     calendarDays.push({ key, active: historySet.has(key), today: key === todayKey });
   }
 
@@ -3425,8 +3458,8 @@ function renderStatsView() {
           sessions.slice(0, 10).map(s => `
             <div class="history-item">
               <div>
-                <div class="history-date">${s.date}</div>
-                <div class="history-mode">${s.mode || 'study'}${s.sessionType ? ' · ' + s.sessionType : ''}</div>
+                <div class="history-date">${esc(s.date)}</div>
+                <div class="history-mode">${esc(s.mode || 'study')}${s.sessionType ? ' · ' + esc(s.sessionType) : ''}</div>
               </div>
               <div class="history-score" style="color:${(s.correct/(s.correct+s.wrong||1)) >= 0.7 ? 'var(--green)' : 'var(--red)'}">
                 ${s.correct}/${s.correct + s.wrong} (${Math.round(s.correct/(s.correct+s.wrong||1)*100)}%)
@@ -3474,6 +3507,8 @@ function renderGoalModal() {
 }
 
 function render() {
+  _statsCache = loadCardStats();
+  _favsCache = loadFavorites();
   const app = document.getElementById('app');
 
   let viewHTML = '';
@@ -3512,16 +3547,13 @@ function render() {
 
   // Post-render hooks
   postRender();
+  _statsCache = null;
+  _favsCache = null;
 }
 
 function postRender() {
-  // Handle pending animations
-  if (pendingAnimation === 'shake') {
-    const cardEl = document.querySelector('.card');
-    if (cardEl) {
-      cardEl.classList.add('shake');
-      setTimeout(() => cardEl.classList.remove('shake'), 400);
-    }
+  // Handle pending animations (shake is now applied directly in markWrong/selectQuizOption)
+  if (pendingAnimation) {
     pendingAnimation = null;
   }
 
@@ -3534,6 +3566,26 @@ function postRender() {
   // Clear XP pop after animation
   if (pendingXPPop > 0) {
     setTimeout(() => { pendingXPPop = 0; }, 800);
+  }
+
+  // Trap focus inside open overlay
+  const overlay = document.querySelector('.add-panel-overlay');
+  if (overlay) {
+    const focusable = overlay.querySelectorAll('input, select, button, [tabindex]:not([tabindex="-1"])');
+    if (focusable.length > 0) {
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      overlay._focusTrap = (e) => {
+        if (e.key !== 'Tab') return;
+        if (e.shiftKey) {
+          if (document.activeElement === first) { e.preventDefault(); last.focus(); }
+        } else {
+          if (document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
+      };
+      overlay.addEventListener('keydown', overlay._focusTrap);
+      if (!overlay.contains(document.activeElement)) first.focus();
+    }
   }
 }
 
