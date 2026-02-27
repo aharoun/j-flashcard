@@ -2070,7 +2070,7 @@ function toggleTheme() {
 setTheme(getTheme());
 
 // ─── SPEECH SYNTHESIS ───
-let speechRate = 0.75;
+let speechRate = 1;
 let isSpeaking = false;
 
 function speak(text) {
@@ -2129,11 +2129,6 @@ function audioButtonHTML() {
         <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
       </svg>
     </button>
-    <div class="audio-speed">
-      <button class="speed-btn ${speechRate === 0.5 ? 'active' : ''}" onclick="event.stopPropagation(); setSpeed(0.5)">0.5×</button>
-      <button class="speed-btn ${speechRate === 0.75 ? 'active' : ''}" onclick="event.stopPropagation(); setSpeed(0.75)">0.75×</button>
-      <button class="speed-btn ${speechRate === 1 ? 'active' : ''}" onclick="event.stopPropagation(); setSpeed(1)">1×</button>
-    </div>
   `;
 }
 
