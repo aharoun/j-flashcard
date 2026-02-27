@@ -1605,7 +1605,10 @@
 
 <script>
 // ─── VOCABULARY DATA (loaded from vocabulary.json) ───
-let vocabulary = {
+let vocabulary = {};
+
+// Minimal fallback if vocabulary.json fails to load (offline first visit)
+const FALLBACK_VOCABULARY = {
   "Greetings": [
     { japanese: "こんにちは", romaji: "konnichiwa", english: "Hello", level: 1, jlpt: "N5", examples: [{ jp: "こんにちは、元気ですか？", en: "Hello, how are you?" }] },
     { japanese: "ありがとう", romaji: "arigatou", english: "Thank you", level: 1, jlpt: "N5", examples: [{ jp: "手伝ってくれてありがとう。", en: "Thank you for helping me." }] },
@@ -1762,6 +1765,9 @@ let vocabulary = {
     { japanese: "同僚", romaji: "douryou", english: "Colleague", level: 3, jlpt: "N3", examples: [{ jp: "同僚と食事に行きました。", en: "I went to eat with a colleague." }] },
   ],
 };
+
+// Start with fallback so the app can render immediately if needed
+vocabulary = FALLBACK_VOCABULARY;
 
 const LEVELS = {
   all: { label: 'All Levels', colorClass: 'active-all' },
@@ -2798,9 +2804,10 @@ function startSessionType(type) {
 
 function startQuizSession() {
   stopSpeechRecognition();
+  const quizCards = getCards(state.category, state.level);
+  if (quizCards.length < 4) return;
   state.sessionType = null;
-  state.cards = getCards(state.category, state.level);
-  if (state.cards.length < 4) return;
+  state.cards = quizCards;
   state.currentIndex = 0;
   state.correct = 0;
   state.wrong = 0;
