@@ -1962,9 +1962,11 @@ function loadVocabulary() {
     })
     .then(data => {
       vocabulary = data;
+      return true;
     })
     .catch(() => {
       // Keep the inline fallback vocabulary if fetch fails (offline first load)
+      return false;
     });
 }
 
@@ -3587,10 +3589,14 @@ if ('serviceWorker' in navigator) {
 resetDailyIfNeeded();
 mergeCustomCards();
 startSession();
-// Upgrade vocabulary from JSON in the background; re-start session with full data
-loadVocabulary().then(() => {
-  mergeCustomCards();
-  startSession();
+// Upgrade vocabulary from JSON in the background
+loadVocabulary().then(upgraded => {
+  if (!upgraded) return; // fetch failed, already using fallback
+  // Only restart if user hasn't begun interacting
+  if (state.correct === 0 && state.wrong === 0 && state.skipped === 0 && state.currentIndex === 0) {
+    mergeCustomCards();
+    startSession();
+  }
 });
 </script>
 </body>
