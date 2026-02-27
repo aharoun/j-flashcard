@@ -818,6 +818,13 @@
     font-weight: 500;
     line-height: 1.5;
   }
+  .example-romaji {
+    font-size: 12px;
+    color: var(--text-faint);
+    font-style: italic;
+    line-height: 1.4;
+    margin-top: 1px;
+  }
   .example-en {
     font-size: 12px;
     color: var(--text-dim);
@@ -1510,14 +1517,41 @@
   }
   .mic-btn:hover { background: rgba(74,158,255,0.2); border-color: var(--blue); }
   .mic-btn.listening {
-    animation: pulse-ring-blue 0.8s ease infinite;
-    background: var(--blue-soft);
-    border-color: var(--blue);
+    animation: pulse-ring-red 1s ease infinite;
+    background: rgba(232,64,87,0.12);
+    border-color: var(--red);
+  }
+  .mic-recording-dot {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background: var(--red);
+    border-radius: 50%;
+    animation: blink-dot 1s ease infinite;
+  }
+  @keyframes blink-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  @keyframes pulse-ring-red {
+    0% { box-shadow: 0 0 0 0 rgba(232,64,87,0.4); }
+    70% { box-shadow: 0 0 0 12px rgba(232,64,87,0); }
+    100% { box-shadow: 0 0 0 0 rgba(232,64,87,0); }
   }
   @keyframes pulse-ring-blue {
     0% { box-shadow: 0 0 0 0 rgba(74,158,255,0.4); }
     70% { box-shadow: 0 0 0 10px rgba(74,158,255,0); }
     100% { box-shadow: 0 0 0 0 rgba(74,158,255,0); }
+  }
+  .mic-label {
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 6px;
+    transition: color 0.2s;
+  }
+  .mic-label.listening-active {
+    color: var(--red);
+    font-weight: 600;
   }
   .speech-interim {
     font-size: 14px;
@@ -1526,11 +1560,11 @@
     font-style: italic;
   }
   .speech-result {
-    font-size: 14px;
-    font-weight: 500;
-    margin-top: 8px;
-    padding: 6px 12px;
-    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    margin-top: 10px;
+    padding: 8px 16px;
+    border-radius: 10px;
   }
   .speech-result.correct {
     background: var(--green-soft);
@@ -1539,6 +1573,8 @@
   .speech-result.wrong {
     background: var(--red-soft);
     color: var(--red);
+    font-weight: 500;
+    font-size: 14px;
   }
   .speech-fallback {
     font-size: 11px;
@@ -2008,17 +2044,20 @@ let isSpeaking = false;
 function speak(text) {
   if (!('speechSynthesis' in window)) return;
   window.speechSynthesis.cancel();
-  const utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'ja-JP';
-  utterance.rate = speechRate;
-  utterance.pitch = 1;
-  const voices = window.speechSynthesis.getVoices();
-  const jpVoice = voices.find(v => v.lang.startsWith('ja'));
-  if (jpVoice) utterance.voice = jpVoice;
-  utterance.onstart = () => { isSpeaking = true; updateAudioBtn(); };
-  utterance.onend = () => { isSpeaking = false; updateAudioBtn(); };
-  utterance.onerror = () => { isSpeaking = false; updateAudioBtn(); };
-  window.speechSynthesis.speak(utterance);
+  // Delay after cancel ensures new rate/voice settings are applied reliably
+  setTimeout(() => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ja-JP';
+    utterance.rate = speechRate;
+    utterance.pitch = 1;
+    const voices = window.speechSynthesis.getVoices();
+    const jpVoice = voices.find(v => v.lang.startsWith('ja'));
+    if (jpVoice) utterance.voice = jpVoice;
+    utterance.onstart = () => { isSpeaking = true; updateAudioBtn(); };
+    utterance.onend = () => { isSpeaking = false; updateAudioBtn(); };
+    utterance.onerror = () => { isSpeaking = false; updateAudioBtn(); };
+    window.speechSynthesis.speak(utterance);
+  }, 60);
 }
 
 function updateAudioBtn() {
@@ -2466,6 +2505,8 @@ function checkSpeechMatch(spoken, expected, lang) {
 
 let speechRecognizer = null;
 
+let speechAutoStopTimer = null;
+
 function startSpeechRecognition(card, lang) {
   if (!isSpeechRecognitionAvailable()) return;
   stopSpeechRecognition();
@@ -2479,14 +2520,20 @@ function startSpeechRecognition(card, lang) {
   state.speechRecognizing = true;
   state.speechResult = null;
   state.speechInterim = '';
-  render();
+  updateSpeechDisplay();
+
+  // Auto-stop after 8 seconds as safety net
+  if (speechAutoStopTimer) clearTimeout(speechAutoStopTimer);
+  speechAutoStopTimer = setTimeout(() => {
+    if (state.speechRecognizing) stopSpeechRecognition();
+  }, 8000);
 
   speechRecognizer.onresult = (event) => {
     let interim = '';
     let finalTranscript = '';
     for (let i = event.resultIndex; i < event.results.length; i++) {
       if (event.results[i].isFinal) {
-        // Check all alternatives
+        if (speechAutoStopTimer) { clearTimeout(speechAutoStopTimer); speechAutoStopTimer = null; }
         const expected = lang === 'ja' ? card.japanese : card.english;
         let bestMatch = { match: false, similarity: 0 };
         let bestText = '';
@@ -2506,38 +2553,100 @@ function startSpeechRecognition(card, lang) {
         };
         state.speechRecognizing = false;
         state.speechInterim = '';
-        render();
+        updateSpeechDisplay();
       } else {
         interim += event.results[i][0].transcript;
       }
     }
     if (interim) {
       state.speechInterim = interim;
-      render();
+      updateSpeechDisplay();
     }
   };
 
   speechRecognizer.onerror = () => {
+    if (speechAutoStopTimer) { clearTimeout(speechAutoStopTimer); speechAutoStopTimer = null; }
     state.speechRecognizing = false;
     state.speechInterim = '';
-    render();
+    updateSpeechDisplay();
   };
 
   speechRecognizer.onend = () => {
+    if (speechAutoStopTimer) { clearTimeout(speechAutoStopTimer); speechAutoStopTimer = null; }
     state.speechRecognizing = false;
-    render();
+    updateSpeechDisplay();
   };
 
   speechRecognizer.start();
 }
 
 function stopSpeechRecognition() {
+  if (speechAutoStopTimer) { clearTimeout(speechAutoStopTimer); speechAutoStopTimer = null; }
   if (speechRecognizer) {
     speechRecognizer.stop();
     speechRecognizer = null;
   }
   state.speechRecognizing = false;
-  render();
+  updateSpeechDisplay();
+}
+
+function toggleSpeechRecognition() {
+  if (state.speechRecognizing) {
+    stopSpeechRecognition();
+  } else {
+    const card = state.cards[state.currentIndex];
+    if (!card) return;
+    const lang = state.mode === 'en-to-jp' ? 'ja' : 'en';
+    startSpeechRecognition(card, lang);
+  }
+}
+
+// Targeted DOM update for speech UI to avoid full re-render (prevents card twitching)
+function updateSpeechDisplay() {
+  const micSection = document.querySelector('.mic-section');
+  if (!micSection) return;
+
+  // Update mic button state
+  const micBtn = micSection.querySelector('.mic-btn');
+  if (micBtn) {
+    micBtn.classList.toggle('listening', state.speechRecognizing);
+  }
+
+  // Update listening label
+  const label = micSection.querySelector('.mic-label');
+  if (label) {
+    const lang = state.mode === 'en-to-jp' ? 'Japanese' : 'English';
+    if (state.speechRecognizing) {
+      label.textContent = 'Listening...';
+      label.className = 'mic-label listening-active';
+    } else {
+      label.textContent = `Say it in ${lang}`;
+      label.className = 'mic-label';
+    }
+  }
+
+  // Update result/interim display
+  const oldResult = micSection.querySelector('.speech-result');
+  const oldInterim = micSection.querySelector('.speech-interim');
+  if (oldResult) oldResult.remove();
+  if (oldInterim) oldInterim.remove();
+
+  if (state.speechResult) {
+    const div = document.createElement('div');
+    if (state.speechResult.correct) {
+      div.className = 'speech-result correct';
+      div.innerHTML = '&#10003; Correct!';
+    } else {
+      div.className = 'speech-result wrong';
+      div.innerHTML = `&#10007; "${esc(state.speechResult.text)}" &mdash; ${state.speechResult.similarity}% match`;
+    }
+    micSection.appendChild(div);
+  } else if (state.speechInterim) {
+    const div = document.createElement('div');
+    div.className = 'speech-interim';
+    div.textContent = state.speechInterim + '...';
+    micSection.appendChild(div);
+  }
 }
 
 // ─── ANIMATIONS ───
@@ -2708,6 +2817,7 @@ function startSession() {
 
 function flipCard() {
   if (state.sessionDone) return;
+  if (state.speechRecognizing) stopSpeechRecognition();
   state.flipped = !state.flipped;
   render();
 }
@@ -3034,6 +3144,7 @@ function renderExamples(card) {
       ${card.examples.map(ex => `
         <div class="example-sentence">
           <div class="example-jp">${esc(ex.jp)}</div>
+          ${ex.romaji ? `<div class="example-romaji">${esc(ex.romaji)}</div>` : ''}
           <div class="example-en">${esc(ex.en)}</div>
         </div>
       `).join('')}
@@ -3066,21 +3177,30 @@ function renderSpeechSection(card) {
 
   let resultHTML = '';
   if (state.speechResult) {
-    const cls = state.speechResult.correct ? 'correct' : 'wrong';
-    resultHTML = `<div class="speech-result ${cls}">
-      "${esc(state.speechResult.text)}" — ${state.speechResult.similarity}% match
-    </div>`;
+    if (state.speechResult.correct) {
+      resultHTML = `<div class="speech-result correct">&#10003; Correct!</div>`;
+    } else {
+      resultHTML = `<div class="speech-result wrong">&#10007; "${esc(state.speechResult.text)}" &mdash; ${state.speechResult.similarity}% match</div>`;
+    }
   } else if (state.speechInterim) {
     resultHTML = `<div class="speech-interim">${esc(state.speechInterim)}...</div>`;
   }
 
+  // Show mic button only on front side (before flip)
+  const micButtonHTML = !state.flipped ? `
+    <button class="mic-btn ${state.speechRecognizing ? 'listening' : ''}"
+      onclick="event.stopPropagation(); toggleSpeechRecognition()"
+      title="Say the ${langLabel} translation">
+      ${state.speechRecognizing ? '<span class="mic-recording-dot"></span>' : '🎤'}
+    </button>
+    <div class="mic-label ${state.speechRecognizing ? 'listening-active' : ''}">
+      ${state.speechRecognizing ? 'Listening...' : `Say it in ${langLabel}`}
+    </div>
+  ` : '';
+
   return `
     <div class="mic-section">
-      <button class="mic-btn ${state.speechRecognizing ? 'listening' : ''}"
-        onclick="event.stopPropagation(); ${state.speechRecognizing ? 'stopSpeechRecognition()' : `startSpeechRecognition(state.cards[state.currentIndex], '${lang}')`}"
-        title="Say the ${langLabel} answer">
-        🎤
-      </button>
+      ${micButtonHTML}
       ${resultHTML}
     </div>
   `;
@@ -3163,10 +3283,10 @@ function renderStudyView() {
           <div class="card-face card-back">${backHTML}</div>
         </div>
       </div>
+      ${renderSpeechSection(card)}
       <div class="audio-controls">
         ${state.mode === 'jp-to-en' || state.flipped ? audioButtonHTML() : '<div style="height:44px"></div>'}
       </div>
-      ${state.flipped ? renderSpeechSection(card) : ''}
       <div class="actions">
         <button class="action-btn btn-wrong" onclick="markWrong()">✕ Wrong</button>
         <button class="action-btn btn-skip" onclick="skipCard()">Skip</button>
