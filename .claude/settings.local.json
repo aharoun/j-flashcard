@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:webreflection.medium.com)",
+      "WebFetch(domain:caniuse.com)"
+    ]
+  }
+}
