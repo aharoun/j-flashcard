@@ -13,94 +13,113 @@
 <link rel="manifest" href="manifest.json">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600;700&family=Noto+Sans+JP:wght@400;500;600&family=Sora:wght@300;400;500;600;700&family=DM+Mono:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #09090f;
-    --surface: #0e0e1c;
-    --surface-hover: #131326;
-    --card: #131326;
-    --accent: #ff6b35;
-    --accent-end: #ffab5e;
-    --accent-soft: rgba(255, 107, 53, 0.12);
-    --text: #eeeef8;
-    --text-dim: #7878a0;
-    --text-faint: #5a5a7a;
-    --green: #3ecf6a;
-    --green-soft: rgba(62, 207, 106, 0.1);
-    --red: #e84057;
-    --red-soft: rgba(232, 64, 87, 0.1);
-    --border: rgba(255, 255, 255, 0.09);
+    --bg: #07070e;
+    --surface: #0d0c1e;
+    --surface-hover: #131228;
+    --card: #0d0c1e;
+    --accent: #e8442c;
+    --accent-end: #ff7050;
+    --accent-soft: rgba(232, 68, 44, 0.12);
+    --text: #edeaf8;
+    --text-dim: #6c6a9a;
+    --text-faint: #50507a;
+    --green: #3ed888;
+    --green-soft: rgba(62, 216, 136, 0.1);
+    --red: #ff3860;
+    --red-soft: rgba(255, 56, 96, 0.1);
+    --border: rgba(255, 255, 255, 0.08);
     --radius: 16px;
-    --card-front-bg: rgba(255, 255, 255, 0.028);
-    --card-back-bg: rgba(62, 207, 106, 0.045);
-    --overlay-bg: rgba(0, 0, 0, 0.78);
-    --blue: #5aadff;
-    --blue-soft: rgba(90, 173, 255, 0.1);
-    --purple: #c060e8;
-    --purple-soft: rgba(192, 96, 232, 0.1);
-    --yellow: #f0a030;
-    --yellow-soft: rgba(240, 160, 48, 0.1);
-    --glass-bg: rgba(14, 14, 28, 0.78);
-    --glass-border: rgba(255, 255, 255, 0.09);
+    --card-front-bg: rgba(255, 255, 255, 0.025);
+    --card-back-bg: rgba(62, 216, 136, 0.04);
+    --overlay-bg: rgba(0, 0, 0, 0.82);
+    --blue: #4eaaff;
+    --blue-soft: rgba(78, 170, 255, 0.1);
+    --purple: #b86aec;
+    --purple-soft: rgba(184, 106, 236, 0.1);
+    --yellow: #f0a830;
+    --yellow-soft: rgba(240, 168, 48, 0.1);
+    --glass-bg: rgba(13, 12, 30, 0.82);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --body-bg: radial-gradient(ellipse at 40% -15%, #16123a 0%, #07070e 58%);
   }
 
   [data-theme="light"] {
-    --bg: #f5f3f0;
+    --bg: #f6f0e6;
     --surface: #ffffff;
-    --surface-hover: #f0eeeb;
+    --surface-hover: #ede6d8;
     --card: #ffffff;
-    --accent: #d94b1e;
-    --accent-soft: rgba(217, 75, 30, 0.1);
-    --text: #1a1a1a;
-    --text-dim: #666;
-    --text-faint: #767676;
-    --green: #1e8c3e;
-    --green-soft: rgba(30, 140, 62, 0.08);
-    --red: #c02030;
-    --red-soft: rgba(192, 32, 48, 0.07);
-    --border: #ddd;
-    --card-front-bg: linear-gradient(145deg, #ffffff, #faf9f7);
-    --card-back-bg: linear-gradient(145deg, #f0f8f2, #edf5ef);
-    --overlay-bg: rgba(0,0,0,0.35);
-    --blue: #2563eb;
-    --blue-soft: rgba(37, 99, 235, 0.08);
-    --purple: #9040b8;
-    --purple-soft: rgba(144, 64, 184, 0.08);
-    --yellow: #c07820;
-    --yellow-soft: rgba(192, 120, 32, 0.08);
-    --glass-bg: rgba(255, 255, 255, 0.7);
-    --glass-border: rgba(0, 0, 0, 0.08);
+    --accent: #c4301a;
+    --accent-end: #de5030;
+    --accent-soft: rgba(196, 48, 26, 0.09);
+    --text: #1c0e06;
+    --text-dim: #7a6658;
+    --text-faint: #a89880;
+    --green: #246848;
+    --green-soft: rgba(36, 104, 72, 0.09);
+    --red: #b41e1e;
+    --red-soft: rgba(180, 30, 30, 0.08);
+    --border: rgba(28, 14, 6, 0.13);
+    --card-front-bg: #ffffff;
+    --card-back-bg: #f2fbf5;
+    --overlay-bg: rgba(0, 0, 0, 0.38);
+    --blue: #1c50c0;
+    --blue-soft: rgba(28, 80, 192, 0.09);
+    --purple: #6828a0;
+    --purple-soft: rgba(104, 40, 160, 0.09);
+    --yellow: #b86810;
+    --yellow-soft: rgba(184, 104, 16, 0.09);
+    --glass-bg: rgba(255, 255, 255, 0.82);
+    --glass-border: rgba(28, 14, 6, 0.1);
+    --body-bg: radial-gradient(ellipse at 75% 0%, #fff5e2 0%, #f6f0e6 65%);
   }
 
-  [data-theme="light"] .level-btn.active-beginner { border-color: #1e8c3e; background: rgba(30,140,62,0.08); }
+  [data-theme="light"] .level-btn.active-beginner { border-color: #246848; background: rgba(36,104,72,0.09); }
   [data-theme="light"] .level-btn.active-beginner .level-name,
-  [data-theme="light"] .level-btn.active-beginner .level-count { color: #1e8c3e; }
-  [data-theme="light"] .level-btn.active-intermediate { border-color: #c07820; background: rgba(192,120,32,0.08); }
+  [data-theme="light"] .level-btn.active-beginner .level-count { color: #246848; }
+  [data-theme="light"] .level-btn.active-intermediate { border-color: #b86810; background: rgba(184,104,16,0.09); }
   [data-theme="light"] .level-btn.active-intermediate .level-name,
-  [data-theme="light"] .level-btn.active-intermediate .level-count { color: #c07820; }
-  [data-theme="light"] .level-btn.active-advanced { border-color: #9040b8; background: rgba(144,64,184,0.08); }
+  [data-theme="light"] .level-btn.active-intermediate .level-count { color: #b86810; }
+  [data-theme="light"] .level-btn.active-advanced { border-color: #6828a0; background: rgba(104,40,160,0.09); }
   [data-theme="light"] .level-btn.active-advanced .level-name,
-  [data-theme="light"] .level-btn.active-advanced .level-count { color: #9040b8; }
+  [data-theme="light"] .level-btn.active-advanced .level-count { color: #6828a0; }
 
-  [data-theme="light"] .badge-beginner { background: rgba(30,140,62,0.1); color: #1e8c3e; }
-  [data-theme="light"] .badge-intermediate { background: rgba(192,120,32,0.1); color: #c07820; }
-  [data-theme="light"] .badge-advanced { background: rgba(144,64,184,0.1); color: #9040b8; }
+  [data-theme="light"] .badge-beginner { background: rgba(36,104,72,0.1); color: #246848; }
+  [data-theme="light"] .badge-intermediate { background: rgba(184,104,16,0.1); color: #b86810; }
+  [data-theme="light"] .badge-advanced { background: rgba(104,40,160,0.1); color: #6828a0; }
 
-  [data-theme="light"] .dot-beginner { background: #1e8c3e; }
-  [data-theme="light"] .dot-intermediate { background: #c07820; }
-  [data-theme="light"] .dot-advanced { background: #9040b8; }
+  [data-theme="light"] .dot-beginner { background: #246848; }
+  [data-theme="light"] .dot-intermediate { background: #b86810; }
+  [data-theme="light"] .dot-advanced { background: #6828a0; }
 
-  [data-theme="light"] .form-select option { background: #fff; color: #1a1a1a; }
+  [data-theme="light"] .form-select option { background: #fff; color: #1c0e06; }
 
-  [data-theme="light"] kbd { background: #eee; border-color: #ccc; }
+  [data-theme="light"] kbd { background: #ece5d8; border-color: #c8bfb0; }
+
+  [data-theme="light"] .card-face {
+    border-color: rgba(28, 14, 6, 0.08);
+    box-shadow: 0 6px 32px rgba(28, 14, 6, 0.1), 0 2px 8px rgba(28, 14, 6, 0.06);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  [data-theme="light"] .card-back { border-color: rgba(36, 104, 72, 0.18); }
+  [data-theme="light"] .progress-bar-bg { background: rgba(28, 14, 6, 0.08); }
+  [data-theme="light"] .btn-skip {
+    border-color: rgba(28, 14, 6, 0.15);
+    color: var(--text-dim);
+  }
+  [data-theme="light"] .btn-wrong { border-color: rgba(180, 30, 30, 0.25); }
+  [data-theme="light"] .logo-mark {
+    box-shadow: 0 4px 14px rgba(196, 48, 26, 0.28);
+  }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    background: var(--bg);
-    background: radial-gradient(ellipse at 50% 0%, #0e0c22 0%, #09090f 60%);
+    font-family: 'Sora', sans-serif;
+    background: var(--body-bg);
     color: var(--text);
     min-height: 100vh;
     overflow-x: hidden;
@@ -278,7 +297,7 @@
     border: 1.5px solid var(--border);
     border-radius: 20px;
     padding: 6px 12px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-size: 13px;
     font-weight: 600;
     color: var(--accent);
@@ -411,7 +430,7 @@
     border: 1.5px solid var(--border);
     border-radius: 10px;
     padding: 10px 14px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-size: 15px;
     color: var(--text);
     outline: none;
@@ -421,12 +440,12 @@
   .form-input:focus { border-color: var(--accent); }
 
   .form-input.input-japanese {
-    font-family: 'Noto Sans JP', 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Noto Sans JP', 'Sora', sans-serif;
     font-size: 18px;
   }
 
   .form-input.input-romaji {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'DM Mono', monospace;
     font-size: 14px;
   }
 
@@ -443,7 +462,7 @@
     border: 1.5px solid var(--border);
     border-radius: 10px;
     padding: 10px 14px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-size: 14px;
     color: var(--text);
     outline: none;
@@ -486,7 +505,7 @@
   }
 
   .form-preview-romaji {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'DM Mono', monospace;
     font-size: 13px;
     color: var(--text-dim);
     margin-bottom: 6px;
@@ -532,7 +551,7 @@
     border: none;
     border-radius: 999px;
     padding: 12px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-size: 14px;
     font-weight: 600;
     color: white;
@@ -550,7 +569,7 @@
     border: 1.5px solid var(--border);
     border-radius: 10px;
     padding: 12px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-size: 14px;
     font-weight: 600;
     color: var(--text-dim);
@@ -629,7 +648,7 @@
   .mode-btn.active .mode-desc { color: var(--text); }
 
   .mode-arrow {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'DM Mono', monospace;
     font-size: 15px;
     margin: 4px 0;
     color: var(--text-faint);
@@ -659,7 +678,7 @@
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.2s;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Sora', sans-serif;
   }
 
   .cat-btn:hover { border-color: var(--text-dim); }
@@ -746,7 +765,7 @@
   }
 
   .card-romaji {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'DM Mono', monospace;
     font-size: 17px;
     font-weight: 400;
     color: var(--text-dim);
@@ -853,7 +872,7 @@
     padding: 14px 20px;
     border-radius: 999px;
     border: 1.5px solid;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
@@ -937,7 +956,7 @@
     border: 1px solid var(--border);
     border-radius: 4px;
     padding: 2px 6px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'DM Mono', monospace;
     font-size: 10px;
     margin-right: 4px;
   }
@@ -971,7 +990,7 @@
     border: none;
     border-radius: 999px;
     padding: 14px 32px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
@@ -998,7 +1017,7 @@
     cursor: pointer;
     transition: all 0.2s;
     text-align: center;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Sora', sans-serif;
   }
 
   .level-btn:hover { border-color: var(--text-dim); background: var(--surface-hover); }
@@ -1126,7 +1145,7 @@
     border: 1px solid var(--border);
     border-radius: 6px;
     padding: 3px 8px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'DM Mono', monospace;
     font-size: 10px;
     color: var(--text-dim);
     cursor: pointer;
@@ -1163,12 +1182,12 @@
   .quiz-prompt-text {
     font-size: 36px;
     font-weight: 600;
-    font-family: 'Noto Serif JP', 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Noto Serif JP', 'Sora', sans-serif;
     margin-bottom: 4px;
     letter-spacing: -0.5px;
   }
   .quiz-prompt-sub {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'DM Mono', monospace;
     font-size: 15px;
     color: var(--text-dim);
   }
@@ -1188,7 +1207,7 @@
     cursor: pointer;
     transition: all 0.15s;
     text-align: center;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-size: 15px;
     font-weight: 500;
     color: var(--text);
@@ -1222,7 +1241,7 @@
     border: none;
     border-radius: 999px;
     padding: 14px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-size: 15px;
     font-weight: 600;
     cursor: pointer;
@@ -1304,7 +1323,7 @@
     margin-bottom: 16px;
   }
   .speed-timer-text {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'DM Mono', monospace;
     font-size: 28px;
     font-weight: 700;
     color: var(--accent);
@@ -1332,7 +1351,7 @@
     border: 1.5px solid var(--border);
     border-radius: 10px;
     padding: 8px 14px;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-size: 13px;
     font-weight: 600;
     color: var(--text-dim);
@@ -1459,7 +1478,7 @@
     padding: 8px;
     cursor: pointer;
     text-align: center;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-size: 13px;
     font-weight: 600;
     color: var(--text-dim);
@@ -1508,7 +1527,7 @@
     border-radius: 12px;
     padding: 14px 20px;
     cursor: pointer;
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Sora', sans-serif;
     font-size: 16px;
     font-weight: 600;
     color: var(--text);
@@ -3622,7 +3641,7 @@ function renderStatsView() {
       <div class="stats-section" style="border:1.5px solid var(--red);border-color:rgba(232,64,87,0.3)">
         <div class="stats-section-title" style="color:var(--red)">Reset</div>
         <p style="font-size:13px;color:var(--text-dim);margin-bottom:14px">Erase all progress — streak, XP, stats, favorites, and session history. This cannot be undone.</p>
-        <button onclick="confirmReset()" style="background:var(--red-soft);border:1.5px solid rgba(232,64,87,0.3);color:var(--red);border-radius:10px;padding:10px 20px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;font-weight:600;cursor:pointer;width:100%">Reset All Progress</button>
+        <button onclick="confirmReset()" style="background:var(--red-soft);border:1.5px solid rgba(232,64,87,0.3);color:var(--red);border-radius:10px;padding:10px 20px;font-family:'Sora',sans-serif;font-size:14px;font-weight:600;cursor:pointer;width:100%">Reset All Progress</button>
       </div>
     </div>
   `;
