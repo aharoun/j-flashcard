@@ -590,6 +590,8 @@
 
   .mode-btn:hover { border-color: #444; background: var(--surface-hover); }
 
+  .mode-btn.disabled { opacity: 0.4; pointer-events: none; }
+
   .mode-btn.active {
     border-color: var(--accent);
     background: var(--accent-soft);
@@ -1766,7 +1768,7 @@ const FALLBACK_VOCABULARY = {
   ],
 };
 
-// Start with fallback so the app can render immediately if needed
+// Start with fallback for instant first render; replaced by vocabulary.json when loaded
 vocabulary = FALLBACK_VOCABULARY;
 
 const LEVELS = {
@@ -2920,6 +2922,7 @@ function renderHeader() {
 }
 
 function renderModeSelector() {
+  const canQuiz = countByLevel(state.category, 'all') >= 4;
   return `
     <div class="mode-selector">
       <div class="mode-btn ${state.view === 'study' && state.mode === 'en-to-jp' ? 'active' : ''}" onclick="setMode('en-to-jp')">
@@ -2932,10 +2935,10 @@ function renderModeSelector() {
         <div class="mode-arrow">JP → EN</div>
         <div class="mode-desc">See Japanese, guess English</div>
       </div>
-      <div class="mode-btn ${state.view === 'quiz' ? 'active' : ''}" onclick="startQuizSession()">
+      <div class="mode-btn ${state.view === 'quiz' ? 'active' : ''} ${!canQuiz ? 'disabled' : ''}" onclick="startQuizSession()">
         <div class="mode-label">Quiz</div>
         <div class="mode-arrow">🧠</div>
-        <div class="mode-desc">Multiple choice</div>
+        <div class="mode-desc">${canQuiz ? 'Multiple choice' : 'Need 4+ cards'}</div>
       </div>
     </div>
   `;
@@ -3230,6 +3233,7 @@ function renderSessionSetup() {
   const dueCount = getDueCardCount();
   const weakCount = getWeakCardCount();
   const favCount = getFavoriteCards().length;
+  const quizCount = countByLevel(state.category, 'all');
 
   return `
     <div class="session-setup">
@@ -3278,11 +3282,11 @@ function renderSessionSetup() {
           <div class="session-card-desc">${dueCount === 0 ? 'No cards due right now' : 'Due cards by urgency'}</div>
           <div class="session-card-count">${dueCount} due</div>
         </div>
-        <div class="session-card" onclick="startQuizSession()">
+        <div class="session-card ${quizCount < 4 ? 'disabled' : ''}" onclick="startQuizSession()">
           <div class="session-card-icon">❓</div>
           <div class="session-card-name">Quiz Mode</div>
-          <div class="session-card-desc">Multiple choice questions</div>
-          <div class="session-card-count">${countByLevel(state.category, 'all')} cards</div>
+          <div class="session-card-desc">${quizCount < 4 ? 'Need at least 4 cards for quiz' : 'Multiple choice questions'}</div>
+          <div class="session-card-count">${quizCount} cards</div>
         </div>
       </div>
       <div style="text-align:center;margin-top:20px">
@@ -3581,6 +3585,9 @@ if ('serviceWorker' in navigator) {
 
 // ─── INIT ───
 resetDailyIfNeeded();
+mergeCustomCards();
+startSession();
+// Upgrade vocabulary from JSON in the background; re-start session with full data
 loadVocabulary().then(() => {
   mergeCustomCards();
   startSession();
