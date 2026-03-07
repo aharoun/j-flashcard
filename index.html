@@ -76,24 +76,6 @@
     --body-bg: radial-gradient(ellipse at 75% 0%, #fff5e2 0%, #f6f0e6 65%);
   }
 
-  [data-theme="light"] .level-btn.active-beginner { border-color: #246848; background: rgba(36,104,72,0.09); }
-  [data-theme="light"] .level-btn.active-beginner .level-name,
-  [data-theme="light"] .level-btn.active-beginner .level-count { color: #246848; }
-  [data-theme="light"] .level-btn.active-intermediate { border-color: #b86810; background: rgba(184,104,16,0.09); }
-  [data-theme="light"] .level-btn.active-intermediate .level-name,
-  [data-theme="light"] .level-btn.active-intermediate .level-count { color: #b86810; }
-  [data-theme="light"] .level-btn.active-advanced { border-color: #6828a0; background: rgba(104,40,160,0.09); }
-  [data-theme="light"] .level-btn.active-advanced .level-name,
-  [data-theme="light"] .level-btn.active-advanced .level-count { color: #6828a0; }
-
-  [data-theme="light"] .badge-beginner { background: rgba(36,104,72,0.1); color: #246848; }
-  [data-theme="light"] .badge-intermediate { background: rgba(184,104,16,0.1); color: #b86810; }
-  [data-theme="light"] .badge-advanced { background: rgba(104,40,160,0.1); color: #6828a0; }
-
-  [data-theme="light"] .dot-beginner { background: #246848; }
-  [data-theme="light"] .dot-intermediate { background: #b86810; }
-  [data-theme="light"] .dot-advanced { background: #6828a0; }
-
   [data-theme="light"] .form-select option { background: #fff; color: #1c0e06; }
 
   [data-theme="light"] kbd { background: #ece5d8; border-color: #c8bfb0; }
@@ -997,91 +979,6 @@
 
   .restart-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(255, 107, 53, 0.4); }
 
-  /* ─── Level Selector ─── */
-  .level-selector {
-    display: flex;
-    gap: 5px;
-    margin-bottom: 12px;
-  }
-
-  .level-btn {
-    flex: 1;
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: 7px;
-    padding: 5px 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: center;
-    font-family: 'Sora', sans-serif;
-  }
-
-  .level-btn:hover { border-color: var(--text-dim); background: var(--surface-hover); }
-
-  .level-name {
-    font-size: 11px;
-    font-weight: 600;
-  }
-
-  .level-count {
-    display: none;
-  }
-
-  .level-btn.active-beginner {
-    border-color: #3ecf6a;
-    background: rgba(62, 207, 106, 0.1);
-  }
-  .level-btn.active-beginner .level-name { color: #3ecf6a; }
-  .level-btn.active-beginner .level-count { color: #3ecf6a; }
-
-  .level-btn.active-intermediate {
-    border-color: #f0a030;
-    background: rgba(240, 160, 48, 0.1);
-  }
-  .level-btn.active-intermediate .level-name { color: #f0a030; }
-  .level-btn.active-intermediate .level-count { color: #f0a030; }
-
-  .level-btn.active-advanced {
-    border-color: #c060e8;
-    background: rgba(192, 96, 232, 0.1);
-  }
-  .level-btn.active-advanced .level-name { color: #c060e8; }
-  .level-btn.active-advanced .level-count { color: #c060e8; }
-
-  .level-btn.active-all {
-    border-color: var(--accent);
-    background: var(--accent-soft);
-  }
-  .level-btn.active-all .level-name { color: var(--accent); }
-  .level-btn.active-all .level-count { color: var(--accent); }
-
-  .level-dot {
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    margin-right: 4px;
-    vertical-align: middle;
-  }
-  .dot-beginner { background: #3ecf6a; }
-  .dot-intermediate { background: #f0a030; }
-  .dot-advanced { background: #c060e8; }
-
-  .card-level-badge {
-    position: absolute;
-    top: 14px;
-    right: 16px;
-    font-size: 10px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding: 3px 8px;
-    border-radius: 6px;
-  }
-  .badge-beginner { background: rgba(62,207,106,0.15); color: #3ecf6a; }
-  .badge-intermediate { background: rgba(240,160,48,0.15); color: #f0a030; }
-  .badge-advanced { background: rgba(192,96,232,0.15); color: #c060e8; }
-
   /* ─── Audio Controls ─── */
   .audio-controls {
     display: flex;
@@ -1458,34 +1355,6 @@
     outline-offset: 1px;
   }
 
-  /* ─── JLPT Selector ─── */
-  .jlpt-selector {
-    display: flex;
-    gap: 5px;
-    margin-bottom: 12px;
-  }
-  .jlpt-btn {
-    flex: 1;
-    background: var(--surface);
-    border: 1.5px solid var(--border);
-    border-radius: 7px;
-    padding: 5px 6px;
-    cursor: pointer;
-    text-align: center;
-    font-family: 'Sora', sans-serif;
-    font-size: 11px;
-    font-weight: 600;
-    color: var(--text-dim);
-    transition: all 0.2s;
-  }
-  .jlpt-btn:hover { border-color: var(--text-dim); background: var(--surface-hover); }
-  .jlpt-btn.active {
-    border-color: var(--blue);
-    background: var(--blue-soft);
-    color: var(--blue);
-  }
-  .jlpt-btn .jlpt-count { display: none; }
-
   /* ─── Daily Goal Settings Modal ─── */
   .goal-modal {
     background: var(--glass-bg);
@@ -1676,6 +1545,82 @@
   .history-score { font-size: 13px; font-weight: 600; }
   .history-mode { font-size: 11px; color: var(--text-faint); }
 
+  /* ─── Word List View ─── */
+  .wordlist-view {
+    margin-top: 8px;
+  }
+  .wordlist-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  .wordlist-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .wordlist-count {
+    font-size: 12px;
+    color: var(--text-dim);
+  }
+  .wordlist-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .wordlist-table th {
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 10px;
+    border-bottom: 2px solid var(--border);
+  }
+  .wordlist-table td {
+    padding: 10px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+    vertical-align: middle;
+  }
+  .wordlist-table tr:last-child td { border-bottom: none; }
+  .wordlist-table tr:hover { background: var(--surface); }
+  .wordlist-table .wl-jp {
+    font-family: 'Noto Sans JP', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  .wordlist-table .wl-romaji {
+    color: var(--text-dim);
+    font-size: 12px;
+  }
+  .wordlist-table .wl-en {
+    color: var(--text);
+  }
+  .wordlist-table .wl-play {
+    cursor: pointer;
+    opacity: 0.5;
+    transition: opacity 0.2s;
+    font-size: 16px;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .wordlist-table .wl-play:hover { opacity: 1; }
+  .wordlist-cat-section {
+    margin-bottom: 20px;
+  }
+  .wordlist-cat-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 8px;
+    padding: 6px 10px;
+    background: var(--accent-soft);
+    border-radius: 8px;
+  }
+
   /* ─── Responsive ─── */
   @media (max-width: 480px) {
     .card-japanese { font-size: 38px; }
@@ -1684,6 +1629,10 @@
     .header-center { gap: 6px; }
     .quiz-options { grid-template-columns: 1fr; }
     .session-grid { grid-template-columns: 1fr; }
+    .wordlist-table .wl-romaji { font-size: 11px; }
+    .wordlist-table .wl-jp { font-size: 16px; }
+    .wordlist-table td { padding: 8px 6px; }
+    .wordlist-table th { padding: 6px; font-size: 10px; }
   }
 </style>
 </head>
@@ -1697,173 +1646,221 @@ let vocabulary = {};
 // Minimal fallback if vocabulary.json fails to load (offline first visit)
 const FALLBACK_VOCABULARY = {
   "Greetings": [
-    { japanese: "こんにちは", romaji: "konnichiwa", english: "Hello", level: 1, jlpt: "N5", examples: [{ jp: "こんにちは、元気ですか？", en: "Hello, how are you?" }] },
-    { japanese: "ありがとう", romaji: "arigatou", english: "Thank you", level: 1, jlpt: "N5", examples: [{ jp: "手伝ってくれてありがとう。", en: "Thank you for helping me." }] },
-    { japanese: "すみません", romaji: "sumimasen", english: "Excuse me / Sorry", level: 1, jlpt: "N5", examples: [{ jp: "すみません、駅はどこですか？", en: "Excuse me, where is the station?" }] },
-    { japanese: "はい", romaji: "hai", english: "Yes", level: 1, jlpt: "N5", examples: [{ jp: "はい、わかりました。", en: "Yes, I understand." }] },
-    { japanese: "いいえ", romaji: "iie", english: "No", level: 1, jlpt: "N5", examples: [{ jp: "いいえ、結構です。", en: "No, I'm fine." }] },
-    { japanese: "お願いします", romaji: "onegai shimasu", english: "Please", level: 1, jlpt: "N5", examples: [{ jp: "水をお願いします。", en: "Water, please." }] },
-    { japanese: "おはよう", romaji: "ohayou", english: "Good morning (casual)", level: 1, jlpt: "N5", examples: [{ jp: "おはよう、今日もいい天気だね。", en: "Good morning, nice weather today." }] },
-    { japanese: "ありがとうございます", romaji: "arigatou gozaimasu", english: "Thank you (polite)", level: 2, jlpt: "N5", examples: [{ jp: "ご親切にありがとうございます。", en: "Thank you for your kindness." }] },
-    { japanese: "おはようございます", romaji: "ohayou gozaimasu", english: "Good morning (polite)", level: 2, jlpt: "N5", examples: [{ jp: "先生、おはようございます。", en: "Good morning, teacher." }] },
-    { japanese: "こんばんは", romaji: "konbanwa", english: "Good evening", level: 2, jlpt: "N5", examples: [{ jp: "こんばんは、お元気ですか？", en: "Good evening, how are you?" }] },
-    { japanese: "さようなら", romaji: "sayounara", english: "Goodbye", level: 2, jlpt: "N5", examples: [{ jp: "さようなら、また明日。", en: "Goodbye, see you tomorrow." }] },
-    { japanese: "おやすみなさい", romaji: "oyasuminasai", english: "Good night", level: 2, jlpt: "N5", examples: [{ jp: "おやすみなさい、いい夢を。", en: "Good night, sweet dreams." }] },
-    { japanese: "お元気ですか", romaji: "ogenki desu ka", english: "How are you?", level: 2, jlpt: "N5", examples: [{ jp: "お久しぶりです。お元気ですか？", en: "Long time no see. How are you?" }] },
-    { japanese: "元気です", romaji: "genki desu", english: "I'm fine", level: 2, jlpt: "N5", examples: [{ jp: "はい、元気です。ありがとう。", en: "Yes, I'm fine. Thank you." }] },
-    { japanese: "はじめまして", romaji: "hajimemashite", english: "Nice to meet you", level: 3, jlpt: "N5", examples: [{ jp: "はじめまして、田中です。", en: "Nice to meet you, I'm Tanaka." }] },
-    { japanese: "よろしくお願いします", romaji: "yoroshiku onegai shimasu", english: "Please treat me well", level: 3, jlpt: "N4", examples: [{ jp: "新しいメンバーです。よろしくお願いします。", en: "I'm a new member. Please take care of me." }] },
-    { japanese: "いただきます", romaji: "itadakimasu", english: "Let's eat (before a meal)", level: 3, jlpt: "N4", examples: [{ jp: "いただきます！おいしそう！", en: "Let's eat! It looks delicious!" }] },
-    { japanese: "ごちそうさまでした", romaji: "gochisousama deshita", english: "Thank you for the meal", level: 3, jlpt: "N4", examples: [{ jp: "ごちそうさまでした。とてもおいしかったです。", en: "Thank you for the meal. It was very delicious." }] },
-    { japanese: "お久しぶりです", romaji: "ohisashiburi desu", english: "Long time no see", level: 3, jlpt: "N3", examples: [{ jp: "お久しぶりです！最近どうですか？", en: "Long time no see! How have you been?" }] },
-    { japanese: "失礼します", romaji: "shitsurei shimasu", english: "Excuse me (formal)", level: 3, jlpt: "N3", examples: [{ jp: "失礼します、少しよろしいですか？", en: "Excuse me, do you have a moment?" }] },
+    { japanese: "ようこそ", romaji: "youkoso", english: "welcome" },
+    { japanese: "おはようございます", romaji: "ohayou gozaimasu", english: "good morning" },
+    { japanese: "はじめまして", romaji: "hajimemashite", english: "nice to meet you, how do you do" },
+    { japanese: "おなまえは", romaji: "onamae wa", english: "what's your name" },
+    { japanese: "すみません", romaji: "sumimasen", english: "excuse me" },
+    { japanese: "こんばんは", romaji: "konbanwa", english: "good evening" },
+    { japanese: "こんにちは", romaji: "konnichiwa", english: "hello, hi" },
+    { japanese: "またあした", romaji: "mata ashita", english: "see you tomorrow" },
+    { japanese: "じゃあね", romaji: "jaa ne", english: "bye" },
+    { japanese: "どうぞよろしく", romaji: "douzo yoroshiku", english: "nice to meet you" },
+    { japanese: "ください", romaji: "kudasai", english: "please" },
+    { japanese: "はい", romaji: "hai", english: "yes" },
+    { japanese: "いいえ", romaji: "iie", english: "no" },
   ],
-  "Survival Words": [
-    { japanese: "水", romaji: "mizu", english: "Water", level: 1, jlpt: "N5", examples: [{ jp: "水をください。", en: "Please give me water." }] },
-    { japanese: "トイレ", romaji: "toire", english: "Toilet / Restroom", level: 1, jlpt: "N5", examples: [{ jp: "トイレはどこですか？", en: "Where is the toilet?" }] },
-    { japanese: "駅", romaji: "eki", english: "Station", level: 1, jlpt: "N5", examples: [{ jp: "東京駅まで行きたいです。", en: "I want to go to Tokyo Station." }] },
-    { japanese: "お金", romaji: "okane", english: "Money", level: 1, jlpt: "N5", examples: [{ jp: "お金が足りません。", en: "I don't have enough money." }] },
-    { japanese: "これ", romaji: "kore", english: "This", level: 1, jlpt: "N5", examples: [{ jp: "これは何ですか？", en: "What is this?" }] },
-    { japanese: "いくら", romaji: "ikura", english: "How much?", level: 1, jlpt: "N5", examples: [{ jp: "これはいくらですか？", en: "How much is this?" }] },
-    { japanese: "どこ", romaji: "doko", english: "Where?", level: 1, jlpt: "N5", examples: [{ jp: "どこに行きますか？", en: "Where are you going?" }] },
-    { japanese: "ここ", romaji: "koko", english: "Here", level: 1, jlpt: "N5", examples: [{ jp: "ここに座ってください。", en: "Please sit here." }] },
-    { japanese: "大丈夫", romaji: "daijoubu", english: "OK / I'm fine", level: 1, jlpt: "N5", examples: [{ jp: "大丈夫ですか？", en: "Are you OK?" }] },
-    { japanese: "お茶", romaji: "ocha", english: "Tea", level: 2, jlpt: "N5", examples: [{ jp: "お茶を飲みましょう。", en: "Let's drink tea." }] },
-    { japanese: "コーヒー", romaji: "koohii", english: "Coffee", level: 2, jlpt: "N5", examples: [{ jp: "コーヒーを一つお願いします。", en: "One coffee, please." }] },
-    { japanese: "ご飯", romaji: "gohan", english: "Rice / Meal", level: 2, jlpt: "N5", examples: [{ jp: "ご飯を食べましたか？", en: "Have you eaten?" }] },
-    { japanese: "電車", romaji: "densha", english: "Train", level: 2, jlpt: "N5", examples: [{ jp: "電車で行きます。", en: "I'll go by train." }] },
-    { japanese: "切符", romaji: "kippu", english: "Ticket", level: 2, jlpt: "N4", examples: [{ jp: "切符を買いたいです。", en: "I want to buy a ticket." }] },
-    { japanese: "今日", romaji: "kyou", english: "Today", level: 2, jlpt: "N5", examples: [{ jp: "今日は暑いですね。", en: "It's hot today, isn't it?" }] },
-    { japanese: "明日", romaji: "ashita", english: "Tomorrow", level: 2, jlpt: "N5", examples: [{ jp: "明日は休みです。", en: "Tomorrow is a day off." }] },
-    { japanese: "時間", romaji: "jikan", english: "Time", level: 2, jlpt: "N5", examples: [{ jp: "時間がありません。", en: "I don't have time." }] },
-    { japanese: "昨日", romaji: "kinou", english: "Yesterday", level: 3, jlpt: "N5", examples: [{ jp: "昨日は雨でした。", en: "It rained yesterday." }] },
-    { japanese: "天気", romaji: "tenki", english: "Weather", level: 3, jlpt: "N5", examples: [{ jp: "明日の天気はどうですか？", en: "How's the weather tomorrow?" }] },
-    { japanese: "暑い", romaji: "atsui", english: "Hot", level: 3, jlpt: "N5", examples: [{ jp: "今日はとても暑いです。", en: "It's very hot today." }] },
-    { japanese: "寒い", romaji: "samui", english: "Cold", level: 3, jlpt: "N5", examples: [{ jp: "冬は寒いです。", en: "Winter is cold." }] },
-    { japanese: "傘", romaji: "kasa", english: "Umbrella", level: 3, jlpt: "N4", examples: [{ jp: "傘を忘れました。", en: "I forgot my umbrella." }] },
-    { japanese: "鍵", romaji: "kagi", english: "Key", level: 3, jlpt: "N4", examples: [{ jp: "鍵をなくしました。", en: "I lost my key." }] },
-    { japanese: "財布", romaji: "saifu", english: "Wallet", level: 3, jlpt: "N4", examples: [{ jp: "財布を忘れました。", en: "I forgot my wallet." }] },
+  "People": [
+    { japanese: "私", romaji: "watashi", english: "I" },
+    { japanese: "わたしの", romaji: "watashi no", english: "my, mine" },
+    { japanese: "さん", romaji: "san", english: "Mr., Miss, Mrs." },
+    { japanese: "ひと", romaji: "hito", english: "person, people" },
+    { japanese: "がくせい", romaji: "gakusei", english: "student, students" },
+    { japanese: "せんせい", romaji: "sensei", english: "teacher, Professor, teachers" },
+    { japanese: "いしゃ", romaji: "isha", english: "doctor, doctors" },
+    { japanese: "べんごし", romaji: "bengoshi", english: "lawyer, lawyers" },
+    { japanese: "なおみ", romaji: "naomi", english: "Naomi" },
+    { japanese: "はな", romaji: "hana", english: "flowers, flower, Hana" },
+    { japanese: "けん", romaji: "ken", english: "Ken, ticket" },
+    { japanese: "中山", romaji: "nakayama", english: "Nakayama" },
+    { japanese: "田中", romaji: "tanaka", english: "Tanaka" },
+    { japanese: "山口", romaji: "yamaguchi", english: "Yamaguchi" },
+    { japanese: "なかやま", romaji: "nakayama", english: "Nakayama" },
+    { japanese: "たなか", romaji: "tanaka", english: "Tanaka" },
+    { japanese: "やまぐち", romaji: "yamaguchi", english: "Yamaguchi" },
   ],
-  "Getting Around": [
-    { japanese: "右", romaji: "migi", english: "Right", level: 1, jlpt: "N5", examples: [{ jp: "右に曲がってください。", en: "Please turn right." }] },
-    { japanese: "左", romaji: "hidari", english: "Left", level: 1, jlpt: "N5", examples: [{ jp: "左に曲がってください。", en: "Please turn left." }] },
-    { japanese: "まっすぐ", romaji: "massugu", english: "Straight ahead", level: 1, jlpt: "N5", examples: [{ jp: "まっすぐ行ってください。", en: "Please go straight." }] },
-    { japanese: "出口", romaji: "deguchi", english: "Exit", level: 1, jlpt: "N4", examples: [{ jp: "出口はどこですか？", en: "Where is the exit?" }] },
-    { japanese: "入口", romaji: "iriguchi", english: "Entrance", level: 1, jlpt: "N4", examples: [{ jp: "入口はあちらです。", en: "The entrance is over there." }] },
-    { japanese: "タクシー", romaji: "takushii", english: "Taxi", level: 1, jlpt: "N5", examples: [{ jp: "タクシーを呼んでください。", en: "Please call a taxi." }] },
-    { japanese: "地下鉄", romaji: "chikatetsu", english: "Subway", level: 2, jlpt: "N4", examples: [{ jp: "地下鉄で行きましょう。", en: "Let's go by subway." }] },
-    { japanese: "バス", romaji: "basu", english: "Bus", level: 2, jlpt: "N5", examples: [{ jp: "バスは何時ですか？", en: "What time is the bus?" }] },
-    { japanese: "近い", romaji: "chikai", english: "Near / Close", level: 2, jlpt: "N5", examples: [{ jp: "駅は近いですか？", en: "Is the station near?" }] },
-    { japanese: "遠い", romaji: "tooi", english: "Far", level: 2, jlpt: "N5", examples: [{ jp: "空港は遠いです。", en: "The airport is far." }] },
-    { japanese: "そこ", romaji: "soko", english: "There", level: 2, jlpt: "N5", examples: [{ jp: "そこに置いてください。", en: "Please put it there." }] },
-    { japanese: "地図", romaji: "chizu", english: "Map", level: 2, jlpt: "N4", examples: [{ jp: "地図を見せてください。", en: "Please show me the map." }] },
-    { japanese: "止まる", romaji: "tomaru", english: "To stop", level: 2, jlpt: "N4", examples: [{ jp: "ここで止まってください。", en: "Please stop here." }] },
-    { japanese: "交番", romaji: "kouban", english: "Police box", level: 3, jlpt: "N3", examples: [{ jp: "交番で道を聞きました。", en: "I asked for directions at the police box." }] },
-    { japanese: "病院", romaji: "byouin", english: "Hospital", level: 3, jlpt: "N4", examples: [{ jp: "病院に行きたいです。", en: "I want to go to the hospital." }] },
-    { japanese: "信号", romaji: "shingou", english: "Traffic light", level: 3, jlpt: "N3", examples: [{ jp: "信号を右に曲がってください。", en: "Turn right at the traffic light." }] },
-    { japanese: "交差点", romaji: "kousaten", english: "Intersection", level: 3, jlpt: "N3", examples: [{ jp: "次の交差点を左に。", en: "Turn left at the next intersection." }] },
-    { japanese: "歩く", romaji: "aruku", english: "To walk", level: 3, jlpt: "N4", examples: [{ jp: "駅まで歩きます。", en: "I'll walk to the station." }] },
-    { japanese: "乗り換え", romaji: "norikae", english: "Transfer (trains)", level: 3, jlpt: "N3", examples: [{ jp: "新宿で乗り換えてください。", en: "Please transfer at Shinjuku." }] },
-    { japanese: "片道", romaji: "katamichi", english: "One way", level: 3, jlpt: "N3", examples: [{ jp: "片道切符をください。", en: "A one-way ticket, please." }] },
-    { japanese: "往復", romaji: "oufuku", english: "Round trip", level: 3, jlpt: "N3", examples: [{ jp: "往復でいくらですか？", en: "How much for a round trip?" }] },
+  "Countries & Cities": [
+    { japanese: "日本", romaji: "nihon", english: "Japan, Japanese" },
+    { japanese: "にほん", romaji: "nihon", english: "Japan" },
+    { japanese: "トロント", romaji: "toronto", english: "Toronto" },
+    { japanese: "おおさか", romaji: "oosaka", english: "Osaka" },
+    { japanese: "京都", romaji: "kyouto", english: "Kyoto" },
+    { japanese: "ニューヨーク", romaji: "nyuuyooku", english: "New York" },
+    { japanese: "東京", romaji: "toukyou", english: "Tokyo" },
+    { japanese: "ブラジル", romaji: "burajiru", english: "Brazil" },
+    { japanese: "イギリス", romaji: "igirisu", english: "Britain, the United Kingdom" },
+    { japanese: "カナダ", romaji: "kanada", english: "Canada" },
+    { japanese: "アメリカ", romaji: "amerika", english: "America, the USA, the US" },
+    { japanese: "にほんじん", romaji: "nihonjin", english: "Japanese" },
+    { japanese: "ブラジルじん", romaji: "burajirujin", english: "Brazilian" },
+    { japanese: "イギリスじん", romaji: "igirisujin", english: "British" },
+    { japanese: "アメリカじん", romaji: "amerikajin", english: "American" },
+    { japanese: "カナダじん", romaji: "kanadajin", english: "Canadian" },
+    { japanese: "にすんでいます", romaji: "ni sunde imasu", english: "is living" },
+    { japanese: "しゅっしん", romaji: "shusshin", english: "from, origin, hometown" },
+    { japanese: "まち", romaji: "machi", english: "town, city" },
   ],
-  "Shopping & Food": [
-    { japanese: "いくらですか", romaji: "ikura desu ka", english: "How much is it?", level: 1, jlpt: "N5", examples: [{ jp: "このバッグはいくらですか？", en: "How much is this bag?" }] },
-    { japanese: "これをください", romaji: "kore o kudasai", english: "This one, please", level: 1, jlpt: "N5", examples: [{ jp: "これをください。二つお願いします。", en: "This one, please. Two, please." }] },
-    { japanese: "おいしい", romaji: "oishii", english: "Delicious", level: 1, jlpt: "N5", examples: [{ jp: "このラーメンはおいしい！", en: "This ramen is delicious!" }] },
-    { japanese: "メニュー", romaji: "menyuu", english: "Menu", level: 1, jlpt: "N5", examples: [{ jp: "メニューを見せてください。", en: "Please show me the menu." }] },
-    { japanese: "会計", romaji: "kaikei", english: "Check / Bill", level: 1, jlpt: "N4", examples: [{ jp: "会計をお願いします。", en: "The check, please." }] },
-    { japanese: "それ", romaji: "sore", english: "That (near you)", level: 2, jlpt: "N5", examples: [{ jp: "それは何ですか？", en: "What is that?" }] },
-    { japanese: "高い", romaji: "takai", english: "Expensive", level: 2, jlpt: "N5", examples: [{ jp: "このホテルは高いです。", en: "This hotel is expensive." }] },
-    { japanese: "安い", romaji: "yasui", english: "Cheap", level: 2, jlpt: "N5", examples: [{ jp: "この店は安いです。", en: "This shop is cheap." }] },
-    { japanese: "大きい", romaji: "ookii", english: "Big", level: 2, jlpt: "N5", examples: [{ jp: "大きいサイズはありますか？", en: "Do you have a big size?" }] },
-    { japanese: "小さい", romaji: "chiisai", english: "Small", level: 2, jlpt: "N5", examples: [{ jp: "もっと小さいのはありますか？", en: "Do you have a smaller one?" }] },
-    { japanese: "現金", romaji: "genkin", english: "Cash", level: 2, jlpt: "N4", examples: [{ jp: "現金で払います。", en: "I'll pay with cash." }] },
-    { japanese: "クレジットカード", romaji: "kurejitto kaado", english: "Credit card", level: 2, jlpt: "N4", examples: [{ jp: "クレジットカードは使えますか？", en: "Can I use a credit card?" }] },
-    { japanese: "レシート", romaji: "reshiito", english: "Receipt", level: 2, jlpt: "N4", examples: [{ jp: "レシートをください。", en: "Please give me a receipt." }] },
-    { japanese: "袋", romaji: "fukuro", english: "Bag", level: 3, jlpt: "N4", examples: [{ jp: "袋はいりますか？", en: "Do you need a bag?" }] },
-    { japanese: "肉", romaji: "niku", english: "Meat", level: 3, jlpt: "N5", examples: [{ jp: "肉を食べません。", en: "I don't eat meat." }] },
-    { japanese: "魚", romaji: "sakana", english: "Fish", level: 3, jlpt: "N5", examples: [{ jp: "日本の魚はおいしいです。", en: "Japanese fish is delicious." }] },
-    { japanese: "野菜", romaji: "yasai", english: "Vegetables", level: 3, jlpt: "N4", examples: [{ jp: "野菜を多く食べましょう。", en: "Let's eat more vegetables." }] },
-    { japanese: "飲み物", romaji: "nomimono", english: "Drink / Beverage", level: 3, jlpt: "N4", examples: [{ jp: "飲み物は何がいいですか？", en: "What would you like to drink?" }] },
-    { japanese: "辛い", romaji: "karai", english: "Spicy", level: 3, jlpt: "N4", examples: [{ jp: "辛い食べ物が好きです。", en: "I like spicy food." }] },
-    { japanese: "甘い", romaji: "amai", english: "Sweet", level: 3, jlpt: "N4", examples: [{ jp: "日本のお菓子は甘い。", en: "Japanese sweets are sweet." }] },
-    { japanese: "お持ち帰り", romaji: "omochikaeri", english: "Takeout", level: 3, jlpt: "N3", examples: [{ jp: "お持ち帰りでお願いします。", en: "Takeout, please." }] },
-    { japanese: "アレルギー", romaji: "arerugii", english: "Allergy", level: 3, jlpt: "N3", examples: [{ jp: "ナッツアレルギーがあります。", en: "I have a nut allergy." }] },
+  "Places": [
+    { japanese: "そこ", romaji: "soko", english: "there" },
+    { japanese: "ここ", romaji: "koko", english: "here" },
+    { japanese: "どこ", romaji: "doko", english: "where" },
+    { japanese: "だいがく", romaji: "daigaku", english: "university, college" },
+    { japanese: "えき", romaji: "eki", english: "station, train station" },
+    { japanese: "デパート", romaji: "depaato", english: "department store" },
+    { japanese: "バスてい", romaji: "basutei", english: "bus stop" },
+    { japanese: "ホテル", romaji: "hoteru", english: "hotel" },
+    { japanese: "コンビニ", romaji: "konbini", english: "convenience store" },
+    { japanese: "ちかてつ", romaji: "chikatetsu", english: "subway" },
+    { japanese: "くうこう", romaji: "kuukou", english: "airport" },
   ],
-  "Key Phrases": [
-    { japanese: "わかりません", romaji: "wakarimasen", english: "I don't understand", level: 1, jlpt: "N5", examples: [{ jp: "すみません、わかりません。", en: "Sorry, I don't understand." }] },
-    { japanese: "日本語がわかりません", romaji: "nihongo ga wakarimasen", english: "I don't understand Japanese", level: 1, jlpt: "N5", examples: [{ jp: "ごめんなさい、日本語がわかりません。", en: "I'm sorry, I don't understand Japanese." }] },
-    { japanese: "英語を話せますか", romaji: "eigo o hanasemasu ka", english: "Do you speak English?", level: 1, jlpt: "N4", examples: [{ jp: "すみません、英語を話せますか？", en: "Excuse me, do you speak English?" }] },
-    { japanese: "助けて", romaji: "tasukete", english: "Help!", level: 1, jlpt: "N4", examples: [{ jp: "助けてください！", en: "Please help!" }] },
-    { japanese: "ちょっと待って", romaji: "chotto matte", english: "Wait a moment", level: 1, jlpt: "N5", examples: [{ jp: "ちょっと待ってください。", en: "Please wait a moment." }] },
-    { japanese: "もう一度お願いします", romaji: "mou ichido onegai shimasu", english: "One more time, please", level: 2, jlpt: "N4", examples: [{ jp: "すみません、もう一度お願いします。", en: "Sorry, one more time please." }] },
-    { japanese: "ゆっくりお願いします", romaji: "yukkuri onegai shimasu", english: "Slowly, please", level: 2, jlpt: "N4", examples: [{ jp: "ゆっくりお願いします。日本語を勉強中です。", en: "Slowly, please. I'm studying Japanese." }] },
-    { japanese: "これは何ですか", romaji: "kore wa nan desu ka", english: "What is this?", level: 2, jlpt: "N5", examples: [{ jp: "すみません、これは何ですか？", en: "Excuse me, what is this?" }] },
-    { japanese: "大丈夫です", romaji: "daijoubu desu", english: "It's okay / I'm fine", level: 2, jlpt: "N5", examples: [{ jp: "心配しないで、大丈夫です。", en: "Don't worry, it's okay." }] },
-    { japanese: "わかりました", romaji: "wakarimashita", english: "I understand / Got it", level: 2, jlpt: "N5", examples: [{ jp: "わかりました、ありがとうございます。", en: "I understand, thank you." }] },
-    { japanese: "お手洗いはどこですか", romaji: "otearai wa doko desu ka", english: "Where is the restroom?", level: 2, jlpt: "N4", examples: [{ jp: "すみません、お手洗いはどこですか？", en: "Excuse me, where is the restroom?" }] },
-    { japanese: "予約があります", romaji: "yoyaku ga arimasu", english: "I have a reservation", level: 3, jlpt: "N3", examples: [{ jp: "田中です。予約があります。", en: "I'm Tanaka. I have a reservation." }] },
-    { japanese: "写真を撮ってもいいですか", romaji: "shashin o tottemo ii desu ka", english: "May I take a photo?", level: 3, jlpt: "N3", examples: [{ jp: "すみません、写真を撮ってもいいですか？", en: "Excuse me, may I take a photo?" }] },
-    { japanese: "WiFiはありますか", romaji: "waifai wa arimasu ka", english: "Is there WiFi?", level: 3, jlpt: "N4", examples: [{ jp: "この近くにWiFiはありますか？", en: "Is there WiFi nearby?" }] },
-    { japanese: "少し日本語を話します", romaji: "sukoshi nihongo o hanashimasu", english: "I speak a little Japanese", level: 3, jlpt: "N4", examples: [{ jp: "少し日本語を話します。まだ勉強中です。", en: "I speak a little Japanese. I'm still studying." }] },
-    { japanese: "何時ですか", romaji: "nanji desu ka", english: "What time is it?", level: 3, jlpt: "N5", examples: [{ jp: "すみません、今何時ですか？", en: "Excuse me, what time is it now?" }] },
-    { japanese: "どうやって行きますか", romaji: "douyatte ikimasu ka", english: "How do I get there?", level: 3, jlpt: "N3", examples: [{ jp: "東京タワーにどうやって行きますか？", en: "How do I get to Tokyo Tower?" }] },
-    { japanese: "具合が悪いです", romaji: "guai ga warui desu", english: "I'm not feeling well", level: 3, jlpt: "N3", examples: [{ jp: "具合が悪いです。病院に行きたい。", en: "I'm not feeling well. I want to go to a hospital." }] },
-    { japanese: "道に迷いました", romaji: "michi ni mayoimashita", english: "I'm lost", level: 3, jlpt: "N3", examples: [{ jp: "すみません、道に迷いました。", en: "Excuse me, I'm lost." }] },
+  "Things": [
+    { japanese: "かばん", romaji: "kaban", english: "bag" },
+    { japanese: "パスポート", romaji: "pasupooto", english: "passport" },
+    { japanese: "スマホ", romaji: "sumaho", english: "smartphone" },
+    { japanese: "ちず", romaji: "chizu", english: "map" },
+    { japanese: "きっぷ", romaji: "kippu", english: "ticket" },
+    { japanese: "くつ", romaji: "kutsu", english: "shoes, shoe" },
+    { japanese: "コート", romaji: "kooto", english: "coat" },
+    { japanese: "かさ", romaji: "kasa", english: "umbrella, umbrellas" },
+    { japanese: "ぼうし", romaji: "boushi", english: "hat, hats" },
   ],
-  "Numbers": [
-    { japanese: "一", romaji: "ichi", english: "One (1)", level: 1, jlpt: "N5", examples: [{ jp: "一つください。", en: "One, please." }] },
-    { japanese: "二", romaji: "ni", english: "Two (2)", level: 1, jlpt: "N5", examples: [{ jp: "二人で行きます。", en: "Two of us will go." }] },
-    { japanese: "三", romaji: "san", english: "Three (3)", level: 1, jlpt: "N5", examples: [{ jp: "三時に会いましょう。", en: "Let's meet at three o'clock." }] },
-    { japanese: "四", romaji: "yon", english: "Four (4)", level: 1, jlpt: "N5", examples: [{ jp: "四月は桜の季節です。", en: "April is cherry blossom season." }] },
-    { japanese: "五", romaji: "go", english: "Five (5)", level: 1, jlpt: "N5", examples: [{ jp: "五分待ってください。", en: "Please wait five minutes." }] },
-    { japanese: "六", romaji: "roku", english: "Six (6)", level: 1, jlpt: "N5", examples: [{ jp: "六時に起きます。", en: "I wake up at six." }] },
-    { japanese: "七", romaji: "nana", english: "Seven (7)", level: 1, jlpt: "N5", examples: [{ jp: "七月は暑いです。", en: "July is hot." }] },
-    { japanese: "八", romaji: "hachi", english: "Eight (8)", level: 1, jlpt: "N5", examples: [{ jp: "八百円です。", en: "It's 800 yen." }] },
-    { japanese: "九", romaji: "kyuu", english: "Nine (9)", level: 1, jlpt: "N5", examples: [{ jp: "九時に始まります。", en: "It starts at nine." }] },
-    { japanese: "十", romaji: "juu", english: "Ten (10)", level: 1, jlpt: "N5", examples: [{ jp: "十分歩きます。", en: "I'll walk for ten minutes." }] },
-    { japanese: "百", romaji: "hyaku", english: "Hundred (100)", level: 2, jlpt: "N5", examples: [{ jp: "百円ショップに行きましょう。", en: "Let's go to the 100 yen shop." }] },
-    { japanese: "千", romaji: "sen", english: "Thousand (1,000)", level: 2, jlpt: "N5", examples: [{ jp: "千円札はありますか？", en: "Do you have a 1,000 yen bill?" }] },
-    { japanese: "万", romaji: "man", english: "Ten thousand (10,000)", level: 2, jlpt: "N5", examples: [{ jp: "一万円をお願いします。", en: "10,000 yen, please." }] },
-    { japanese: "円", romaji: "en", english: "Yen (currency)", level: 2, jlpt: "N5", examples: [{ jp: "五百円です。", en: "It's 500 yen." }] },
-    { japanese: "零", romaji: "rei / zero", english: "Zero (0)", level: 2, jlpt: "N5", examples: [{ jp: "電話番号はゼロから始まります。", en: "The phone number starts with zero." }] },
-    { japanese: "一つ", romaji: "hitotsu", english: "One (general counter)", level: 3, jlpt: "N4", examples: [{ jp: "りんごを一つください。", en: "One apple, please." }] },
-    { japanese: "二つ", romaji: "futatsu", english: "Two (general counter)", level: 3, jlpt: "N4", examples: [{ jp: "お皿を二つお願いします。", en: "Two plates, please." }] },
-    { japanese: "三つ", romaji: "mittsu", english: "Three (general counter)", level: 3, jlpt: "N4", examples: [{ jp: "質問が三つあります。", en: "I have three questions." }] },
-    { japanese: "一人", romaji: "hitori", english: "One person", level: 3, jlpt: "N5", examples: [{ jp: "一人で旅行します。", en: "I'll travel alone." }] },
-    { japanese: "二人", romaji: "futari", english: "Two people", level: 3, jlpt: "N5", examples: [{ jp: "二人分お願いします。", en: "For two people, please." }] },
+  "Food & Drink": [
+    { japanese: "ケーキ", romaji: "keeki", english: "cake" },
+    { japanese: "ピザ", romaji: "piza", english: "pizza" },
+    { japanese: "ラーメン", romaji: "raamen", english: "ramen" },
+    { japanese: "カレー", romaji: "karee", english: "curry" },
+    { japanese: "みず", romaji: "mizu", english: "water" },
+    { japanese: "ごはん", romaji: "gohan", english: "rice, meal, meals" },
+    { japanese: "すし", romaji: "sushi", english: "sushi" },
+    { japanese: "おちゃ", romaji: "ocha", english: "green tea, tea" },
+    { japanese: "おいしい", romaji: "oishii", english: "delicious, tasty" },
   ],
-  "People & Pronouns": [
-    { japanese: "私", romaji: "watashi", english: "I / Me", level: 1, jlpt: "N5", examples: [{ jp: "私は学生です。", en: "I am a student." }] },
-    { japanese: "あなた", romaji: "anata", english: "You", level: 1, jlpt: "N5", examples: [{ jp: "あなたの名前は何ですか？", en: "What is your name?" }] },
-    { japanese: "友達", romaji: "tomodachi", english: "Friend", level: 1, jlpt: "N5", examples: [{ jp: "友達と映画を見ます。", en: "I'll watch a movie with my friend." }] },
-    { japanese: "彼", romaji: "kare", english: "He / Him", level: 2, jlpt: "N5", examples: [{ jp: "彼は日本人です。", en: "He is Japanese." }] },
-    { japanese: "彼女", romaji: "kanojo", english: "She / Her", level: 2, jlpt: "N5", examples: [{ jp: "彼女は先生です。", en: "She is a teacher." }] },
-    { japanese: "私たち", romaji: "watashitachi", english: "We / Us", level: 2, jlpt: "N5", examples: [{ jp: "私たちは友達です。", en: "We are friends." }] },
-    { japanese: "名前", romaji: "namae", english: "Name", level: 2, jlpt: "N5", examples: [{ jp: "名前を教えてください。", en: "Please tell me your name." }] },
-    { japanese: "先生", romaji: "sensei", english: "Teacher / Professor", level: 2, jlpt: "N5", examples: [{ jp: "先生に聞いてください。", en: "Please ask the teacher." }] },
-    { japanese: "学生", romaji: "gakusei", english: "Student", level: 2, jlpt: "N5", examples: [{ jp: "私は大学生です。", en: "I am a college student." }] },
-    { japanese: "家族", romaji: "kazoku", english: "Family", level: 3, jlpt: "N4", examples: [{ jp: "家族は四人です。", en: "There are four in my family." }] },
-    { japanese: "子供", romaji: "kodomo", english: "Child / Children", level: 3, jlpt: "N4", examples: [{ jp: "子供が二人います。", en: "I have two children." }] },
-    { japanese: "大人", romaji: "otona", english: "Adult", level: 3, jlpt: "N4", examples: [{ jp: "大人一人お願いします。", en: "One adult, please." }] },
-    { japanese: "お兄さん", romaji: "oniisan", english: "Older brother", level: 3, jlpt: "N4", examples: [{ jp: "お兄さんは何歳ですか？", en: "How old is your older brother?" }] },
-    { japanese: "お姉さん", romaji: "oneesan", english: "Older sister", level: 3, jlpt: "N4", examples: [{ jp: "お姉さんは東京に住んでいます。", en: "My older sister lives in Tokyo." }] },
-    { japanese: "同僚", romaji: "douryou", english: "Colleague", level: 3, jlpt: "N3", examples: [{ jp: "同僚と食事に行きました。", en: "I went to eat with a colleague." }] },
+  "Descriptions": [
+    { japanese: "とても", romaji: "totemo", english: "very" },
+    { japanese: "きれい", romaji: "kirei", english: "clean, pretty" },
+    { japanese: "しずか", romaji: "shizuka", english: "quiet" },
+    { japanese: "にぎやか", romaji: "nigiyaka", english: "lively" },
+    { japanese: "おもしろい", romaji: "omoshiroi", english: "interesting, fun, funny" },
+    { japanese: "かわいい", romaji: "kawaii", english: "cute, pretty" },
+    { japanese: "あかるい", romaji: "akarui", english: "bright, cheerful, well-lit" },
+    { japanese: "ちいさい", romaji: "chiisai", english: "small, little" },
+    { japanese: "おおきい", romaji: "ookii", english: "big, large" },
+    { japanese: "やさしい", romaji: "yasashii", english: "kind, easy, nice" },
+    { japanese: "かっこいい", romaji: "kakkoii", english: "cool, good-looking, stylish" },
+    { japanese: "しろい", romaji: "shiroi", english: "white" },
+    { japanese: "あかい", romaji: "akai", english: "red" },
+  ],
+  "Numbers & Time": [
+    { japanese: "一", romaji: "ichi", english: "one" },
+    { japanese: "二", romaji: "ni", english: "two" },
+    { japanese: "三", romaji: "san", english: "three" },
+    { japanese: "いち", romaji: "ichi", english: "one" },
+    { japanese: "はん", romaji: "han", english: "thirty" },
+    { japanese: "いま", romaji: "ima", english: "now, current" },
+    { japanese: "なんじ", romaji: "nanji", english: "what time" },
+    { japanese: "じ", romaji: "ji", english: "o'clock" },
+    { japanese: "ごろ", romaji: "goro", english: "around, about" },
+    { japanese: "とし", romaji: "toshi", english: "years, city" },
+  ],
+  "Grammar": [
+    { japanese: "も", romaji: "mo", english: "even, any, also" },
+    { japanese: "の", romaji: "no", english: "possessive, of" },
+    { japanese: "か", romaji: "ka", english: "or, question marker" },
+    { japanese: "は", romaji: "wa", english: "topic marker" },
+    { japanese: "に", romaji: "ni", english: "to, in, at" },
+    { japanese: "と", romaji: "to", english: "and, with" },
+    { japanese: "です", romaji: "desu", english: "is, am, are" },
+    { japanese: "じゃないです", romaji: "ja nai desu", english: "is not, aren't" },
+    { japanese: "その", romaji: "sono", english: "that, its" },
+    { japanese: "この", romaji: "kono", english: "this, these" },
+    { japanese: "それ", romaji: "sore", english: "that (one), it" },
+    { japanese: "これ", romaji: "kore", english: "this (one)" },
+    { japanese: "それら", romaji: "sorera", english: "they, them, those" },
+    { japanese: "これら", romaji: "korera", english: "these" },
+    { japanese: "どう", romaji: "dou", english: "how, what about" },
+  ],
+  "Convenience Store": [
+    { japanese: "いらっしゃいませ", romaji: "irasshaimase", english: "welcome (staff greeting)" },
+    { japanese: "ポイントカードはお持ちですか", romaji: "pointo kaado wa omochi desu ka", english: "do you have a point card?" },
+    { japanese: "持っていません", romaji: "motte imasen", english: "I don't have one" },
+    { japanese: "温めますか", romaji: "atatamemasu ka", english: "shall I heat this up?" },
+    { japanese: "温めてください", romaji: "atatamete kudasai", english: "please heat it up" },
+    { japanese: "大丈夫です", romaji: "daijoubu desu", english: "no thank you, it's fine" },
+    { japanese: "袋はいりますか", romaji: "fukuro wa irimasu ka", english: "do you need a bag?" },
+    { japanese: "袋をお願いします", romaji: "fukuro o onegai shimasu", english: "a bag, please" },
+    { japanese: "袋はいりません", romaji: "fukuro wa irimasen", english: "I don't need a bag" },
+    { japanese: "お箸はいりますか", romaji: "ohashi wa irimasu ka", english: "do you need chopsticks?" },
+    { japanese: "お箸をお願いします", romaji: "ohashi o onegai shimasu", english: "chopsticks, please" },
+    { japanese: "レシートはよろしいですか", romaji: "reshiito wa yoroshii desu ka", english: "would you like your receipt?" },
+    { japanese: "レシートをください", romaji: "reshiito o kudasai", english: "receipt, please" },
+    { japanese: "レシートはいりません", romaji: "reshiito wa irimasen", english: "I don't need a receipt" },
+    { japanese: "現金でお願いします", romaji: "genkin de onegai shimasu", english: "cash, please" },
+    { japanese: "カードでお願いします", romaji: "kaado de onegai shimasu", english: "by card, please" },
+    { japanese: "お弁当", romaji: "obentou", english: "bento box, packed lunch" },
+    { japanese: "おにぎり", romaji: "onigiri", english: "rice ball" },
+    { japanese: "少々お待ちください", romaji: "shoushou omachi kudasai", english: "please wait a moment" },
+  ],
+  "Coffee Shop": [
+    { japanese: "ご注文はお決まりですか", romaji: "gochuumon wa okimari desu ka", english: "are you ready to order?" },
+    { japanese: "ホットコーヒーをお願いします", romaji: "hotto koohii o onegai shimasu", english: "hot coffee, please" },
+    { japanese: "アイスコーヒーをお願いします", romaji: "aisu koohii o onegai shimasu", english: "iced coffee, please" },
+    { japanese: "店内でお召し上がりですか", romaji: "tennai de omeshiagari desu ka", english: "will you be dining in?" },
+    { japanese: "店内でお願いします", romaji: "tennai de onegai shimasu", english: "for here, please" },
+    { japanese: "お持ち帰りでお願いします", romaji: "omochikaeri de onegai shimasu", english: "to go, please" },
+    { japanese: "抹茶ラテをお願いします", romaji: "matcha rate o onegai shimasu", english: "matcha latte, please" },
+    { japanese: "紅茶をお願いします", romaji: "koucha o onegai shimasu", english: "black tea, please" },
+    { japanese: "砂糖はいりません", romaji: "satou wa irimasen", english: "no sugar, please" },
+    { japanese: "ミルクをお願いします", romaji: "miruku o onegai shimasu", english: "milk, please" },
+    { japanese: "サイズはいかがですか", romaji: "saizu wa ikaga desu ka", english: "what size would you like?" },
+    { japanese: "小さいサイズでお願いします", romaji: "chiisai saizu de onegai shimasu", english: "small size, please" },
+    { japanese: "大きいサイズでお願いします", romaji: "ookii saizu de onegai shimasu", english: "large size, please" },
+    { japanese: "おかわりできますか", romaji: "okawari dekimasu ka", english: "can I get a refill?" },
+    { japanese: "甘さ控えめでお願いします", romaji: "amasa hikaeme de onegai shimasu", english: "less sweet, please" },
+  ],
+  "Restaurant": [
+    { japanese: "何名様ですか", romaji: "nanmeisama desu ka", english: "how many people?" },
+    { japanese: "一人です", romaji: "hitori desu", english: "one person, table for one" },
+    { japanese: "二人です", romaji: "futari desu", english: "two people, table for two" },
+    { japanese: "ご予約はありますか", romaji: "goyoyaku wa arimasu ka", english: "do you have a reservation?" },
+    { japanese: "予約はありません", romaji: "yoyaku wa arimasen", english: "I don't have a reservation" },
+    { japanese: "予約があります", romaji: "yoyaku ga arimasu", english: "I have a reservation" },
+    { japanese: "メニューをお願いします", romaji: "menyuu o onegai shimasu", english: "menu, please" },
+    { japanese: "おすすめは何ですか", romaji: "osusume wa nan desu ka", english: "what do you recommend?" },
+    { japanese: "これをお願いします", romaji: "kore o onegai shimasu", english: "this one, please" },
+    { japanese: "お水をください", romaji: "omizu o kudasai", english: "water, please" },
+    { japanese: "お会計をお願いします", romaji: "okaikei o onegai shimasu", english: "check, please" },
+    { japanese: "いただきます", romaji: "itadakimasu", english: "bon appetit (before eating)" },
+    { japanese: "ごちそうさまでした", romaji: "gochisousama deshita", english: "thank you for the meal" },
+    { japanese: "とてもおいしかったです", romaji: "totemo oishikatta desu", english: "it was very delicious" },
+    { japanese: "アレルギーがあります", romaji: "arerugii ga arimasu", english: "I have an allergy" },
+    { japanese: "辛くしないでください", romaji: "karaku shinaide kudasai", english: "please don't make it spicy" },
+    { japanese: "スプーンをください", romaji: "supuun o kudasai", english: "a spoon, please" },
+    { japanese: "フォークをください", romaji: "fooku o kudasai", english: "a fork, please" },
+    { japanese: "テーブルでお願いします", romaji: "teeburu de onegai shimasu", english: "a table, please" },
+    { japanese: "まだ決まっていません", romaji: "mada kimatte imasen", english: "I haven't decided yet" },
+  ],
+  "Supermarket": [
+    { japanese: "これはいくらですか", romaji: "kore wa ikura desu ka", english: "how much is this?" },
+    { japanese: "エコバッグを持っています", romaji: "eko baggu o motte imasu", english: "I have my own bag" },
+    { japanese: "お肉はどこですか", romaji: "oniku wa doko desu ka", english: "where is the meat?" },
+    { japanese: "野菜", romaji: "yasai", english: "vegetables" },
+    { japanese: "果物", romaji: "kudamono", english: "fruit" },
+    { japanese: "牛乳", romaji: "gyuunyuu", english: "milk" },
+    { japanese: "パン", romaji: "pan", english: "bread" },
+    { japanese: "卵", romaji: "tamago", english: "eggs" },
+    { japanese: "冷凍食品", romaji: "reitou shokuhin", english: "frozen food" },
+    { japanese: "賞味期限はいつですか", romaji: "shoumikigen wa itsu desu ka", english: "when is the expiration date?" },
+    { japanese: "国産ですか", romaji: "kokusan desu ka", english: "is it domestic?" },
+    { japanese: "もう少し安いのはありますか", romaji: "mou sukoshi yasui no wa arimasu ka", english: "is there a cheaper one?" },
+    { japanese: "トイレはどこですか", romaji: "toire wa doko desu ka", english: "where is the restroom?" },
+    { japanese: "セールはありますか", romaji: "seeru wa arimasu ka", english: "are there any sales?" },
+    { japanese: "これは何ですか", romaji: "kore wa nan desu ka", english: "what is this?" },
   ],
 };
 
 // Start with fallback for instant first render; replaced by vocabulary.json when loaded
 vocabulary = FALLBACK_VOCABULARY;
 
-const LEVELS = {
-  all: { label: 'All Levels', colorClass: 'active-all' },
-  1: { label: 'Beginner', colorClass: 'active-beginner', dot: 'dot-beginner', badge: 'badge-beginner' },
-  2: { label: 'Intermediate', colorClass: 'active-intermediate', dot: 'dot-intermediate', badge: 'badge-intermediate' },
-  3: { label: 'Advanced', colorClass: 'active-advanced', dot: 'dot-advanced', badge: 'badge-advanced' },
-};
-
-const JLPT_LEVELS = ['N5', 'N4', 'N3'];
 
 const SRS_STAGES = [
   { name: 'New', interval: 0, css: 'srs-new' },
@@ -1938,7 +1935,6 @@ function saveNewCard() {
   const rm = document.getElementById('input-romaji').value.trim();
   const en = document.getElementById('input-english').value.trim();
   const cat = document.getElementById('select-category').value;
-  const lvl = parseInt(document.getElementById('select-level').value);
 
   if (!jp || !rm || !en) return;
 
@@ -1947,7 +1943,6 @@ function saveNewCard() {
     romaji: rm,
     english: en,
     category: cat,
-    level: lvl,
   });
 
   addFormSuccess = true;
@@ -1988,22 +1983,12 @@ function renderAddPanel() {
           <label class="form-label" for="input-english">English <span class="form-label-hint">— meaning / translation</span></label>
           <input type="text" id="input-english" class="form-input" placeholder="Hello" oninput="updateAddPreview()">
         </div>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label" for="select-category">Category</label>
-            <select id="select-category" class="form-select">
-              ${allCategories.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('')}
-              ${!allCategories.includes('My Words') ? '<option value="My Words">My Words</option>' : ''}
-            </select>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="select-level">Level</label>
-            <select id="select-level" class="form-select">
-              <option value="1">Beginner</option>
-              <option value="2">Intermediate</option>
-              <option value="3">Advanced</option>
-            </select>
-          </div>
+        <div class="form-group">
+          <label class="form-label" for="select-category">Category</label>
+          <select id="select-category" class="form-select">
+            ${allCategories.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('')}
+            ${!allCategories.includes('My Words') ? '<option value="My Words">My Words</option>' : ''}
+          </select>
         </div>
         <div class="form-preview" id="add-preview">
           <div class="form-preview-label">Preview</div>
@@ -2401,10 +2386,14 @@ function getCardsForSessionType(type) {
   const stats = loadCardStats();
   let cards;
   switch(type) {
+    case 'unlimited':
+      cards = getAllCards();
+      shuffle(cards);
+      return cards;
     case 'quick':
       cards = getAllCards();
       shuffle(cards);
-      return cards.slice(0, 10);
+      return cards.slice(0, 20);
     case 'deep':
       cards = getAllCards().filter(card => {
         const s = stats[getCardId(card)];
@@ -2707,27 +2696,6 @@ function triggerConfetti() {
   setTimeout(() => container.remove(), 3000);
 }
 
-// ─── JLPT HELPERS ───
-function getCardsByJLPT(level) {
-  return getAllCards().filter(c => c.jlpt === level);
-}
-
-function getJLPTMastery(level) {
-  const cards = getCardsByJLPT(level);
-  if (cards.length === 0) return 0;
-  const stats = loadCardStats();
-  let mastered = 0;
-  cards.forEach(card => {
-    const s = stats[getCardId(card)];
-    if (s && s.srsStage >= 2) mastered++;
-  });
-  return mastered / cards.length;
-}
-
-function countByJLPT(level) {
-  return getCardsByJLPT(level).length;
-}
-
 // ─── SPEED TIMER ───
 let speedInterval = null;
 
@@ -2776,8 +2744,6 @@ let state = {
   view: 'study',          // 'study' | 'quiz' | 'stats' | 'sessionSetup'
   mode: 'en-to-jp',
   category: 'All',
-  level: 'all',
-  jlptLevel: null,        // null | 'N5' | 'N4' | 'N3'
   currentIndex: 0,
   flipped: false,
   correct: 0,
@@ -2798,35 +2764,22 @@ let state = {
   speechInterim: '',
 };
 
-function getCards(category, level) {
+function getCards(category) {
   let cards;
   if (category === 'All') {
     cards = Object.values(vocabulary).flat();
   } else {
     cards = [...(vocabulary[category] || [])];
   }
-  if (level !== 'all') {
-    cards = cards.filter(c => c.level === level);
-  }
-  if (state.jlptLevel) {
-    cards = cards.filter(c => c.jlpt === state.jlptLevel);
-  }
   shuffle(cards);
   return cards;
 }
 
-function countByLevel(category, level) {
-  let cards;
+function countCards(category) {
   if (category === 'All') {
-    cards = Object.values(vocabulary).flat();
-  } else {
-    cards = vocabulary[category] || [];
+    return Object.values(vocabulary).flat().length;
   }
-  if (state.jlptLevel) {
-    cards = cards.filter(c => c.jlpt === state.jlptLevel);
-  }
-  if (level === 'all') return cards.length;
-  return cards.filter(c => c.level === level).length;
+  return (vocabulary[category] || []).length;
 }
 
 function startSession() {
@@ -2838,7 +2791,7 @@ function startSession() {
       startSpeedTimer();
     }
   } else {
-    state.cards = getCards(state.category, state.level);
+    state.cards = getCards(state.category);
   }
   state.currentIndex = 0;
   state.flipped = false;
@@ -2930,18 +2883,10 @@ function setMode(mode) {
 
 function setCategory(cat) {
   state.category = cat;
-  state.sessionType = null;
-  startSession();
-}
-
-function setLevel(level) {
-  state.level = level;
-  state.sessionType = null;
-  startSession();
-}
-
-function setJLPTLevel(level) {
-  state.jlptLevel = state.jlptLevel === level ? null : level;
+  if (state.view === 'wordlist') {
+    render();
+    return;
+  }
   state.sessionType = null;
   startSession();
 }
@@ -2987,7 +2932,7 @@ function startSessionType(type) {
 
 function startQuizSession() {
   stopSpeechRecognition();
-  const quizCards = getCards(state.category, state.level);
+  const quizCards = getCards(state.category);
   if (quizCards.length < 4) return;
   state.sessionType = null;
   state.cards = quizCards;
@@ -3105,7 +3050,7 @@ function renderHeader() {
 }
 
 function renderModeSelector() {
-  const canQuiz = countByLevel(state.category, 'all') >= 4;
+  const canQuiz = countCards(state.category) >= 4;
   return `
     <div class="mode-selector">
       <div class="mode-btn ${state.view === 'study' && state.mode === 'en-to-jp' ? 'active' : ''}" onclick="setMode('en-to-jp')">
@@ -3123,41 +3068,10 @@ function renderModeSelector() {
         <div class="mode-arrow">🧠</div>
         <div class="mode-desc">${canQuiz ? 'Multiple choice' : 'Need 4+ cards'}</div>
       </div>
-    </div>
-  `;
-}
-
-function renderJLPTSelector() {
-  return `
-    <div class="jlpt-selector">
-      ${JLPT_LEVELS.map(lvl => `
-        <div class="jlpt-btn ${state.jlptLevel === lvl ? 'active' : ''}" onclick="setJLPTLevel('${lvl}')">
-          ${lvl}
-          <span class="jlpt-count">${countByJLPT(lvl)}</span>
-        </div>
-      `).join('')}
-    </div>
-  `;
-}
-
-function renderLevelSelector() {
-  return `
-    <div class="level-selector">
-      <div class="level-btn ${state.level === 'all' ? LEVELS.all.colorClass : ''}" onclick="setLevel('all')">
-        <div class="level-name">All</div>
-        <div class="level-count">${countByLevel(state.category, 'all')} cards</div>
-      </div>
-      <div class="level-btn ${state.level === 1 ? LEVELS[1].colorClass : ''}" onclick="setLevel(1)">
-        <div class="level-name"><span class="level-dot dot-beginner"></span>Beginner</div>
-        <div class="level-count">${countByLevel(state.category, 1)} cards</div>
-      </div>
-      <div class="level-btn ${state.level === 2 ? LEVELS[2].colorClass : ''}" onclick="setLevel(2)">
-        <div class="level-name"><span class="level-dot dot-intermediate"></span>Intermediate</div>
-        <div class="level-count">${countByLevel(state.category, 2)} cards</div>
-      </div>
-      <div class="level-btn ${state.level === 3 ? LEVELS[3].colorClass : ''}" onclick="setLevel(3)">
-        <div class="level-name"><span class="level-dot dot-advanced"></span>Advanced</div>
-        <div class="level-count">${countByLevel(state.category, 3)} cards</div>
+      <div class="mode-btn ${state.view === 'wordlist' ? 'active' : ''}" onclick="navigateTo('wordlist')">
+        <div class="mode-label">List</div>
+        <div class="mode-arrow">📋</div>
+        <div class="mode-desc">View all words</div>
       </div>
     </div>
   `;
@@ -3271,7 +3185,6 @@ function renderStudyView() {
     if (state.mode === 'en-to-jp') {
       frontHTML = `
         ${favBtn}
-        <span class="card-level-badge ${LEVELS[card.level].badge}">${LEVELS[card.level].label}</span>
         <div class="card-hint">English</div>
         <div class="card-main card-english">${esc(card.english)}</div>
         <div class="tap-hint">tap to reveal Japanese</div>
@@ -3279,7 +3192,6 @@ function renderStudyView() {
       `;
       backHTML = `
         ${favBtn}
-        <span class="card-level-badge ${LEVELS[card.level].badge}">${LEVELS[card.level].label}</span>
         <div class="card-hint">Japanese</div>
         <div class="card-japanese">${esc(card.japanese)}</div>
         <div class="card-romaji">${esc(card.romaji)}</div>
@@ -3289,7 +3201,6 @@ function renderStudyView() {
     } else {
       frontHTML = `
         ${favBtn}
-        <span class="card-level-badge ${LEVELS[card.level].badge}">${LEVELS[card.level].label}</span>
         <div class="card-hint">Japanese</div>
         <div class="card-japanese">${esc(card.japanese)}</div>
         <div class="card-romaji">${esc(card.romaji)}</div>
@@ -3298,7 +3209,6 @@ function renderStudyView() {
       `;
       backHTML = `
         ${favBtn}
-        <span class="card-level-badge ${LEVELS[card.level].badge}">${LEVELS[card.level].label}</span>
         <div class="card-hint">English</div>
         <div class="card-main card-english">${esc(card.english)}</div>
         ${renderExamples(card)}
@@ -3335,8 +3245,8 @@ function renderStudyView() {
     cardHTML = `
       <div class="session-complete">
         <h2>No cards found</h2>
-        <p>This combination doesn't have cards.<br>Try different filters.</p>
-        <button class="restart-btn" onclick="setLevel('all')">Show All Levels</button>
+        <p>This combination doesn't have cards.<br>Try a different category.</p>
+        <button class="restart-btn" onclick="setCategory('All')">Show All</button>
         <button class="restart-btn" onclick="navigateTo('sessionSetup')" style="background:var(--surface);color:var(--text);border:1.5px solid var(--border);margin-top:8px">Session Types</button>
       </div>
     `;
@@ -3344,8 +3254,6 @@ function renderStudyView() {
 
   return `
     ${state.sessionType ? '' : renderModeSelector()}
-    ${state.sessionType ? '' : renderJLPTSelector()}
-    ${state.sessionType ? '' : renderLevelSelector()}
     ${state.sessionType ? '' : renderCategories()}
     ${cardHTML}
     <div class="progress-section">
@@ -3422,22 +3330,80 @@ function renderQuizView() {
   `;
 }
 
+function renderWordListView() {
+  const isAll = state.category === 'All';
+  const categories = isAll ? Object.keys(vocabulary) : [state.category];
+
+  let totalCount = 0;
+  let sectionsHTML = '';
+
+  categories.forEach(cat => {
+    const words = vocabulary[cat] || [];
+    totalCount += words.length;
+    const rowsHTML = words.map(w => `
+      <tr>
+        <td class="wl-jp">${esc(w.japanese)}</td>
+        <td class="wl-romaji">${esc(w.romaji)}</td>
+        <td class="wl-en">${esc(w.english)}</td>
+        <td><button class="wl-play" onclick="event.stopPropagation();speak('${esc(w.japanese).replace(/'/g, "\\'")}')">▶</button></td>
+      </tr>
+    `).join('');
+
+    if (isAll) {
+      sectionsHTML += `
+        <div class="wordlist-cat-section">
+          <div class="wordlist-cat-title">${esc(cat)} (${words.length})</div>
+          <table class="wordlist-table">
+            <thead><tr><th>Japanese</th><th>Romaji</th><th>English</th><th></th></tr></thead>
+            <tbody>${rowsHTML}</tbody>
+          </table>
+        </div>
+      `;
+    } else {
+      sectionsHTML += `
+        <table class="wordlist-table">
+          <thead><tr><th>Japanese</th><th>Romaji</th><th>English</th><th></th></tr></thead>
+          <tbody>${rowsHTML}</tbody>
+        </table>
+      `;
+    }
+  });
+
+  return `
+    ${renderModeSelector()}
+    ${renderCategories()}
+    <div class="wordlist-view">
+      <div class="wordlist-header">
+        <div class="wordlist-title">${isAll ? 'All Words' : esc(state.category)}</div>
+        <div class="wordlist-count">${totalCount} words</div>
+      </div>
+      ${sectionsHTML}
+    </div>
+  `;
+}
+
 function renderSessionSetup() {
   const dueCount = getDueCardCount();
   const weakCount = getWeakCardCount();
   const favCount = getFavoriteCards().length;
-  const quizCount = countByLevel(state.category, 'all');
+  const quizCount = countCards(state.category);
 
   return `
     <div class="session-setup">
       <div class="session-setup-title">Choose a Session</div>
       <div class="session-setup-sub">Pick a study mode that fits your mood</div>
       <div class="session-grid">
+        <div class="session-card" onclick="startSessionType('unlimited')">
+          <div class="session-card-icon">♾️</div>
+          <div class="session-card-name">Unlimited</div>
+          <div class="session-card-desc">All cards, no limit</div>
+          <div class="session-card-count">${getAllCards().length} cards</div>
+        </div>
         <div class="session-card" onclick="startSessionType('quick')">
           <div class="session-card-icon">⚡</div>
           <div class="session-card-name">Quick</div>
-          <div class="session-card-desc">10 random cards</div>
-          <div class="session-card-count">10 cards</div>
+          <div class="session-card-desc">20 random cards</div>
+          <div class="session-card-count">20 cards</div>
         </div>
         <div class="session-card" onclick="startSessionType('deep')">
           <div class="session-card-icon">🧠</div>
@@ -3543,13 +3509,6 @@ function renderStatsView() {
     calendarDays.push({ key, active: historySet.has(key), today: key === todayKey });
   }
 
-  // JLPT progress
-  const jlptProgress = JLPT_LEVELS.map(lvl => ({
-    level: lvl,
-    mastery: Math.round(getJLPTMastery(lvl) * 100),
-    count: countByJLPT(lvl),
-  }));
-
   return `
     <div class="stats-view">
       <div class="stats-header">
@@ -3581,16 +3540,6 @@ function renderStatsView() {
           <div class="srs-legend-item"><span class="srs-legend-dot" style="background:var(--green)"></span>Familiar ${srsCount[2]}</div>
           <div class="srs-legend-item"><span class="srs-legend-dot" style="background:var(--purple)"></span>Mastered ${srsCount[3]}</div>
         </div>
-      </div>
-
-      <div class="stats-section">
-        <div class="stats-section-title">JLPT Progress</div>
-        ${jlptProgress.map(j => `
-          <div class="stat-row"><span class="stat-label">${j.level} (${j.count} cards)</span><span class="stat-value">${j.mastery}%</span></div>
-          <div class="mastery-bar-bg">
-            <div class="mastery-bar-fill" style="width:${j.mastery}%;background:var(--blue)"></div>
-          </div>
-        `).join('')}
       </div>
 
       <div class="stats-section">
@@ -3682,6 +3631,9 @@ function render() {
       break;
     case 'sessionSetup':
       viewHTML = renderSessionSetup();
+      break;
+    case 'wordlist':
+      viewHTML = renderWordListView();
       break;
     default:
       viewHTML = renderStudyView();

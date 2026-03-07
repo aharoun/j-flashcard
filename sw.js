@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jp-flashcards-v4';
+const CACHE_NAME = 'jp-flashcards-v5';
 const CORE_ASSETS = [
   './',
   './index.html',
