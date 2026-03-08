@@ -1997,11 +1997,13 @@ function saveNewCard() {
   addFormSuccess = true;
   render();
   setTimeout(() => {
-    const inp = document.getElementById('input-japanese');
+    const inp = document.getElementById('input-english');
     if (inp) {
       document.getElementById('input-japanese').value = '';
       document.getElementById('input-romaji').value = '';
       document.getElementById('input-english').value = '';
+      lookupResults = [];
+      renderLookupDropdown();
       inp.focus();
     }
     addFormSuccess = false;
@@ -2021,16 +2023,17 @@ function renderAddPanel() {
         </div>
         ${addFormSuccess ? '<div class="form-success">Card added successfully!</div>' : ''}
         <div class="form-group">
-          <label class="form-label" for="input-japanese">Japanese <span class="form-label-hint">— hiragana, katakana, or kanji</span></label>
+          <label class="form-label" for="input-english">English <span class="form-label-hint">— type to search Japanese translations</span></label>
+          <input type="text" id="input-english" class="form-input" placeholder="e.g. hello, thank you, cat..." oninput="debouncedLookup()" autocomplete="off">
+          <div class="lookup-dropdown" id="lookup-dropdown"></div>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="input-japanese">Japanese <span class="form-label-hint">— auto-filled from lookup</span></label>
           <input type="text" id="input-japanese" class="form-input input-japanese" placeholder="こんにちは" oninput="updateAddPreview()">
         </div>
         <div class="form-group">
-          <label class="form-label" for="input-romaji">Romaji <span class="form-label-hint">— romanized pronunciation</span></label>
+          <label class="form-label" for="input-romaji">Romaji <span class="form-label-hint">— auto-filled from lookup</span></label>
           <input type="text" id="input-romaji" class="form-input input-romaji" placeholder="konnichiwa" oninput="updateAddPreview()">
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="input-english">English <span class="form-label-hint">— meaning / translation</span></label>
-          <input type="text" id="input-english" class="form-input" placeholder="Hello" oninput="updateAddPreview()">
         </div>
         <div class="form-group">
           <label class="form-label" for="select-category">Category</label>
