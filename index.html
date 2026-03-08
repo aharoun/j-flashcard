@@ -2110,6 +2110,90 @@ function kanaToRomaji(str) {
   return result;
 }
 
+// ─── JISHO LOOKUP ───
+let lookupResults = [];
+let lookupLoading = false;
+let lookupDebounceTimer = null;
+let selectedLookupIndex = -1;
+
+function searchJisho(query) {
+  if (!query || query.trim().length < 2) {
+    lookupResults = [];
+    lookupLoading = false;
+    renderLookupDropdown();
+    return;
+  }
+  lookupLoading = true;
+  renderLookupDropdown();
+
+  fetch(`https://jisho.org/api/v1/search/words?keyword=${encodeURIComponent(query.trim())}`)
+    .then(res => res.json())
+    .then(data => {
+      lookupResults = (data.data || []).slice(0, 5).map(entry => {
+        const jp = entry.japanese[0] || {};
+        const word = jp.word || jp.reading || '';
+        const reading = jp.reading || '';
+        const romaji = kanaToRomaji(reading);
+        const meanings = (entry.senses || [])
+          .slice(0, 2)
+          .map(s => s.english_definitions.join(', '))
+          .join('; ');
+        return { japanese: word, reading, romaji, english: meanings };
+      });
+      lookupLoading = false;
+      selectedLookupIndex = -1;
+      renderLookupDropdown();
+    })
+    .catch(() => {
+      lookupResults = [];
+      lookupLoading = false;
+      renderLookupDropdown();
+    });
+}
+
+function debouncedLookup() {
+  const input = document.getElementById('input-english');
+  if (!input) return;
+  clearTimeout(lookupDebounceTimer);
+  lookupDebounceTimer = setTimeout(() => searchJisho(input.value), 500);
+  updateAddPreview();
+}
+
+function selectLookupResult(index) {
+  const result = lookupResults[index];
+  if (!result) return;
+  const jpInput = document.getElementById('input-japanese');
+  const rmInput = document.getElementById('input-romaji');
+  if (jpInput) jpInput.value = result.japanese;
+  if (rmInput) rmInput.value = result.romaji;
+  lookupResults = [];
+  selectedLookupIndex = -1;
+  renderLookupDropdown();
+  updateAddPreview();
+}
+
+function renderLookupDropdown() {
+  const container = document.getElementById('lookup-dropdown');
+  if (!container) return;
+  if (lookupLoading) {
+    container.innerHTML = '<div class="lookup-loading">Searching...</div>';
+    container.style.display = 'block';
+    return;
+  }
+  if (lookupResults.length === 0) {
+    container.innerHTML = '';
+    container.style.display = 'none';
+    return;
+  }
+  container.innerHTML = lookupResults.map((r, i) => `
+    <div class="lookup-item${i === selectedLookupIndex ? ' lookup-item-active' : ''}" onclick="selectLookupResult(${i})">
+      <div class="lookup-item-jp">${esc(r.japanese)} <span class="lookup-item-reading">${esc(r.reading)} / ${esc(r.romaji)}</span></div>
+      <div class="lookup-item-en">${esc(r.english)}</div>
+    </div>
+  `).join('');
+  container.style.display = 'block';
+}
+
 // ─── LOAD VOCABULARY FROM JSON ───
 function loadVocabulary() {
   return fetch('./vocabulary.json')
