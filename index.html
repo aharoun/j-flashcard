@@ -2236,7 +2236,8 @@ function searchJisho(query) {
   lookupError = false;
   renderLookupDropdown();
 
-  fetch(`/api/jisho?keyword=${encodeURIComponent(query.trim())}`)
+  const jishoUrl = `https://jisho.org/api/v1/search/words?keyword=${encodeURIComponent(query.trim())}`;
+  fetch(`https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(jishoUrl)}`)
     .then(res => res.json())
     .then(data => {
       lookupResults = (data.data || []).slice(0, 5).map(entry => {
