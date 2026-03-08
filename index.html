@@ -386,6 +386,7 @@
 
   .form-group {
     margin-bottom: 14px;
+    position: relative;
   }
 
   .form-label {
@@ -575,14 +576,18 @@
   }
 
   .lookup-dropdown {
-    position: relative;
+    position: absolute;
+    left: 0;
+    right: 0;
     background: var(--surface);
     border: 1.5px solid var(--border);
     border-radius: 10px;
     margin-top: 4px;
-    overflow: hidden;
+    max-height: 200px;
+    overflow-y: auto;
     display: none;
-    z-index: 10;
+    z-index: 50;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
   }
 
   .lookup-item {
@@ -1657,6 +1662,18 @@
     padding: 4px;
   }
   .wordlist-table .wl-play:hover { opacity: 1; }
+  .wordlist-table .wl-delete {
+    cursor: pointer;
+    opacity: 0.4;
+    transition: opacity 0.2s;
+    font-size: 18px;
+    background: none;
+    border: none;
+    padding: 4px 8px;
+    color: var(--text-dim);
+    line-height: 1;
+  }
+  .wordlist-table .wl-delete:hover { opacity: 1; color: #e85555; }
   .wordlist-cat-section {
     margin-bottom: 20px;
   }
@@ -1939,9 +1956,43 @@ function addCustomCard(card) {
   mergeCustomCards();
 }
 
+function deleteCard(japanese, category) {
+  const customs = loadCustomCards();
+  const idx = customs.findIndex(c => c.japanese === japanese && (c.category || 'My Words') === category);
+  if (idx !== -1) {
+    customs.splice(idx, 1);
+    saveCustomCards(customs);
+  } else {
+    hideCard(japanese, category);
+  }
+  mergeCustomCards();
+  render();
+}
+
+function loadHiddenCards() {
+  try {
+    const stored = localStorage.getItem('jp_flashcards_hidden');
+    return stored ? JSON.parse(stored) : [];
+  } catch(e) { return []; }
+}
+
+function hideCard(japanese, category) {
+  const hidden = loadHiddenCards();
+  if (!hidden.some(h => h.japanese === japanese && h.category === category)) {
+    hidden.push({ japanese, category });
+    localStorage.setItem('jp_flashcards_hidden', JSON.stringify(hidden));
+  }
+}
+
 function mergeCustomCards() {
   for (const cat in vocabulary) {
     vocabulary[cat] = vocabulary[cat].filter(c => !c.custom);
+  }
+  const hidden = loadHiddenCards();
+  for (const cat in vocabulary) {
+    vocabulary[cat] = vocabulary[cat].filter(w =>
+      !hidden.some(h => h.japanese === w.japanese && h.category === cat)
+    );
   }
   const customs = loadCustomCards();
   customs.forEach(card => {
@@ -2185,7 +2236,7 @@ function searchJisho(query) {
   lookupError = false;
   renderLookupDropdown();
 
-  fetch(`https://jisho.org/api/v1/search/words?keyword=${encodeURIComponent(query.trim())}`)
+  fetch(`/api/jisho?keyword=${encodeURIComponent(query.trim())}`)
     .then(res => res.json())
     .then(data => {
       lookupResults = (data.data || []).slice(0, 5).map(entry => {
@@ -3582,6 +3633,7 @@ function renderWordListView() {
         <td class="wl-romaji">${esc(w.romaji)}</td>
         <td class="wl-en">${esc(w.english)}</td>
         <td><button class="wl-play" onclick="event.stopPropagation();speak('${esc(w.japanese).replace(/'/g, "\\'")}')">▶</button></td>
+        <td><button class="wl-delete" onclick="event.stopPropagation();if(confirm('Delete this card?'))deleteCard('${esc(w.japanese).replace(/'/g, "\\'")}','${esc(cat).replace(/'/g, "\\'")}')">&times;</button></td>
       </tr>
     `).join('');
 
@@ -3590,7 +3642,7 @@ function renderWordListView() {
         <div class="wordlist-cat-section">
           <div class="wordlist-cat-title">${esc(cat)} (${words.length})</div>
           <table class="wordlist-table">
-            <thead><tr><th>Japanese</th><th>Romaji</th><th>English</th><th></th></tr></thead>
+            <thead><tr><th>Japanese</th><th>Romaji</th><th>English</th><th></th><th></th></tr></thead>
             <tbody>${rowsHTML}</tbody>
           </table>
         </div>
@@ -3598,7 +3650,7 @@ function renderWordListView() {
     } else {
       sectionsHTML += `
         <table class="wordlist-table">
-          <thead><tr><th>Japanese</th><th>Romaji</th><th>English</th><th></th></tr></thead>
+          <thead><tr><th>Japanese</th><th>Romaji</th><th>English</th><th></th><th></th></tr></thead>
           <tbody>${rowsHTML}</tbody>
         </table>
       `;
