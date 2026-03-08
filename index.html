@@ -594,7 +594,7 @@
 
   .lookup-item:last-child { border-bottom: none; }
 
-  .lookup-item:hover, .lookup-item-active {
+  .lookup-item:hover {
     background: var(--accent-soft);
   }
 
@@ -1964,12 +1964,16 @@ function openAddPanel() {
   addFormSuccess = false;
   render();
   setTimeout(() => {
-    const inp = document.getElementById('input-japanese');
+    const inp = document.getElementById('input-english');
     if (inp) inp.focus();
   }, 100);
 }
 
 function closeAddPanel() {
+  clearTimeout(lookupDebounceTimer);
+  lookupResults = [];
+  lookupLoading = false;
+  lookupError = false;
   addPanelOpen = false;
   render();
 }
@@ -2003,6 +2007,7 @@ function saveNewCard() {
       document.getElementById('input-romaji').value = '';
       document.getElementById('input-english').value = '';
       lookupResults = [];
+      lookupError = false;
       renderLookupDropdown();
       inp.focus();
     }
@@ -2166,16 +2171,18 @@ function kanaToRomaji(str) {
 let lookupResults = [];
 let lookupLoading = false;
 let lookupDebounceTimer = null;
-let selectedLookupIndex = -1;
+let lookupError = false;
 
 function searchJisho(query) {
   if (!query || query.trim().length < 2) {
     lookupResults = [];
     lookupLoading = false;
+    lookupError = false;
     renderLookupDropdown();
     return;
   }
   lookupLoading = true;
+  lookupError = false;
   renderLookupDropdown();
 
   fetch(`https://jisho.org/api/v1/search/words?keyword=${encodeURIComponent(query.trim())}`)
@@ -2193,12 +2200,13 @@ function searchJisho(query) {
         return { japanese: word, reading, romaji, english: meanings };
       });
       lookupLoading = false;
-      selectedLookupIndex = -1;
+      lookupError = false;
       renderLookupDropdown();
     })
     .catch(() => {
       lookupResults = [];
       lookupLoading = false;
+      lookupError = true;
       renderLookupDropdown();
     });
 }
@@ -2219,7 +2227,7 @@ function selectLookupResult(index) {
   if (jpInput) jpInput.value = result.japanese;
   if (rmInput) rmInput.value = result.romaji;
   lookupResults = [];
-  selectedLookupIndex = -1;
+  lookupError = false;
   renderLookupDropdown();
   updateAddPreview();
 }
@@ -2232,13 +2240,18 @@ function renderLookupDropdown() {
     container.style.display = 'block';
     return;
   }
+  if (lookupError) {
+    container.innerHTML = '<div class="lookup-loading" style="color: var(--danger, #c0392b);">Lookup unavailable</div>';
+    container.style.display = 'block';
+    return;
+  }
   if (lookupResults.length === 0) {
     container.innerHTML = '';
     container.style.display = 'none';
     return;
   }
   container.innerHTML = lookupResults.map((r, i) => `
-    <div class="lookup-item${i === selectedLookupIndex ? ' lookup-item-active' : ''}" onclick="selectLookupResult(${i})">
+    <div class="lookup-item" onclick="selectLookupResult(${i})">
       <div class="lookup-item-jp">${esc(r.japanese)} <span class="lookup-item-reading">${esc(r.reading)} / ${esc(r.romaji)}</span></div>
       <div class="lookup-item-en">${esc(r.english)}</div>
     </div>
