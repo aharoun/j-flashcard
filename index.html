@@ -2109,7 +2109,7 @@ function mergeCustomCards() {
     const cats = edit.categories || [edit.origCategory];
     cats.forEach(cat => {
       if (!vocabulary[cat]) vocabulary[cat] = [];
-      vocabulary[cat].push({ japanese: edit.japanese, romaji: edit.romaji, english: edit.english, categories: cats, edited: true });
+      vocabulary[cat].push({ japanese: edit.japanese, romaji: edit.romaji, english: edit.english, categories: cats, edited: true, origJapanese: edit.origJapanese, origCategory: edit.origCategory });
     });
   });
   const customs = loadCustomCards();
@@ -3117,7 +3117,13 @@ function saveSession(session) {
 
 // ─── SRS HELPERS ───
 function getAllCards() {
-  return Object.values(vocabulary).flat();
+  const all = Object.values(vocabulary).flat();
+  const seen = new Set();
+  return all.filter(c => {
+    if (seen.has(c.japanese)) return false;
+    seen.add(c.japanese);
+    return true;
+  });
 }
 
 function getDueCards() {
@@ -3542,7 +3548,13 @@ let state = {
 function getCards(category) {
   let cards;
   if (category === 'All') {
-    cards = Object.values(vocabulary).flat();
+    const all = Object.values(vocabulary).flat();
+    const seen = new Set();
+    cards = all.filter(c => {
+      if (seen.has(c.japanese)) return false;
+      seen.add(c.japanese);
+      return true;
+    });
   } else {
     cards = [...(vocabulary[category] || [])];
   }
@@ -3552,7 +3564,12 @@ function getCards(category) {
 
 function countCards(category) {
   if (category === 'All') {
-    return Object.values(vocabulary).flat().length;
+    const seen = new Set();
+    return Object.values(vocabulary).flat().filter(c => {
+      if (seen.has(c.japanese)) return false;
+      seen.add(c.japanese);
+      return true;
+    }).length;
   }
   return (vocabulary[category] || []).length;
 }
@@ -3657,6 +3674,7 @@ function setMode(mode) {
 }
 
 function setCategory(cat) {
+  editingCard = null;
   state.category = cat;
   if (state.view === 'wordlist') {
     render();
@@ -3667,6 +3685,7 @@ function setCategory(cat) {
 }
 
 function navigateTo(view) {
+  editingCard = null;
   stopSpeedTimer();
   stopSpeechRecognition();
   state.view = view;
@@ -4130,7 +4149,7 @@ function renderWordListView() {
                 ${allCats.map(c => `<label class="edit-cat-label"><input type="checkbox" name="edit-category" value="${esc(c)}" ${cardCats.includes(c) ? 'checked' : ''}> ${esc(c)}</label>`).join('')}
               </div>
               <div class="edit-actions">
-                <button class="btn-edit-save" onclick="saveEditCard('${esc(w.japanese).replace(/'/g, "\\'")}','${esc(cat).replace(/'/g, "\\'")}')" >Save</button>
+                <button class="btn-edit-save" onclick="saveEditCard('${esc(w.origJapanese || w.japanese).replace(/'/g, "\\'")}','${esc(w.origCategory || cat).replace(/'/g, "\\'")}')" >Save</button>
                 <button class="btn-edit-cancel" onclick="cancelEditCard()">Cancel</button>
               </div>
             </td>
