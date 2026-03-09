@@ -622,6 +622,17 @@
     color: var(--text-dim);
   }
 
+  .lookup-badge {
+    display: inline-block;
+    font-size: 10px;
+    background: var(--accent, #2980b9);
+    color: white;
+    padding: 1px 6px;
+    border-radius: 8px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
   .lookup-loading {
     padding: 10px 14px;
     font-size: 12px;
@@ -2234,6 +2245,23 @@ function kanaToRomaji(str) {
   return result;
 }
 
+// ─── GOOGLE TRANSLATE FALLBACK ───
+function googleTranslate(text, sourceLang, targetLang) {
+  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&dt=rm&q=${encodeURIComponent(text)}`;
+  return fetch(url)
+    .then(res => res.json())
+    .then(data => {
+      const segments = data[0] || [];
+      let translation = '';
+      let romaji = '';
+      for (const seg of segments) {
+        if (seg[0] !== null) translation += seg[0];
+        if (seg[0] === null && seg[2]) romaji = seg[2];
+      }
+      return { translation: translation.trim(), romaji: romaji.trim() };
+    });
+}
+
 // ─── JISHO LOOKUP ───
 let lookupResults = [];
 let lookupLoading = false;
@@ -2267,6 +2295,27 @@ function searchJisho(query) {
           .join('; ');
         return { japanese: word, reading, romaji, english: meanings };
       });
+      if (lookupResults.length === 0) {
+        googleTranslate(query.trim(), 'en', 'ja').then(result => {
+          if (result.translation) {
+            lookupResults = [{
+              japanese: result.translation,
+              reading: '',
+              romaji: result.romaji || '',
+              english: query.trim(),
+              translated: true
+            }];
+          }
+          lookupLoading = false;
+          lookupError = false;
+          renderLookupDropdown();
+        }).catch(() => {
+          lookupLoading = false;
+          lookupError = false;
+          renderLookupDropdown();
+        });
+        return;
+      }
       lookupLoading = false;
       lookupError = false;
       renderLookupDropdown();
@@ -2320,7 +2369,7 @@ function renderLookupDropdown() {
   }
   container.innerHTML = lookupResults.map((r, i) => `
     <div class="lookup-item" onclick="selectLookupResult(${i})">
-      <div class="lookup-item-jp">${esc(r.japanese)} <span class="lookup-item-reading">${esc(r.reading)} / ${esc(r.romaji)}</span></div>
+      <div class="lookup-item-jp">${esc(r.japanese)} <span class="lookup-item-reading">${r.reading ? esc(r.reading) + ' / ' : ''}${esc(r.romaji)}</span>${r.translated ? '<span class="lookup-badge">Translation</span>' : ''}</div>
       <div class="lookup-item-en">${esc(r.english)}</div>
     </div>
   `).join('');
@@ -2360,6 +2409,27 @@ function searchJishoFromJapanese(query) {
           .join('; ');
         return { japanese: word, reading, romaji, english: meanings };
       });
+      if (jpLookupResults.length === 0) {
+        googleTranslate(query.trim(), 'ja', 'en').then(result => {
+          if (result.translation) {
+            jpLookupResults = [{
+              japanese: query.trim(),
+              reading: '',
+              romaji: result.romaji || '',
+              english: result.translation,
+              translated: true
+            }];
+          }
+          jpLookupLoading = false;
+          jpLookupError = false;
+          renderJpLookupDropdown();
+        }).catch(() => {
+          jpLookupLoading = false;
+          jpLookupError = false;
+          renderJpLookupDropdown();
+        });
+        return;
+      }
       jpLookupLoading = false;
       jpLookupError = false;
       renderJpLookupDropdown();
@@ -2419,7 +2489,7 @@ function renderJpLookupDropdown() {
   }
   container.innerHTML = jpLookupResults.map((r, i) => `
     <div class="lookup-item" onclick="selectJpLookupResult(${i})">
-      <div class="lookup-item-jp">${esc(r.japanese)} <span class="lookup-item-reading">${esc(r.reading)} / ${esc(r.romaji)}</span></div>
+      <div class="lookup-item-jp">${esc(r.japanese)} <span class="lookup-item-reading">${r.reading ? esc(r.reading) + ' / ' : ''}${esc(r.romaji)}</span>${r.translated ? '<span class="lookup-badge">Translation</span>' : ''}</div>
       <div class="lookup-item-en">${esc(r.english)}</div>
     </div>
   `).join('');
@@ -2459,6 +2529,27 @@ function searchJishoFromRomaji(query) {
           .join('; ');
         return { japanese: word, reading, romaji, english: meanings };
       });
+      if (rmLookupResults.length === 0) {
+        googleTranslate(query.trim(), 'en', 'ja').then(result => {
+          if (result.translation) {
+            rmLookupResults = [{
+              japanese: result.translation,
+              reading: '',
+              romaji: query.trim(),
+              english: '',
+              translated: true
+            }];
+          }
+          rmLookupLoading = false;
+          rmLookupError = false;
+          renderRmLookupDropdown();
+        }).catch(() => {
+          rmLookupLoading = false;
+          rmLookupError = false;
+          renderRmLookupDropdown();
+        });
+        return;
+      }
       rmLookupLoading = false;
       rmLookupError = false;
       renderRmLookupDropdown();
@@ -2521,7 +2612,7 @@ function renderRmLookupDropdown() {
   }
   container.innerHTML = rmLookupResults.map((r, i) => `
     <div class="lookup-item" onclick="selectRmLookupResult(${i})">
-      <div class="lookup-item-jp">${esc(r.japanese)} <span class="lookup-item-reading">${esc(r.reading)} / ${esc(r.romaji)}</span></div>
+      <div class="lookup-item-jp">${esc(r.japanese)} <span class="lookup-item-reading">${r.reading ? esc(r.reading) + ' / ' : ''}${esc(r.romaji)}</span>${r.translated ? '<span class="lookup-badge">Translation</span>' : ''}</div>
       <div class="lookup-item-en">${esc(r.english)}</div>
     </div>
   `).join('');
