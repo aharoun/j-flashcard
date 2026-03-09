@@ -1704,6 +1704,60 @@
     line-height: 1;
   }
   .wordlist-table .wl-delete:hover { opacity: 1; color: #e85555; }
+  .edit-row td {
+    padding: 4px;
+    vertical-align: top;
+  }
+  .edit-row .form-input {
+    width: 100%;
+    font-size: 13px;
+    padding: 4px 6px;
+  }
+  .edit-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 8px;
+    margin-bottom: 6px;
+    max-height: 80px;
+    overflow-y: auto;
+  }
+  .edit-cat-label {
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    white-space: nowrap;
+  }
+  .edit-actions {
+    display: flex;
+    gap: 6px;
+  }
+  .btn-edit-save, .btn-edit-cancel {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-edit-save {
+    background: var(--accent, #2980b9);
+    color: white;
+  }
+  .btn-edit-cancel {
+    background: var(--border, #ddd);
+    color: var(--text, #333);
+  }
+  .wl-edit {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 4px;
+    opacity: 0.5;
+  }
+  .wl-edit:hover {
+    opacity: 1;
+  }
   .wordlist-cat-section {
     margin-bottom: 20px;
   }
@@ -2027,6 +2081,7 @@ function hideCard(japanese, category) {
 function mergeCustomCards() {
   for (const cat in vocabulary) {
     vocabulary[cat] = vocabulary[cat].filter(c => !c.custom);
+    vocabulary[cat] = vocabulary[cat].filter(c => !c.edited);
   }
   const hidden = loadHiddenCards();
   for (const cat in vocabulary) {
@@ -2034,6 +2089,20 @@ function mergeCustomCards() {
       !hidden.some(h => h.japanese === w.japanese && h.category === cat)
     );
   }
+  // Apply edits to built-in cards
+  const edits = loadCardEdits();
+  edits.forEach(edit => {
+    if (vocabulary[edit.origCategory]) {
+      vocabulary[edit.origCategory] = vocabulary[edit.origCategory].filter(
+        w => w.japanese !== edit.origJapanese
+      );
+    }
+    const cats = edit.categories || [edit.origCategory];
+    cats.forEach(cat => {
+      if (!vocabulary[cat]) vocabulary[cat] = [];
+      vocabulary[cat].push({ japanese: edit.japanese, romaji: edit.romaji, english: edit.english, edited: true });
+    });
+  });
   const customs = loadCustomCards();
   customs.forEach(card => {
     const cats = card.categories || [card.category || 'My Words'];
@@ -2046,6 +2115,64 @@ function mergeCustomCards() {
 
 function getCustomCardCount() {
   return loadCustomCards().length;
+}
+
+// ─── CARD EDITS (overrides for built-in cards) ───
+let editingCard = null; // { japanese, category } of card being edited
+
+function loadCardEdits() {
+  try {
+    const stored = localStorage.getItem('jp_flashcards_edits');
+    return stored ? JSON.parse(stored) : [];
+  } catch(e) { return []; }
+}
+
+function saveCardEdits(edits) {
+  try {
+    localStorage.setItem('jp_flashcards_edits', JSON.stringify(edits));
+  } catch(e) {}
+}
+
+function startEditCard(japanese, category) {
+  editingCard = { japanese, category };
+  render();
+}
+
+function cancelEditCard() {
+  editingCard = null;
+  render();
+}
+
+function saveEditCard(origJapanese, origCategory) {
+  const jp = document.getElementById('edit-japanese').value.trim();
+  const rm = document.getElementById('edit-romaji').value.trim();
+  const en = document.getElementById('edit-english').value.trim();
+  const checked = [...document.querySelectorAll('input[name="edit-category"]:checked')].map(cb => cb.value);
+  const categories = checked.length > 0 ? checked : [origCategory];
+
+  if (!jp || !rm || !en) return;
+
+  const customs = loadCustomCards();
+  const customIdx = customs.findIndex(c => {
+    const cats = c.categories || [c.category || 'My Words'];
+    return c.japanese === origJapanese && cats.includes(origCategory);
+  });
+
+  if (customIdx !== -1) {
+    // Editing a custom card — update in place
+    customs[customIdx] = { japanese: jp, romaji: rm, english: en, categories };
+    saveCustomCards(customs);
+  } else {
+    // Editing a built-in card — save as override
+    const edits = loadCardEdits();
+    const filtered = edits.filter(e => !(e.origJapanese === origJapanese && e.origCategory === origCategory));
+    filtered.push({ origJapanese, origCategory, japanese: jp, romaji: rm, english: en, categories });
+    saveCardEdits(filtered);
+  }
+
+  editingCard = null;
+  mergeCustomCards();
+  render();
 }
 
 // ─── ADD PANEL STATE ───
@@ -3979,15 +4106,41 @@ function renderWordListView() {
   categories.forEach(cat => {
     const words = vocabulary[cat] || [];
     totalCount += words.length;
-    const rowsHTML = words.map(w => `
-      <tr>
-        <td class="wl-jp">${esc(w.japanese)}</td>
-        <td class="wl-romaji">${esc(w.romaji)}</td>
-        <td class="wl-en">${esc(w.english)}</td>
-        <td><button class="wl-play" onclick="event.stopPropagation();speak('${esc(w.japanese).replace(/'/g, "\\'")}')">▶</button></td>
-        <td><button class="wl-delete" onclick="event.stopPropagation();if(confirm('Delete this card?'))deleteCard('${esc(w.japanese).replace(/'/g, "\\'")}','${esc(cat).replace(/'/g, "\\'")}')">&times;</button></td>
-      </tr>
-    `).join('');
+    const rowsHTML = words.map(w => {
+      const isEditing = editingCard && editingCard.japanese === w.japanese && editingCard.category === cat;
+      if (isEditing) {
+        const allCats = Object.keys(vocabulary);
+        const cardCats = w.categories || [cat];
+        return `
+          <tr class="edit-row">
+            <td><input type="text" id="edit-japanese" class="form-input input-japanese" value="${esc(w.japanese)}"></td>
+            <td><input type="text" id="edit-romaji" class="form-input input-romaji" value="${esc(w.romaji)}"></td>
+            <td><input type="text" id="edit-english" class="form-input" value="${esc(w.english)}"></td>
+            <td colspan="2">
+              <div class="edit-categories">
+                ${allCats.map(c => `<label class="edit-cat-label"><input type="checkbox" name="edit-category" value="${esc(c)}" ${cardCats.includes(c) ? 'checked' : ''}> ${esc(c)}</label>`).join('')}
+              </div>
+              <div class="edit-actions">
+                <button class="btn-edit-save" onclick="saveEditCard('${esc(w.japanese).replace(/'/g, "\\'")}','${esc(cat).replace(/'/g, "\\'")}')" >Save</button>
+                <button class="btn-edit-cancel" onclick="cancelEditCard()">Cancel</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }
+      return `
+        <tr>
+          <td class="wl-jp">${esc(w.japanese)}</td>
+          <td class="wl-romaji">${esc(w.romaji)}</td>
+          <td class="wl-en">${esc(w.english)}</td>
+          <td>
+            <button class="wl-play" onclick="event.stopPropagation();speak('${esc(w.japanese).replace(/'/g, "\\'")}')" title="Play">▶</button>
+            <button class="wl-edit" onclick="event.stopPropagation();startEditCard('${esc(w.japanese).replace(/'/g, "\\'")}','${esc(cat).replace(/'/g, "\\'")}')" title="Edit">✎</button>
+          </td>
+          <td><button class="wl-delete" onclick="event.stopPropagation();if(confirm('Delete this card?'))deleteCard('${esc(w.japanese).replace(/'/g, "\\'")}','${esc(cat).replace(/'/g, "\\'")}')">&times;</button></td>
+        </tr>
+      `;
+    }).join('');
 
     if (isAll) {
       sectionsHTML += `
