@@ -1747,16 +1747,20 @@
     background: var(--border, #ddd);
     color: var(--text, #333);
   }
-  .wl-edit {
-    background: none;
-    border: none;
+  .wordlist-table .wl-edit {
+    background: var(--surface, #f5f5f5);
+    border: 1px solid var(--border, #ddd);
+    border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
-    padding: 2px 4px;
-    opacity: 0.5;
+    font-size: 11px;
+    padding: 2px 8px;
+    color: var(--accent, #2980b9);
+    transition: all 0.2s;
+    margin-left: 4px;
   }
-  .wl-edit:hover {
-    opacity: 1;
+  .wordlist-table .wl-edit:hover {
+    background: var(--accent, #2980b9);
+    color: white;
   }
   .wordlist-cat-section {
     margin-bottom: 20px;
@@ -4163,7 +4167,7 @@ function renderWordListView() {
           <td class="wl-en">${esc(w.english)}</td>
           <td>
             <button class="wl-play" onclick="event.stopPropagation();speak('${esc(w.japanese).replace(/'/g, "\\'")}')" title="Play">▶</button>
-            <button class="wl-edit" onclick="event.stopPropagation();startEditCard('${esc(w.japanese).replace(/'/g, "\\'")}','${esc(cat).replace(/'/g, "\\'")}')" title="Edit">✎</button>
+            <button class="wl-edit" onclick="event.stopPropagation();startEditCard('${esc(w.japanese).replace(/'/g, "\\'")}','${esc(cat).replace(/'/g, "\\'")}')" title="Edit">Edit</button>
           </td>
           <td><button class="wl-delete" onclick="event.stopPropagation();if(confirm('Delete this card?'))deleteCard('${esc(w.japanese).replace(/'/g, "\\'")}','${esc(cat).replace(/'/g, "\\'")}')">&times;</button></td>
         </tr>
