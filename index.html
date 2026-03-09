@@ -2057,7 +2057,17 @@ function deleteCard(japanese, category) {
     }
     saveCustomCards(customs);
   } else {
-    hideCard(japanese, category);
+    // Check if this is an edited built-in card
+    const edits = loadCardEdits();
+    const editIdx = edits.findIndex(e => e.japanese === japanese && (e.categories || [e.origCategory]).includes(category));
+    if (editIdx !== -1) {
+      const edit = edits[editIdx];
+      edits.splice(editIdx, 1);
+      saveCardEdits(edits);
+      hideCard(edit.origJapanese, edit.origCategory);
+    } else {
+      hideCard(japanese, category);
+    }
   }
   mergeCustomCards();
   render();
@@ -2080,8 +2090,7 @@ function hideCard(japanese, category) {
 
 function mergeCustomCards() {
   for (const cat in vocabulary) {
-    vocabulary[cat] = vocabulary[cat].filter(c => !c.custom);
-    vocabulary[cat] = vocabulary[cat].filter(c => !c.edited);
+    vocabulary[cat] = vocabulary[cat].filter(c => !c.custom && !c.edited);
   }
   const hidden = loadHiddenCards();
   for (const cat in vocabulary) {
@@ -2100,7 +2109,7 @@ function mergeCustomCards() {
     const cats = edit.categories || [edit.origCategory];
     cats.forEach(cat => {
       if (!vocabulary[cat]) vocabulary[cat] = [];
-      vocabulary[cat].push({ japanese: edit.japanese, romaji: edit.romaji, english: edit.english, edited: true });
+      vocabulary[cat].push({ japanese: edit.japanese, romaji: edit.romaji, english: edit.english, categories: cats, edited: true });
     });
   });
   const customs = loadCustomCards();
