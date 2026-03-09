@@ -4208,7 +4208,19 @@ function postRender() {
 // ─── KEYBOARD SHORTCUTS ───
 document.addEventListener('keydown', (e) => {
   if (e.code === 'Escape') {
-    if (addPanelOpen) { closeAddPanel(); return; }
+    if (addPanelOpen) {
+      const dd1 = document.getElementById('lookup-dropdown');
+      const dd2 = document.getElementById('jp-lookup-dropdown');
+      const dd3 = document.getElementById('rm-lookup-dropdown');
+      const anyOpen = [dd1, dd2, dd3].some(d => d && d.style.display !== 'none' && d.innerHTML !== '');
+      if (anyOpen) {
+        lookupResults = []; lookupError = false; renderLookupDropdown();
+        jpLookupResults = []; jpLookupError = false; renderJpLookupDropdown();
+        rmLookupResults = []; rmLookupError = false; renderRmLookupDropdown();
+        return;
+      }
+      closeAddPanel(); return;
+    }
     if (goalModalOpen) { goalModalOpen = false; render(); return; }
     if (state.view !== 'study') { navigateTo('study'); return; }
   }
