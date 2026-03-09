@@ -4214,9 +4214,9 @@ document.addEventListener('keydown', (e) => {
       const dd3 = document.getElementById('rm-lookup-dropdown');
       const anyOpen = [dd1, dd2, dd3].some(d => d && d.style.display !== 'none' && d.innerHTML !== '');
       if (anyOpen) {
-        lookupResults = []; lookupError = false; renderLookupDropdown();
-        jpLookupResults = []; jpLookupError = false; renderJpLookupDropdown();
-        rmLookupResults = []; rmLookupError = false; renderRmLookupDropdown();
+        lookupResults = []; lookupLoading = false; lookupError = false; renderLookupDropdown();
+        jpLookupResults = []; jpLookupLoading = false; jpLookupError = false; renderJpLookupDropdown();
+        rmLookupResults = []; rmLookupLoading = false; rmLookupError = false; renderRmLookupDropdown();
         return;
       }
       closeAddPanel(); return;
