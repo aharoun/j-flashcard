@@ -2155,12 +2155,12 @@ function renderAddPanel() {
           <div class="category-checkboxes" id="category-checkboxes">
             ${allCategories.map(c => `
               <label class="category-checkbox-label">
-                <input type="checkbox" name="card-category" value="${esc(c)}"> ${esc(c)}
+                <input type="checkbox" name="card-category" value="${esc(c)}" ${c === 'My Words' ? 'checked' : ''}> ${esc(c)}
               </label>
             `).join('')}
             ${!allCategories.includes('My Words') ? `
               <label class="category-checkbox-label">
-                <input type="checkbox" name="card-category" value="My Words"> My Words
+                <input type="checkbox" name="card-category" value="My Words" checked> My Words
               </label>
             ` : ''}
           </div>
