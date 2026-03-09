@@ -463,6 +463,25 @@
     color: var(--text);
   }
 
+  .category-checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 12px;
+    max-height: 120px;
+    overflow-y: auto;
+    padding: 8px;
+    border: 1px solid var(--border, #ddd);
+    border-radius: 8px;
+  }
+  .category-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
   .form-preview {
     background: var(--bg);
     border: 1px solid var(--border);
@@ -1969,9 +1988,19 @@ function addCustomCard(card) {
 
 function deleteCard(japanese, category) {
   const customs = loadCustomCards();
-  const idx = customs.findIndex(c => c.japanese === japanese && (c.category || 'My Words') === category);
+  const idx = customs.findIndex(c => {
+    const cats = c.categories || [c.category || 'My Words'];
+    return c.japanese === japanese && cats.includes(category);
+  });
   if (idx !== -1) {
-    customs.splice(idx, 1);
+    const card = customs[idx];
+    const cats = card.categories || [card.category || 'My Words'];
+    if (cats.length > 1) {
+      card.categories = cats.filter(c => c !== category);
+      delete card.category;
+    } else {
+      customs.splice(idx, 1);
+    }
     saveCustomCards(customs);
   } else {
     hideCard(japanese, category);
@@ -2007,9 +2036,11 @@ function mergeCustomCards() {
   }
   const customs = loadCustomCards();
   customs.forEach(card => {
-    const cat = card.category || 'My Words';
-    if (!vocabulary[cat]) vocabulary[cat] = [];
-    vocabulary[cat].push({ ...card, custom: true });
+    const cats = card.categories || [card.category || 'My Words'];
+    cats.forEach(cat => {
+      if (!vocabulary[cat]) vocabulary[cat] = [];
+      vocabulary[cat].push({ ...card, custom: true });
+    });
   });
 }
 
@@ -2057,7 +2088,8 @@ function saveNewCard() {
   const jp = document.getElementById('input-japanese').value.trim();
   const rm = document.getElementById('input-romaji').value.trim();
   const en = document.getElementById('input-english').value.trim();
-  const cat = document.getElementById('select-category').value;
+  const checked = [...document.querySelectorAll('input[name="card-category"]:checked')].map(cb => cb.value);
+  const categories = checked.length > 0 ? checked : ['My Words'];
 
   if (!jp || !rm || !en) return;
 
@@ -2065,7 +2097,7 @@ function saveNewCard() {
     japanese: jp,
     romaji: rm,
     english: en,
-    category: cat,
+    categories: categories,
   });
 
   addFormSuccess = true;
@@ -2119,11 +2151,19 @@ function renderAddPanel() {
           <div class="lookup-dropdown" id="rm-lookup-dropdown"></div>
         </div>
         <div class="form-group">
-          <label class="form-label" for="select-category">Category</label>
-          <select id="select-category" class="form-select">
-            ${allCategories.map(c => `<option value="${esc(c)}">${esc(c)}</option>`).join('')}
-            ${!allCategories.includes('My Words') ? '<option value="My Words">My Words</option>' : ''}
-          </select>
+          <label class="form-label">Categories</label>
+          <div class="category-checkboxes" id="category-checkboxes">
+            ${allCategories.map(c => `
+              <label class="category-checkbox-label">
+                <input type="checkbox" name="card-category" value="${esc(c)}"> ${esc(c)}
+              </label>
+            `).join('')}
+            ${!allCategories.includes('My Words') ? `
+              <label class="category-checkbox-label">
+                <input type="checkbox" name="card-category" value="My Words"> My Words
+              </label>
+            ` : ''}
+          </div>
         </div>
         <div class="form-preview" id="add-preview">
           <div class="form-preview-label">Preview</div>
