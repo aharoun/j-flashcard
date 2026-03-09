@@ -2022,9 +2022,17 @@ function openAddPanel() {
 
 function closeAddPanel() {
   clearTimeout(lookupDebounceTimer);
+  clearTimeout(jpLookupDebounceTimer);
+  clearTimeout(rmLookupDebounceTimer);
   lookupResults = [];
   lookupLoading = false;
   lookupError = false;
+  jpLookupResults = [];
+  jpLookupLoading = false;
+  jpLookupError = false;
+  rmLookupResults = [];
+  rmLookupLoading = false;
+  rmLookupError = false;
   addPanelOpen = false;
   render();
 }
@@ -2060,6 +2068,12 @@ function saveNewCard() {
       lookupResults = [];
       lookupError = false;
       renderLookupDropdown();
+      jpLookupResults = [];
+      jpLookupError = false;
+      renderJpLookupDropdown();
+      rmLookupResults = [];
+      rmLookupError = false;
+      renderRmLookupDropdown();
       inp.focus();
     }
     addFormSuccess = false;
@@ -2084,12 +2098,14 @@ function renderAddPanel() {
           <div class="lookup-dropdown" id="lookup-dropdown"></div>
         </div>
         <div class="form-group">
-          <label class="form-label" for="input-japanese">Japanese <span class="form-label-hint">— auto-filled from lookup</span></label>
-          <input type="text" id="input-japanese" class="form-input input-japanese" placeholder="こんにちは" oninput="updateAddPreview()">
+          <label class="form-label" for="input-japanese">Japanese <span class="form-label-hint">— type to search English meanings</span></label>
+          <input type="text" id="input-japanese" class="form-input input-japanese" placeholder="こんにちは" oninput="debouncedJapaneseLookup()" autocomplete="off">
+          <div class="lookup-dropdown" id="jp-lookup-dropdown"></div>
         </div>
         <div class="form-group">
-          <label class="form-label" for="input-romaji">Romaji <span class="form-label-hint">— auto-filled from lookup</span></label>
-          <input type="text" id="input-romaji" class="form-input input-romaji" placeholder="konnichiwa" oninput="updateAddPreview()">
+          <label class="form-label" for="input-romaji">Romaji <span class="form-label-hint">— type to search too</span></label>
+          <input type="text" id="input-romaji" class="form-input input-romaji" placeholder="konnichiwa" oninput="debouncedRomajiLookup()" autocomplete="off">
+          <div class="lookup-dropdown" id="rm-lookup-dropdown"></div>
         </div>
         <div class="form-group">
           <label class="form-label" for="select-category">Category</label>
@@ -2304,6 +2320,207 @@ function renderLookupDropdown() {
   }
   container.innerHTML = lookupResults.map((r, i) => `
     <div class="lookup-item" onclick="selectLookupResult(${i})">
+      <div class="lookup-item-jp">${esc(r.japanese)} <span class="lookup-item-reading">${esc(r.reading)} / ${esc(r.romaji)}</span></div>
+      <div class="lookup-item-en">${esc(r.english)}</div>
+    </div>
+  `).join('');
+  container.style.display = 'block';
+}
+
+// ─── REVERSE JISHO LOOKUP (Japanese → English) ───
+let jpLookupResults = [];
+let jpLookupLoading = false;
+let jpLookupDebounceTimer = null;
+let jpLookupError = false;
+
+function searchJishoFromJapanese(query) {
+  if (!query || query.trim().length < 1) {
+    jpLookupResults = [];
+    jpLookupLoading = false;
+    jpLookupError = false;
+    renderJpLookupDropdown();
+    return;
+  }
+  jpLookupLoading = true;
+  jpLookupError = false;
+  renderJpLookupDropdown();
+
+  const jishoUrl = `https://jisho.org/api/v1/search/words?keyword=${encodeURIComponent(query.trim())}`;
+  fetch(`https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(jishoUrl)}`)
+    .then(res => res.json())
+    .then(data => {
+      jpLookupResults = (data.data || []).slice(0, 5).map(entry => {
+        const jp = entry.japanese[0] || {};
+        const word = jp.word || jp.reading || '';
+        const reading = jp.reading || '';
+        const romaji = kanaToRomaji(reading);
+        const meanings = (entry.senses || [])
+          .slice(0, 2)
+          .map(s => s.english_definitions.join(', '))
+          .join('; ');
+        return { japanese: word, reading, romaji, english: meanings };
+      });
+      jpLookupLoading = false;
+      jpLookupError = false;
+      renderJpLookupDropdown();
+    })
+    .catch(() => {
+      jpLookupResults = [];
+      jpLookupLoading = false;
+      jpLookupError = true;
+      renderJpLookupDropdown();
+    });
+}
+
+function debouncedJapaneseLookup() {
+  const input = document.getElementById('input-japanese');
+  if (!input) return;
+  clearTimeout(jpLookupDebounceTimer);
+  jpLookupDebounceTimer = setTimeout(() => searchJishoFromJapanese(input.value), 500);
+  updateAddPreview();
+}
+
+function selectJpLookupResult(index) {
+  const result = jpLookupResults[index];
+  if (!result) return;
+  const enInput = document.getElementById('input-english');
+  const jpInput = document.getElementById('input-japanese');
+  const rmInput = document.getElementById('input-romaji');
+  if (enInput) enInput.value = result.english;
+  if (jpInput) jpInput.value = result.japanese;
+  if (rmInput) rmInput.value = result.romaji;
+  jpLookupResults = [];
+  jpLookupError = false;
+  renderJpLookupDropdown();
+  // Clear the English lookup dropdown too
+  lookupResults = [];
+  lookupError = false;
+  renderLookupDropdown();
+  updateAddPreview();
+}
+
+function renderJpLookupDropdown() {
+  const container = document.getElementById('jp-lookup-dropdown');
+  if (!container) return;
+  if (jpLookupLoading) {
+    container.innerHTML = '<div class="lookup-loading">Searching...</div>';
+    container.style.display = 'block';
+    return;
+  }
+  if (jpLookupError) {
+    container.innerHTML = '<div class="lookup-loading" style="color: var(--danger, #c0392b);">Lookup unavailable</div>';
+    container.style.display = 'block';
+    return;
+  }
+  if (jpLookupResults.length === 0) {
+    container.innerHTML = '';
+    container.style.display = 'none';
+    return;
+  }
+  container.innerHTML = jpLookupResults.map((r, i) => `
+    <div class="lookup-item" onclick="selectJpLookupResult(${i})">
+      <div class="lookup-item-jp">${esc(r.japanese)} <span class="lookup-item-reading">${esc(r.reading)} / ${esc(r.romaji)}</span></div>
+      <div class="lookup-item-en">${esc(r.english)}</div>
+    </div>
+  `).join('');
+  container.style.display = 'block';
+}
+
+// ─── ROMAJI JISHO LOOKUP (Romaji → Japanese + English) ───
+let rmLookupResults = [];
+let rmLookupLoading = false;
+let rmLookupDebounceTimer = null;
+let rmLookupError = false;
+
+function searchJishoFromRomaji(query) {
+  if (!query || query.trim().length < 2) {
+    rmLookupResults = [];
+    rmLookupLoading = false;
+    rmLookupError = false;
+    renderRmLookupDropdown();
+    return;
+  }
+  rmLookupLoading = true;
+  rmLookupError = false;
+  renderRmLookupDropdown();
+
+  const jishoUrl = `https://jisho.org/api/v1/search/words?keyword=${encodeURIComponent(query.trim().toLowerCase())}`;
+  fetch(`https://api.codetabs.com/v1/proxy/?quest=${encodeURIComponent(jishoUrl)}`)
+    .then(res => res.json())
+    .then(data => {
+      rmLookupResults = (data.data || []).slice(0, 5).map(entry => {
+        const jp = entry.japanese[0] || {};
+        const word = jp.word || jp.reading || '';
+        const reading = jp.reading || '';
+        const romaji = kanaToRomaji(reading);
+        const meanings = (entry.senses || [])
+          .slice(0, 2)
+          .map(s => s.english_definitions.join(', '))
+          .join('; ');
+        return { japanese: word, reading, romaji, english: meanings };
+      });
+      rmLookupLoading = false;
+      rmLookupError = false;
+      renderRmLookupDropdown();
+    })
+    .catch(() => {
+      rmLookupResults = [];
+      rmLookupLoading = false;
+      rmLookupError = true;
+      renderRmLookupDropdown();
+    });
+}
+
+function debouncedRomajiLookup() {
+  const input = document.getElementById('input-romaji');
+  if (!input) return;
+  clearTimeout(rmLookupDebounceTimer);
+  rmLookupDebounceTimer = setTimeout(() => searchJishoFromRomaji(input.value), 500);
+  updateAddPreview();
+}
+
+function selectRmLookupResult(index) {
+  const result = rmLookupResults[index];
+  if (!result) return;
+  const enInput = document.getElementById('input-english');
+  const jpInput = document.getElementById('input-japanese');
+  if (enInput) enInput.value = result.english;
+  // Use hiragana reading instead of kanji — avoids ambiguous pronunciations
+  if (jpInput) jpInput.value = result.reading || result.japanese;
+  // Keep the user's typed romaji — don't overwrite it
+  rmLookupResults = [];
+  rmLookupError = false;
+  renderRmLookupDropdown();
+  // Clear other dropdowns
+  lookupResults = [];
+  lookupError = false;
+  renderLookupDropdown();
+  jpLookupResults = [];
+  jpLookupError = false;
+  renderJpLookupDropdown();
+  updateAddPreview();
+}
+
+function renderRmLookupDropdown() {
+  const container = document.getElementById('rm-lookup-dropdown');
+  if (!container) return;
+  if (rmLookupLoading) {
+    container.innerHTML = '<div class="lookup-loading">Searching...</div>';
+    container.style.display = 'block';
+    return;
+  }
+  if (rmLookupError) {
+    container.innerHTML = '<div class="lookup-loading" style="color: var(--danger, #c0392b);">Lookup unavailable</div>';
+    container.style.display = 'block';
+    return;
+  }
+  if (rmLookupResults.length === 0) {
+    container.innerHTML = '';
+    container.style.display = 'none';
+    return;
+  }
+  container.innerHTML = rmLookupResults.map((r, i) => `
+    <div class="lookup-item" onclick="selectRmLookupResult(${i})">
       <div class="lookup-item-jp">${esc(r.japanese)} <span class="lookup-item-reading">${esc(r.reading)} / ${esc(r.romaji)}</span></div>
       <div class="lookup-item-en">${esc(r.english)}</div>
     </div>
